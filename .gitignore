@@ -10,3 +10,21 @@
 .externalNativeBuild
 .cxx
 local.properties
+/engine/target
+
+# sherpa-onnx native libraries: run scripts/fetch-sherpa-android.sh
+/app/src/main/jniLibs/
+
+# llama.cpp sources: run scripts/vendor-llama-cpp.sh
+/app/src/main/cpp/llama.cpp/
+/app/.cxx/
+
+/dist
+/extension/**/dist
+/extension/**/node_modules
+*.zip
+
+# test and scratch outputs
+/extension/apps/chrome/e2e/.profile/
+*.ppm
+/Voicio Chrome extension prototype/

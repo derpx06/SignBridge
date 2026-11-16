@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android 12+: the system splash (PhoneIntroA): ink, the Ink & Ember icon, its core breathes once, then paper. -->
+    <style name="Theme.Voicio" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/voicio_paper</item>
+        <item name="android:windowSplashScreenBackground">@color/voicio_ink</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_icon_anim</item>
+        <item name="android:windowSplashScreenAnimationDuration">900</item>
+    </style>
+</resources>

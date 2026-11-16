@@ -1,0 +1,4 @@
+/* Latin subsets only, bundled so the extension never fetches fonts (all SIL OFL). Names match tokens.css (--font, --head, --mono). */
+@font-face{font-family:"Inter";font-style:normal;font-display:swap;font-weight:100 900;src:url(@fontsource-variable/inter/files/inter-latin-wght-normal.woff2) format("woff2-variations")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-display:swap;font-weight:100 800;src:url(@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2) format("woff2-variations")}
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-display:swap;font-weight:800;src:url(@fontsource/bricolage-grotesque/files/bricolage-grotesque-latin-800-normal.woff2) format("woff2")}

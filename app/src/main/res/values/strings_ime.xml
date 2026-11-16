@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Accessibility service (replaces accessibility_description in the service config) -->
+    <string name="accessibility_description_v2">Voicio shows a small microphone bubble next to the text field you are typing in and puts the words you dictate into that field. It only looks at the field you are typing in, never at password fields, and it does not tap, swipe, read the rest of the screen or take screenshots. Your voice stays on this phone unless you turn on a cloud provider. To switch Voicio off quickly (for example before paying), use the Voicio tile in Quick Settings, or use the Voicio Keyboard, which needs no accessibility access.</string>
+
+    <!-- Pause -->
+    <string name="tile_label">Voicio</string>
+    <string name="tile_on">On · tap to pause</string>
+    <string name="tile_paused">Paused · tap to turn on</string>
+    <string name="tile_on_description">Voicio bubble is on. Tap to pause it completely.</string>
+    <string name="tile_paused_description">Voicio bubble is paused. Tap to open its setting and turn it back on.</string>
+    <string name="pause_action">Pause Voicio</string>
+    <string name="pause_explain">Turns Voicio\'s accessibility off completely, so banking and payment apps stop warning. Turn it back on with the Voicio tile or in Settings › Accessibility › Voicio.</string>
+    <string name="turn_back_on">Turn back on</string>
+    <string name="turn_back_on_explain">Android lets only you switch accessibility on. Tap Voicio, then the switch.</string>
+
+    <!-- Keyboard -->
+    <string name="ime_name">Voicio Keyboard</string>
+    <string name="ime_subtype_en">English (Voicio)</string>
+    <string name="ime_hint">Tap to talk · hold to talk while held</string>
+    <string name="ime_listening">Listening…</string>
+    <string name="ime_continuous">Continuous · tap to stop</string>
+    <string name="ime_working">Writing it up…</string>
+    <string name="ime_done">Done</string>
+    <string name="ime_password">Voice, suggestions and clipboard are off in this field</string>
+    <string name="ime_no_mic">Allow the microphone in Voicio</string>
+    <string name="ime_open_app">Open Voicio</string>
+    <string name="ime_mic">Dictate</string>
+    <string name="ime_stop">Stop and type</string>
+    <string name="ime_globe">Switch keyboard</string>
+    <string name="ime_backspace">Delete</string>
+    <string name="ime_space">Space</string>
+    <string name="ime_shift">Shift</string>
+    <string name="ime_symbols">Symbols</string>
+    <string name="ime_letters">Letters</string>
+    <string name="ime_emoji">Emoji</string>
+    <string name="ime_clipboard">Clipboard</string>
+    <string name="ime_clipboard_empty">Copied text shows up here for an hour. Pin what you want to keep.</string>
+    <string name="ime_pin">Pin</string>
+    <string name="ime_unpin">Unpin</string>
+    <string name="ime_one_handed">One-handed</string>
+    <string name="ime_floating">Floating</string>
+    <string name="ime_dock">Dock</string>
+    <string name="ime_full_width">Full width</string>
+    <string name="ime_move_side">Move to other side</string>
+    <string name="ime_copy">Copy</string>
+    <string name="ime_copied">Couldn\'t type here. Copied</string>
+    <string name="ime_undo">Undo</string>
+    <string name="ime_style_auto">As said</string>
+    <string name="ime_style_casual">Casual</string>
+    <string name="ime_style_formal">Formal</string>
+    <string name="ime_style_list">List</string>
+    <string name="ime_style_email">Email</string>
+    <string name="ime_cloud">Cloud</string>
+    <string name="ime_settings">Keyboard settings</string>
+    <string name="ime_paste">Paste</string>
+    <string name="ime_on_device">On device</string>
+    <string name="ime_tools">Voice tools</string>
+    <string name="ime_rewrite_title">REWRITE THE SELECTION OR LAST DICTATION · ON DEVICE</string>
+    <string name="ime_rewriting">REWRITING ON DEVICE…</string>
+    <string name="ime_rewrite_shorter">Shorter</string>
+    <string name="ime_rewrite_grammar">Fix grammar</string>
+    <string name="ime_rewrite_needs_model">Formal, Casual, Shorter and Fix grammar need Smart Edit (Voicio app › Smart Edit, about 400 MB). List and Email work now.</string>
+    <string name="ime_whisper">Whisper mode</string>
+    <string name="ime_auto_stop">Auto-stop</string>
+    <string name="ime_incognito">Incognito field: nothing is stored or learned</string>
+    <string name="ime_history">Recent dictations</string>
+    <string name="ime_history_empty">Your recent dictations show up here (on this phone only).</string>
+    <string name="ime_nothing_to_rewrite">Select text or dictate first</string>
+    <string name="ime_rewrite_kept">Kept your wording</string>
+    <string name="ime_added">Added to your words</string>
+</resources>

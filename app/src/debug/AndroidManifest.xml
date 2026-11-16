@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Debug builds only: runs the AI model on sample text and logs timing, for measuring on a device. -->
+        <activity
+            android:name="com.whispr.app.edit.SelfTestActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Voicio.Sheet"
+            android:excludeFromRecents="true" />
+        <!-- Debug builds only: e2e hook that types text into the focused field (see DebugInsertReceiver). -->
+        <receiver
+            android:name="com.whispr.app.flow.DebugInsertReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.whispr.app.DEBUG_INSERT" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

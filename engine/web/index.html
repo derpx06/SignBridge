@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voicio Voice Lab</title>
+<style>
+  :root {
+    --bg: #f6f5f2; --surface: #ffffff; --text: #1d1d1b; --muted: #6b6a66; --line: #e2e0da;
+    --accent: #2f5bd3; --on-accent: #ffffff; --rec: #c62f2f; --ok: #2e7d4f; --warn: #b7791f; --bad: #c62f2f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --surface: #1f1f1d; --text: #ecebe7; --muted: #9b9a95; --line: #33332f;
+      --accent: #7c9cff; --on-accent: #0d1530; --rec: #ff6b6b; --ok: #5fc28a; --warn: #e5b04d; --bad: #ff6b6b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; display: grid; gap: 16px; }
+  h1 { margin: 0; font-size: 1.5rem; }
+  .sub { margin: 4px 0 0; color: var(--muted); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  button { min-height: 48px; min-width: 160px; padding: 0 20px; border: 0; border-radius: 24px; font: inherit; font-weight: 600;
+           background: var(--accent); color: var(--on-accent); cursor: pointer; }
+  button.recording { background: var(--rec); }
+  button:disabled { opacity: .5; cursor: progress; }
+  .lang { padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+  #status { color: var(--muted); }
+  #status.error { color: var(--bad); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .stat b { display: block; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: .85rem; }
+  .bar { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; margin-top: 12px; position: relative; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+  .bar i.warn { background: var(--warn); } .bar i.bad { background: var(--bad); }
+  .budget { display: flex; justify-content: space-between; color: var(--muted); font-size: .8rem; margin-top: 4px; }
+  #transcript { display: grid; gap: 10px; }
+  .seg { border-left: 3px solid var(--line); padding: 4px 0 4px 12px; }
+  .seg.final { border-color: var(--accent); }
+  .seg p { margin: 2px 0; overflow-wrap: anywhere; }
+  .seg:not(.final) p { color: var(--muted); font-style: italic; }
+  .meta { font-size: .8rem; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { font-weight: 600; color: var(--text); }
+  .empty { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Voicio Voice Lab</h1>
+    <p class="sub">Speak and watch the on-device pipeline: VAD → English speech recognition → speaker diarization. Audio never leaves this machine and is dropped after each session.</p>
+  </header>
+
+  <section class="card controls">
+    <button id="toggle" aria-label="Start recording">Start recording</button>
+    <span class="lang">English</span>
+    <span id="status" role="status">Connecting…</span>
+  </section>
+
+  <section class="card" aria-label="Resource usage">
+    <div class="stats">
+      <div class="stat"><b id="rss">–</b><span>RAM now (MB)</span></div>
+      <div class="stat"><b id="peak">–</b><span>Peak RAM (MB)</span></div>
+      <div class="stat"><b id="load">–</b><span>After model load</span></div>
+      <div class="stat"><b id="decode">–</b><span>Last decode (ms)</span></div>
+      <div class="stat"><b id="rtf">–</b><span>Real-time factor</span></div>
+      <div class="stat"><b id="audio">–</b><span>Audio held (s)</span></div>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="fill"></i></div>
+    <div class="budget"><span id="model">model –</span><span>peak vs 1024 MB budget</span></div>
+  </section>
+
+  <section class="card" aria-label="Transcript" aria-live="polite">
+    <div id="transcript"><p class="empty">Your transcript will appear here as you speak.</p></div>
+  </section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const toggle = $("toggle"), status = $("status"), transcript = $("transcript");
+let ws, audioContext, micStream, recording = false;
+
+const worklet = `
+class Tap extends AudioWorkletProcessor {
+  constructor() { super(); this.buf = new Float32Array(1600); this.n = 0; }
+  process([input]) {
+    const ch = input[0];
+    if (ch) for (let i = 0; i < ch.length; i++) {
+      this.buf[this.n++] = ch[i];
+      if (this.n === this.buf.length) { this.port.postMessage(this.buf.slice()); this.n = 0; }
+    }
+    return true;
+  }
+}
+registerProcessor("tap", Tap);`;
+
+function setStatus(text, isError = false) { status.textContent = text; status.classList.toggle("error", isError); }
+
+function connect() {
+  ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.binaryType = "arraybuffer";
+  ws.onopen = () => { setStatus("Ready"); toggle.disabled = false; };
+  ws.onclose = () => { setStatus("Disconnected from server. Retrying…", true); toggle.disabled = true; stopMic(); setTimeout(connect, 1500); };
+  ws.onmessage = (event) => handle(JSON.parse(event.data));
+}
+
+function handle(m) {
+  if (m.type === "stats") return showStats(m);
+  if (m.type === "started") return setStatus("Listening…");
+  if (m.type === "segment") return upsert(m);
+  if (m.type === "speakers") {
+    for (const [id, speaker] of Object.entries(m.assignments)) {
+      const chip = document.querySelector(`[data-id="${id}"] .chip`);
+      if (chip) chip.textContent = speaker;
+    }
+    return;
+  }
+  if (m.type === "done") { setStatus("Session finished. Audio discarded; transcript kept on this page only."); toggle.disabled = false; return; }
+  if (m.type === "error") setStatus(`Server error: ${m.message}`, true);
+}
+
+function upsert(m) {
+  transcript.querySelector(".empty")?.remove();
+  let row = transcript.querySelector(`[data-id="${m.id}"]`);
+  if (row?.classList.contains("final") && !m.final) return;  // a late partial never overwrites final text
+  if (!row) {
+    row = document.createElement("div");
+    row.className = "seg";
+    row.dataset.id = m.id;
+    row.innerHTML = `<div class="meta"><span class="chip">Speaker pending</span><span class="time"></span></div><p></p>`;
+    transcript.append(row);
+  }
+  row.classList.toggle("final", m.final);
+  row.querySelector("p").textContent = m.text || "…";
+  row.querySelector(".time").textContent = `${(m.startMs / 1000).toFixed(1)}–${(m.endMs / 1000).toFixed(1)} s`;
+  row.scrollIntoView({ block: "nearest" });
+}
+
+function showStats(m) {
+  $("rss").textContent = m.rssMb; $("peak").textContent = m.peakRssMb; $("load").textContent = m.loadRssMb;
+  $("decode").textContent = m.decodeMs ?? "–"; $("rtf").textContent = m.rtf ?? "–"; $("audio").textContent = m.audioSec;
+  $("model").textContent = m.model;
+  const fill = $("fill");
+  fill.style.width = `${Math.min(100, (m.peakRssMb / 1200) * 100)}%`;
+  fill.className = m.peakRssMb > 1200 ? "bad" : m.peakRssMb > 1024 ? "warn" : "";
+}
+
+async function start() {
+  toggle.disabled = true;
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
+    audioContext = new AudioContext({ sampleRate: 16000 });
+    await audioContext.audioWorklet.addModule(URL.createObjectURL(new Blob([worklet], { type: "application/javascript" })));
+    const tap = new AudioWorkletNode(audioContext, "tap");
+    tap.port.onmessage = (e) => { if (recording && ws.readyState === 1) ws.send(e.data.buffer); };
+    audioContext.createMediaStreamSource(micStream).connect(tap);
+    transcript.innerHTML = "";
+    ws.send(JSON.stringify({ type: "start" }));
+    recording = true;
+    toggle.textContent = "Stop and finish"; toggle.setAttribute("aria-label", "Stop recording"); toggle.classList.add("recording");
+  } catch (failure) {
+    stopMic();
+    setStatus(`Microphone unavailable: ${failure.message}`, true);
+  }
+  toggle.disabled = false;
+}
+
+function stopMic() {
+  recording = false;
+  micStream?.getTracks().forEach((t) => t.stop());
+  audioContext?.close();
+  micStream = audioContext = null;
+  toggle.textContent = "Start recording"; toggle.setAttribute("aria-label", "Start recording"); toggle.classList.remove("recording");
+}
+
+function stop() {
+  stopMic();
+  toggle.disabled = true;
+  setStatus("Finalizing: last words and speaker labels…");
+  ws.send(JSON.stringify({ type: "stop" }));
+}
+
+toggle.disabled = true;
+toggle.onclick = () => (recording ? stop() : start());
+connect();
+</script>
+</body>
+</html>

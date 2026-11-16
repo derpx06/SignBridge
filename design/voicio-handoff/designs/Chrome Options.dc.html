@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>body{margin:0;--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--ac2:#22D3EE;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--focus:#5EEAD4}</style>
+</helmet>
+<div data-screen-label="Options page" style="width:{{ W }};height:{{ H }};box-sizing:border-box;display:flex;background:var(--bg);color:var(--tx);border:{{ frameBd }};border-radius:{{ frameR }};overflow:hidden;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;-webkit-font-smoothing:antialiased">
+  <aside style="width:224px;flex:none;border-right:1px solid var(--line);background:var(--sunk);padding:20px 12px;box-sizing:border-box;display:flex;flex-direction:column;gap:2px">
+    <div style="display:flex;align-items:center;gap:10px;padding:0 8px">{{ logo }}<div><div style="font-weight:600">Voicio for Chrome</div><div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--tx3)"><span style="width:6px;height:6px;border-radius:50%;background:{{ dot }}"></span>{{ connText }}</div></div></div>
+    <div style="height:16px"></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><button onClick="{{ n.go }}" aria-current="{{ n.cur }}" style="height:34px;display:flex;align-items:center;gap:10px;padding:0 10px;border:none;border-radius:8px;background:{{ n.bg }};color:{{ n.fg }};font:500 13.5px/1 Inter,sans-serif;cursor:pointer;text-align:left;transition:background .15s ease-out" style-hover="background:var(--surf2);color:var(--tx)"><span style="display:flex;color:{{ n.ic }}">{{ n.icon }}</span>{{ n.label }}</button></sc-for>
+    <div style="flex:1"></div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tx3);padding:0 10px"><span style="color:var(--ac-tx);display:flex">{{ ic12.lock }}</span>Offline. Nothing leaves your computer.</div>
+  </aside>
+  <main style="flex:1;min-width:0;overflow:auto">
+    <div style="max-width:720px;padding:28px 40px 40px;display:flex;flex-direction:column;gap:14px">
+      <div style="margin-bottom:4px"><h1 style="margin:0;font-size:22px;line-height:30px;font-weight:600;letter-spacing:-0.02em">{{ title }}</h1><div style="font-size:13.5px;color:var(--tx2)">{{ sub }}</div></div>
+
+      <sc-if value="{{ sDictate }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;gap:20px;align-items:center;background-image:radial-gradient(260px 160px at 90px 50%,var(--ac-soft),transparent 70%)">
+          <div style="position:relative;width:120px;height:120px;flex:none;display:flex;align-items:center;justify-content:center">
+            <sc-if value="{{ listening }}">{{ rings }}</sc-if>
+            <sc-if value="{{ processing }}">{{ spinner }}</sc-if>
+            <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;inset:8px;border-radius:50%;border:1px solid var(--ac-line)"></span></sc-if>
+            <button onClick="{{ mic }}" aria-label="{{ micLabel }}" style="width:88px;height:88px;border-radius:50%;border:none;background:{{ micBg }};color:{{ micFg }};display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:transform .15s ease-out" style-hover="transform:scale(1.03)" style-active="transform:scale(.96)">{{ micIcon }}</button>
+          </div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+            <div style="height:36px;display:flex;align-items:center">{{ wave }}</div>
+            <div role="status" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:600">{{ stText }}<span style="font:500 12px/1 'JetBrains Mono',monospace;color:var(--tx3)">{{ timer }}</span></div>
+            <div style="display:flex;align-items:center;gap:4px;font-size:12.5px;color:var(--tx3)">Click the mic or press
+              <kbd style="font:500 11px/1 'JetBrains Mono',monospace;height:20px;padding:0 5px;display:inline-flex;align-items:center;border-radius:5px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Alt</kbd>+<kbd style="font:500 11px/1 'JetBrains Mono',monospace;height:20px;padding:0 5px;display:inline-flex;align-items:center;border-radius:5px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Shift</kbd>+<kbd style="font:500 11px/1 'JetBrains Mono',monospace;height:20px;padding:0 5px;display:inline-flex;align-items:center;border-radius:5px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">V</kbd></div>
+          </div>
+        </div>
+        <div aria-live="polite" aria-label="Transcript" style="min-height:96px;box-sizing:border-box;border-radius:12px;border:1px solid var(--line2);background:var(--surf);padding:12px 14px;font-size:14px;line-height:22px;text-wrap:pretty">
+          <sc-if value="{{ hasText }}">{{ textA }}<span style="color:var(--tx3)">{{ textB }}</span></sc-if>
+          <sc-if value="{{ noText }}" hint-placeholder-val="{{ true }}"><span style="color:var(--tx3)">Your words appear here as you speak.</span></sc-if>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button onClick="{{ insert }}" disabled="{{ actOff }}" style="height:36px;padding:0 16px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer;opacity:{{ actOp }}" style-hover="filter:brightness(1.1)">{{ ic14.enter }}Insert into page</button>
+          <button onClick="{{ copy }}" disabled="{{ actOff }}" style="height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer;opacity:{{ actOp }}" style-hover="background:var(--surf2)">{{ ic14.copy }}{{ copyLabel }}</button>
+          <button onClick="{{ clear }}" disabled="{{ actOff }}" style="height:36px;padding:0 12px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer;opacity:{{ actOp }}" style-hover="background:var(--surf2);color:var(--tx)">{{ ic14.eraser }}Clear</button>
+          <div style="flex:1"></div>
+          <span style="font-size:13px;font-weight:500">Dictate into the focused field</span>
+          <button role="switch" aria-checked="{{ into.on }}" aria-label="Dictate into the focused field" onClick="{{ into.t }}" style="width:34px;height:20px;border-radius:999px;border:none;background:{{ into.bg }};padding:0;position:relative;cursor:pointer;flex:none;transition:background .15s ease-out"><span style="position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:{{ into.k }};transform:translateX({{ into.x }});transition:transform .15s ease-out"></span></button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ sGeneral }}">
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px">
+          <div style="padding:14px 16px;display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-weight:500">Shortcut</div><div style="font-size:12.5px;color:var(--tx3)">Click, then press the keys you want.</div></div>
+            <button onClick="{{ recKeys }}" style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:8px;border:1px dashed {{ recBd }};background:{{ recBg }};cursor:pointer;color:var(--tx2);font:400 12px/1 Inter,sans-serif" style-hover="border-color:var(--ac)">
+              <sc-if value="{{ recording }}"><span style="display:flex;align-items:center;gap:6px;padding:0 6px;height:26px"><span style="width:7px;height:7px;border-radius:50%;background:var(--ac);animation:vk-breathe 1.2s ease-in-out infinite"></span>Press keys… Esc cancels</span></sc-if>
+              <sc-if value="{{ notRecording }}" hint-placeholder-val="{{ true }}"><kbd style="font:500 12px/1 'JetBrains Mono',monospace;height:26px;padding:0 8px;display:inline-flex;align-items:center;border-radius:6px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Alt</kbd><kbd style="font:500 12px/1 'JetBrains Mono',monospace;height:26px;padding:0 8px;display:inline-flex;align-items:center;border-radius:6px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Shift</kbd><kbd style="font:500 12px/1 'JetBrains Mono',monospace;height:26px;padding:0 8px;display:inline-flex;align-items:center;border-radius:6px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">V</kbd></sc-if>
+            </button></div>
+          <sc-for list="{{ genSegs }}" as="g" hint-placeholder-count="3">
+            <div style="padding:14px 16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-weight:500">{{ g.label }}</div><div style="font-size:12.5px;color:var(--tx3)">{{ g.note }}</div></div>
+              <div role="radiogroup" aria-label="{{ g.label }}" style="display:flex;height:30px;padding:2px;gap:2px;border-radius:10px;background:var(--sunk);border:1px solid var(--line);box-sizing:border-box"><sc-for list="{{ g.opts }}" as="s"><button role="radio" aria-checked="{{ s.on }}" onClick="{{ s.pick }}" style="padding:0 12px;border-radius:8px;border:1px solid {{ s.bd }};background:{{ s.bg }};color:{{ s.fg }};font:500 12.5px/1 Inter,sans-serif;cursor:pointer">{{ s.label }}</button></sc-for></div></div>
+          </sc-for>
+          <sc-for list="{{ genSw }}" as="w" hint-placeholder-count="2">
+            <div style="padding:14px 16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-weight:500">{{ w.label }}</div><div style="font-size:12.5px;color:var(--tx3)">{{ w.note }}</div></div>
+              <button role="switch" aria-checked="{{ w.on }}" aria-label="{{ w.label }}" onClick="{{ w.t }}" style="width:34px;height:20px;border-radius:999px;border:none;background:{{ w.bg }};padding:0;position:relative;cursor:pointer;flex:none;transition:background .15s ease-out"><span style="position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:{{ w.k }};transform:translateX({{ w.x }});transition:transform .15s ease-out"></span></button></div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+
+      <sc-if value="{{ sSites }}">
+        <div style="display:flex;gap:8px">
+          <label style="flex:1;height:36px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx3);box-sizing:border-box">{{ ic.search }}<input value="{{ q }}" onChange="{{ onQ }}" placeholder="Search or add a site, e.g. notion.so" aria-label="Search or add a site" style="flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--tx);font:400 13px/1 Inter,sans-serif"></label>
+          <button onClick="{{ addAllow }}" style="height:36px;padding:0 12px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="filter:brightness(1.1)">{{ ic14.plus }}Allow</button>
+          <button onClick="{{ addNever }}" style="height:36px;padding:0 12px;border-radius:8px;border:1px solid transparent;background:var(--err-soft);color:var(--err);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="border-color:var(--err)">{{ ic14.ban }}Never on this site</button>
+        </div>
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;overflow:hidden">
+          <sc-for list="{{ sites }}" as="r" hint-placeholder-count="6"><div style="display:flex;align-items:center;gap:10px;height:46px;padding:0 8px 0 16px;border-top:{{ r.bt }}" style-hover="background:var(--surf2)"><span style="color:var(--tx3);display:flex">{{ ic14.globe }}</span><span style="flex:1;font:400 13px/1 'JetBrains Mono',monospace">{{ r.h }}</span><button onClick="{{ r.flip }}" title="Switch rule" style="height:24px;padding:0 9px;border-radius:999px;border:none;background:{{ r.cb }};color:{{ r.cf }};font:500 11.5px/1 Inter,sans-serif;cursor:pointer">{{ r.s }}</button><button aria-label="Remove" onClick="{{ r.del }}" style="width:30px;height:30px;border-radius:8px;border:none;background:transparent;color:var(--tx3);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--err-soft);color:var(--err)">{{ ic14.x }}</button></div></sc-for>
+          <sc-if value="{{ noSites }}"><div style="padding:28px;text-align:center;font-size:13px;color:var(--tx3)">No sites match. Press Allow or Never to add it.</div></sc-if>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:var(--surf)">
+          <span style="width:30px;height:30px;border-radius:8px;background:var(--surf2);color:var(--tx2);display:flex;align-items:center;justify-content:center">{{ ic14.lock }}</span>
+          <div style="flex:1"><div style="font-weight:500">Dictate into password fields</div><div style="font-size:12.5px;color:var(--tx3)">Always off. Voicio skips password and card fields.</div></div>
+          <span aria-disabled="true" title="Locked" style="width:34px;height:20px;border-radius:999px;background:var(--line2);position:relative;display:block;opacity:.5"><span style="position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--knob)"></span></span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ sAppear }}">
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+          <div style="font-weight:500">Theme</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px"><sc-for list="{{ themes }}" as="t" hint-placeholder-count="3"><button onClick="{{ t.pick }}" aria-pressed="{{ t.on }}" style="border-radius:12px;border:{{ t.bd }};background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:10px;cursor:pointer;color:var(--tx);font:500 13px/1 Inter,sans-serif;text-align:left;transition:border-color .15s ease-out"><span style="height:56px;border-radius:8px;background:{{ t.sw }};border:1px solid var(--line)"></span><span style="display:flex;align-items:center;gap:6px">{{ t.icon }}{{ t.label }}</span></button></sc-for></div>
+        </div>
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;gap:20px;align-items:center">
+          <div style="flex:1"><div style="font-weight:500">Pill position</div><div style="font-size:12.5px;color:var(--tx3)">Where the pill appears next to the field you're typing in. Drag it on a page to move it there.</div></div>
+          <div role="radiogroup" aria-label="Pill position" style="display:grid;grid-template-columns:repeat(2,44px);gap:6px"><sc-for list="{{ pos }}" as="o" hint-placeholder-count="4"><button role="radio" aria-checked="{{ o.on }}" aria-label="{{ o.label }}" title="{{ o.label }}" onClick="{{ o.pick }}" style="width:44px;height:32px;border-radius:8px;border:1px solid {{ o.bd }};background:var(--bg);position:relative;cursor:pointer;padding:0"><span style="position:absolute;left:8px;right:8px;top:12px;height:8px;border-radius:2px;background:var(--line2)"></span><span style="position:absolute;{{ o.css }};width:14px;height:5px;border-radius:3px;background:{{ o.dot }}"></span></button></sc-for></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ sConn }}">
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:12px"><span style="width:40px;height:40px;border-radius:10px;background:{{ connBg }};color:{{ connFg }};display:flex;align-items:center;justify-content:center">{{ ic.cpu }}</span>
+            <div style="flex:1"><div style="font-weight:600">{{ connTitle }}</div><div style="font-size:12.5px;color:var(--tx3)">Runs inside Chrome on this computer. No server, no desktop app.</div></div>
+            <button onClick="{{ test }}" style="height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:var(--surf2)">{{ testIcon }}{{ testLabel }}</button></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div style="border-radius:10px;background:var(--bg);border:1px solid var(--line);padding:10px 12px"><div style="font-size:12px;color:var(--tx3)">Model</div><div style="font:500 13px/20px 'JetBrains Mono',monospace">Parakeet 0.6B</div></div>
+            <div style="border-radius:10px;background:var(--bg);border:1px solid var(--line);padding:10px 12px"><div style="font-size:12px;color:var(--tx3)">Stored in Chrome</div><div style="font:500 13px/20px 'JetBrains Mono',monospace">640 MB · WebGPU</div></div>
+            <div style="border-radius:10px;background:var(--bg);border:1px solid var(--line);padding:10px 12px"><div style="font-size:12px;color:var(--tx3)">Speed test</div><div style="font:500 13px/20px 'JetBrains Mono',monospace">{{ rtt }}</div></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ sPrivacy }}">
+        <div style="border-radius:16px;border:1px solid var(--ac-line);background:var(--ac-soft);padding:20px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px;font-size:17px;font-weight:600"><span style="color:var(--ac-tx);display:flex">{{ ic20.shield }}</span>Audio never leaves your device</div>
+          <div style="font-size:14px;line-height:22px;text-wrap:pretty">Your voice is turned into text by a model running inside Chrome on this computer. Text is typed into the page you're on. We can't see it, and neither can anyone else.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:var(--ac-tx);display:flex">{{ ic14.check }}</span>No analytics or tracking</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:var(--ac-tx);display:flex">{{ ic14.check }}</span>No account needed</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:var(--ac-tx);display:flex">{{ ic14.check }}</span>Works with Wi-Fi off</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:var(--ac-tx);display:flex">{{ ic14.check }}</span>Password fields always skipped</div>
+          </div>
+          <a href="#" style="align-self:flex-start;margin-top:6px;font-size:13px;color:var(--ac-tx);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:500" style-hover="text-decoration:underline">{{ ic14.code }}Read the source code{{ ic12.ext }}</a>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ sAbout }}">
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px">{{ logo44 }}<div style="flex:1"><div style="font-weight:600;font-size:15px">Voicio for Chrome</div><div style="font:400 12px/18px 'JetBrains Mono',monospace;color:var(--tx3)">Version 1.2.0 · Manifest V3</div></div><span style="height:24px;padding:0 9px;border-radius:999px;background:var(--ac-soft);color:var(--ac-tx);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:5px">{{ ic12.check }}Up to date</span></div>
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:4px">
+          <sc-for list="{{ lic }}" as="l" hint-placeholder-count="5"><a href="#" style="display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:8px;color:var(--tx);text-decoration:none;font-size:13px" style-hover="background:var(--surf2)"><span style="flex:1">{{ l.n }}</span><span style="font:400 12px/1 'JetBrains Mono',monospace;color:var(--tx3)">{{ l.l }}</span></a></sc-for>
+        </div>
+        <div style="font-size:12.5px;color:var(--tx3)">Clean-up model: “S1-mini” by “Superwhisper”. Speech: NVIDIA Parakeet (CC-BY-4.0). Voice detection: Silero VAD.</div>
+      </sc-if>
+    </div>
+  </main>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { sec: null, rec: null, cleared: false, copied: false, into: true, recording: false, q: '', opt: { Mode: 'Tap to toggle', 'Insert as': 'Typing', 'Auto-stop after silence': '3 s' }, sw: { ctx: true, hover: true }, theme: 'System', pos: 'Below right', sites: [['docs.google.com', 'Allowed'], ['mail.postbox.app', 'Allowed'], ['linear.app', 'Allowed'], ['github.com', 'Allowed'], ['web.whatsapp.com', 'Never'], ['bank.example.com', 'Never']], testing: false, tested: false };
+  componentDidMount() { if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true }); }
+  componentDidUpdate(pp) { if (pp.section !== this.props.section) this.setState({ sec: null }); }
+  componentWillUnmount() { clearTimeout(this._a); clearTimeout(this._b); }
+  renderVals() {
+    const K = window.VK, R = React, p = this.props, s = this.state;
+    const ic = K ? K.icons(R, 16) : {}, ic14 = K ? K.icons(R, 14) : {}, ic12 = K ? K.icons(R, 12, 2) : {}, ic20 = K ? K.icons(R, 20) : {};
+    const sec = s.sec || p.section || 'dictate';
+    const navDef = [['dictate', 'Dictate', 'mic'], ['general', 'General', 'settings'], ['sites', 'Sites', 'globe'], ['appearance', 'Appearance', 'sun'], ['connection', 'Speech model', 'cpu'], ['privacy', 'Privacy', 'shield'], ['about', 'About', 'info']];
+    const T = { dictate: ['Dictate', 'Talk here, then insert or copy the text.'], general: ['General', 'How the shortcut and typing behave.'], sites: ['Sites', 'Choose where Voicio can listen.'], appearance: ['Appearance', 'Theme and where the pill sits.'], connection: ['Speech model', 'Recognition runs on this computer, inside Chrome.'], privacy: ['Privacy', 'In plain language.'], about: ['About', 'Version, licences and credits.'] };
+    const rec = p.rec || s.rec || 'ready', L = rec === 'listening', P = rec === 'processing';
+    const textA = p.textA ?? (s.cleared ? '' : (L || P ? 'Quick update for the team: the Chrome extension now works on every text field, ' : ''));
+    const textB = p.textB ?? (L ? 'including the comment' : '');
+    const has = !!(textA || textB);
+    const sw = (on, t) => ({ on, t, bg: on ? 'var(--ac)' : 'var(--line2)', k: on ? 'var(--on-ac)' : 'var(--knob)', x: on ? '14px' : '0px' });
+    const segOpt = (o, cur, pick) => { const on = o === cur; return { label: o, on, pick, bg: on ? 'var(--surf)' : 'transparent', fg: on ? 'var(--tx)' : 'var(--tx2)', bd: on ? 'var(--line2)' : 'transparent' }; };
+    const gs = (label, note, opts) => ({ label, note, opts: opts.map((o) => segOpt(o, s.opt[label], () => { this.setState({ opt: { ...s.opt, [label]: o } }); p.onOpt && p.onOpt(label, o); })) });
+    const into = p.into ?? s.into;
+    const q = s.q.trim().toLowerCase();
+    const sites = s.sites.filter(([h]) => !q || h.includes(q)).map(([h, r], i) => ({ h, s: r, bt: i ? '1px solid var(--line)' : 'none', cb: r === 'Allowed' ? 'var(--ac-soft)' : 'var(--err-soft)', cf: r === 'Allowed' ? 'var(--ac-tx)' : 'var(--err)', del: () => this.setState({ sites: s.sites.filter((x) => x[0] !== h) }), flip: () => this.setState({ sites: s.sites.map((x) => x[0] === h ? [h, r === 'Allowed' ? 'Never' : 'Allowed'] : x) }) }));
+    const add = (r) => () => { const h = s.q.trim(); if (!h) return; this.setState({ sites: [[h, r], ...s.sites.filter((x) => x[0] !== h)], q: '' }); };
+    const theme = p.theme || s.theme;
+    const themes = [['System', 'monitor', 'linear-gradient(90deg,#101417 50%,#F6F7F7 50%)'], ['Light', 'sun', '#F6F7F7'], ['Dark', 'moon', '#101417']].map(([l, i, swc]) => ({ label: l, icon: ic14[i] || null, sw: swc, on: theme === l, bd: theme === l ? '2px solid var(--ac)' : '2px solid var(--line)', pick: () => { this.setState({ theme: l }); p.onTheme && p.onTheme(l); } }));
+    const pos = [['Above left', 'left:8px;top:4px'], ['Above right', 'right:8px;top:4px'], ['Below left', 'left:8px;bottom:4px'], ['Below right', 'right:8px;bottom:4px']].map(([l, css]) => ({ label: l, css, on: s.pos === l, bd: s.pos === l ? 'var(--ac)' : 'var(--line2)', dot: s.pos === l ? 'var(--ac)' : 'var(--tx3)', pick: () => this.setState({ pos: l }) }));
+    const conn = p.conn !== 'off';
+    const emb = !!p.embedded;
+    return {
+      ic, ic14, ic12, ic20, logo: K ? K.logo(R, 28) : null, logo44: K ? K.logo(R, 44) : null,
+      W: emb ? '100%' : '960px', H: emb ? '100%' : '680px', frameBd: emb ? 'none' : '1px solid var(--line)', frameR: emb ? '0' : '16px',
+      dot: conn ? 'var(--ac)' : 'var(--tx3)', connText: conn ? 'On-device · ready' : 'Model not downloaded',
+      nav: navDef.map(([k, l, i]) => { const a = sec === k; return { label: l, icon: ic[i] || null, go: () => this.setState({ sec: k }), cur: a ? 'page' : undefined, bg: a ? 'var(--surf2)' : 'transparent', fg: a ? 'var(--tx)' : 'var(--tx2)', ic: a ? 'var(--ac-tx)' : 'var(--tx3)' }; }),
+      title: T[sec][0], sub: T[sec][1],
+      sDictate: sec === 'dictate', sGeneral: sec === 'general', sSites: sec === 'sites', sAppear: sec === 'appearance', sConn: sec === 'connection', sPrivacy: sec === 'privacy', sAbout: sec === 'about',
+      listening: L, processing: P, ready: !L && !P,
+      rings: K ? K.rings(R, 14) : null, spinner: K ? K.spinner(R, 8, 2) : null,
+      micBg: P ? 'var(--surf2)' : 'linear-gradient(160deg,var(--ac2),var(--ac))', micFg: P ? 'var(--ac-tx)' : 'var(--on-ac)',
+      micIcon: K ? K.icons(R, 32, 1.75)[P ? 'wand' : L ? 'stop' : 'mic'] : null, micLabel: L ? 'Stop dictation' : 'Start dictation',
+      mic: () => { if (p.onMic) return p.onMic(); if (L) { this.setState({ rec: 'processing' }); this._a = setTimeout(() => this.setState({ rec: 'ready' }), 1200); } else this.setState({ rec: 'listening', cleared: false }); },
+      wave: K ? K.wave(R, { n: 40, h: 36, w: 4, g: 3, mode: L ? 'live' : P ? 'processing' : 'idle', grad: L || P, color: 'var(--tx3)' }) : null,
+      stText: L ? 'Listening…' : P ? 'Cleaning up…' : 'Ready', timer: L ? (p.timer || '0:05') : '',
+      hasText: has, noText: !has, textA, textB, actOff: !has || L, actOp: !has || L ? 0.45 : 1,
+      insert: () => p.onInsert && p.onInsert(),
+      copy: () => { this.setState({ copied: true }); this._b = setTimeout(() => this.setState({ copied: false }), 1400); }, copyLabel: s.copied ? 'Copied' : 'Copy',
+      clear: () => { this.setState({ cleared: true }); p.onClear && p.onClear(); },
+      into: sw(into, () => { this.setState({ into: !into }); p.onInto && p.onInto(!into); }),
+      recording: s.recording, notRecording: !s.recording, recBd: s.recording ? 'var(--ac)' : 'var(--line2)', recBg: s.recording ? 'var(--ac-soft)' : 'transparent',
+      recKeys: () => { this.setState({ recording: true }); clearTimeout(this._a); this._a = setTimeout(() => this.setState({ recording: false }), 2200); },
+      genSegs: [gs('Mode', 'Tap once to start and again to stop, or hold while you talk.', ['Tap to toggle', 'Hold to talk']), gs('Insert as', 'Typing works everywhere. Paste is faster for long text.', ['Typing', 'Paste']), gs('Auto-stop after silence', 'Stops listening when you pause this long.', ['Off', '3 s', '10 s'])],
+      genSw: [['ctx', 'Right-click “Dictate here”', 'Adds Voicio to the context menu in text fields.'], ['hover', 'Mic button in text fields', 'Shows a small mic when you hover a field.']].map(([k, l, n]) => Object.assign({ label: l, note: n }, sw(s.sw[k], () => this.setState({ sw: { ...s.sw, [k]: !s.sw[k] } })))),
+      q: s.q, onQ: (e) => this.setState({ q: e.target.value }), sites, noSites: sites.length === 0, addAllow: add('Allowed'), addNever: add('Never'),
+      themes, pos,
+      connBg: conn ? 'var(--ac-soft)' : 'var(--surf2)', connFg: conn ? 'var(--ac-tx)' : 'var(--tx3)', connTitle: conn ? 'Speech model ready' : 'Speech model not downloaded',
+      test: () => { this.setState({ testing: true, tested: false }); this._b = setTimeout(() => this.setState({ testing: false, tested: true }), 900); },
+      testLabel: s.testing ? 'Testing…' : s.tested ? '0.08× real time' : 'Run speed test', testIcon: s.tested ? ic14.check : ic14.gauge,
+      rtt: s.tested ? '212 ms / 4 s audio' : '—',
+      lic: [['Voicio for Chrome', 'MIT'], ['NVIDIA Parakeet', 'CC-BY-4.0'], ['S1-mini by Superwhisper', 'Model licence'], ['Silero VAD', 'MIT'], ['Inter · JetBrains Mono', 'OFL-1.1']].map(([n, l]) => ({ n, l }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+[package]
+name = "voicio-engine"
+version = "0.9.0"
+edition = "2021"
+license.workspace = true
+description = "On-device dictation engine for Voicio: VAD, ASR, cleanup LLM and diarization"
+publish = false
+
+[dependencies]
+voicio-ipc = { path = "crates/ipc" }
+sherpa-onnx = "=1.13.8"
+serde_json = "1"
+tungstenite = { version = "0.30", default-features = false, features = ["handshake"] }
+llama-cpp-2 = { version = "=0.1.160", default-features = false }
+llama-cpp-sys-2 = { version = "=0.1.160", default-features = false }
+
+[workspace]
+members = [".", "crates/ipc", "crates/app", "crates/models"]
+resolver = "2"
+
+[workspace.package]
+license = "GPL-3.0-or-later"
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# The pill painter does per-pixel maths every frame: keep debug builds fast enough to be honest.
+[profile.dev.package.voicio]
+opt-level = 2
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+
+# llama-cpp-2 0.1.160 plus one setter (`with_use_extra_bufts`), see vendor/llama-cpp-2/src/model/params.rs
+[patch.crates-io]
+llama-cpp-2 = { path = "vendor/llama-cpp-2" }

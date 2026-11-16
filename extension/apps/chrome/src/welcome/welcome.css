@@ -1,0 +1,83 @@
+.wl{position:relative;min-height:100vh;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+
+/* header (OnbHeader.dc.html): brand, progress pills */
+.wl-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;min-height:76px;padding:14px 28px}
+.wl-steps{display:flex;align-items:center;gap:6px;list-style:none;margin:0;padding:0}
+.wl-step{display:flex;align-items:center;gap:8px;padding:5px;border-radius:999px;border:0;background:transparent;font:700 13px var(--font);color:var(--tx);transition:background .25s var(--ease),padding .25s var(--ease)}
+.wl-step .lbl{display:none}
+.wl-step.on{background:var(--ink);color:var(--on-ink);padding:5px 14px 5px 5px}
+.wl-step.on .lbl{display:inline}
+.wl-dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:800 12px var(--font);background:var(--line2);color:var(--tx3);transition:background .25s,color .25s}
+.wl-step.on .wl-dot{background:var(--ac);color:#16130F}
+.wl-step.done .wl-dot{background:var(--ink);color:var(--on-ink)}
+
+/* the step card: text column + illustration panel */
+.wl-card{flex:1;width:min(1120px,100%);border-radius:30px;background:var(--surf);box-shadow:0 18px 40px rgba(60,40,10,.06);padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:18px;align-items:stretch}
+.wl-col{padding:30px 26px 20px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.wl-panel{position:relative;overflow:hidden;border-radius:24px;min-height:400px;display:flex;align-items:center;justify-content:center;padding:28px}
+.wl-panel.peach{background:radial-gradient(90% 70% at 70% 30%,#FFC6A2 0%,rgba(255,198,162,0) 65%),linear-gradient(150deg,#FFF1E8 0%,#FFDCC8 100%)}
+.wl-panel.lime{background:radial-gradient(80% 70% at 50% 40%,#F4FDE6 0%,rgba(244,253,230,0) 70%),linear-gradient(160deg,#EAF8D2 0%,#D6F0AE 100%)}
+.wl-panel.sky{background:radial-gradient(80% 70% at 40% 30%,#F3F9FF 0%,rgba(243,249,255,0) 70%),linear-gradient(160deg,#E2F0FF 0%,#C9E2FF 100%)}
+/* the panels are light in both themes, so everything on them uses the light tokens */
+.wl-panel{color-scheme:light;color:#16130F;--ink:#16130F;--on-ink:#FFFFFF;--tx:#16130F;--tx2:#3D372E;--tx3:#3D372E;--surf:#FFFFFF;--surf2:#F7F3EA;--sunk:#EFE9DD;--line:#EFE9DD;--line2:#E3DDD0;--ok:#4E9A13;--ok-soft:#EAF8D2;--ok-tx:#2F5B0B;--warn:#8A5A00;--warn-soft:#FFF0B8;--ac-tx:#B83A0E;--key:#FFFFFF;--key-edge:#16130F}
+
+/* page transitions: calm, short */
+.wl-page{animation:wl-in .32s var(--ease) both}
+.wl-page.back{animation-name:wl-in-back}
+@keyframes wl-in{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes wl-in-back{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+.wl-up{opacity:0;animation:wl-fade-up .4s var(--ease) forwards}
+@keyframes wl-fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.wl h1{margin:0;font:800 46px/48px var(--head);letter-spacing:-1.6px;text-wrap:balance}
+.wl h1 em{font-style:normal;color:var(--ac)}
+.wl .lead{margin:12px 0 0;color:var(--tx2);font-size:16.5px;line-height:25px}
+
+.wl-points{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+.wl-points li{display:flex;align-items:center;gap:14px}
+
+/* live demo window on the peach panel */
+.wl-demo{position:relative;width:100%;max-width:420px;padding-bottom:70px}
+.wl-demo .win{border-radius:20px;background:#FFFFFF;box-shadow:0 24px 50px rgba(120,50,10,.18);overflow:hidden;color:#16130F}
+.wl-demo .tb{display:flex;gap:6px;align-items:center;padding:12px 14px;background:#F7F3EA}
+.wl-demo .tb i{width:10px;height:10px;border-radius:50%;background:#E8E2D6}
+.wl-demo .tb span{margin-left:10px;font:600 11px var(--font);color:#5E574B}
+.wl-demo .bd{padding:18px 22px 24px;min-height:150px;font:400 16px/25px var(--font)}
+.wl-demo .lb{font:700 12px var(--font);color:#5E574B;margin-bottom:8px}
+.wl-demo .tx{min-height:50px}
+.wl-demo .tx .w{animation:wl-word .25s var(--ease) both}
+.wl-demo .tx .w.dim{color:#A39A8A}
+.wl-demo .caret{display:inline-block;width:2px;height:18px;background:#F2541B;margin-left:2px;vertical-align:-3px;animation:wl-blink 1s steps(2) infinite}
+@keyframes wl-word{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+@keyframes wl-blink{50%{opacity:0}}
+.wl-pill{position:absolute;left:50%;bottom:0;transform:translateX(-50%);display:flex;align-items:center;gap:10px;height:42px;min-width:64px;padding:0 16px 0 10px;border-radius:21px;background:#16130F;color:#F7F3EA;box-shadow:0 14px 30px rgba(40,20,0,.28);font:500 13px var(--font);white-space:nowrap;transition:opacity .25s var(--ease),transform .25s var(--ease)}
+.wl-pill b{color:#B8F06A}
+.wl-pill.idle{opacity:0;transform:translateX(-50%) translateY(8px)}
+
+.wl-model{position:relative;background:var(--surf2);border-radius:20px;padding:16px 18px;text-align:left}
+.wl-model.warn{background:var(--warn-soft)}
+.wl-ok{animation:wl-pop .3s cubic-bezier(.2,.9,.3,1.08) both}
+@keyframes wl-pop{0%{transform:scale(.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* microphone test on the lime panel */
+.wl-micbtn{position:relative;width:112px;height:112px;border-radius:50%;border:0;background:radial-gradient(circle at 34% 28%,#FF9B6E 0%,#F2541B 55%,#D8410E 100%);color:#FFFFFF;display:grid;place-items:center;cursor:pointer;box-shadow:0 14px 30px rgba(242,84,27,.3);transition:transform .2s cubic-bezier(.2,.9,.3,1.08)}
+.wl-micbtn:hover{transform:scale(1.04)}
+.wl-micbtn:active{transform:scale(.97)}
+.wl-micbtn::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #F2541B;opacity:0;animation:wl-ring 2.4s var(--ease) infinite}
+@keyframes wl-ring{0%{transform:scale(.95);opacity:.45}100%{transform:scale(1.45);opacity:0}}
+.wl-micbtn.ok{background:#16130F;color:#B8F06A;cursor:default;box-shadow:0 14px 30px rgba(22,19,15,.25)}
+.wl-micbtn.ok::before{animation:none;border-color:transparent}
+.wl-levels{display:flex;align-items:center;justify-content:center;gap:4px;height:64px}
+.wl-levels i{display:block;width:6px;height:100%;border-radius:3px;background:#16130F;transform:scaleY(.08);transition:transform 80ms linear}
+
+/* big keycaps on the sky panel */
+.wl-keys{display:inline-flex;gap:10px;align-items:center;vertical-align:middle;flex-wrap:wrap;justify-content:center}
+.wl-keys .plus{font:800 22px var(--head);color:#3D372E}
+.wl-key{min-width:78px;height:72px;padding:0 20px;border-radius:18px;display:inline-grid;place-items:center;font:800 22px var(--head);background:#FFFFFF;color:#16130F;box-shadow:inset 0 0 0 2.5px #16130F,0 8px 0 #16130F;transition:transform .12s,box-shadow .12s}
+.wl-key.down{transform:translateY(6px);box-shadow:inset 0 0 0 2.5px #16130F,0 2px 0 #16130F;background:#FFE3D3}
+.wl-how{display:flex;gap:14px;align-items:flex-start;background:var(--surf2);border-radius:18px;padding:14px 16px}
+
+.wl-foot{padding:14px 32px 18px;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:720px){.hide-sm{display:none}.wl h1{font-size:34px;line-height:38px}.wl-head{padding:12px 16px}.wl-col{padding:16px 8px}.wl-panel{min-height:300px}.wl #wl-reason{order:-1;flex-basis:100%;text-align:center}}
+@media (prefers-reduced-motion:reduce){.wl *,.wl::before,.wl::after{animation:none!important;transition:none!important}.wl-up,.wl-page{opacity:1!important}}
+.wl h1:focus{outline:none}

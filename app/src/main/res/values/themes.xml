@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Whispr" parent="android:style/Theme.Material.Light.NoActionBar" />
+    <!-- Light only ("Paper & Ink"), so the system must not force-darken it. -->
+    <style name="Theme.Voicio" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Android 9-11: the ink splash is the window background until the first frame (values-v31 uses the SplashScreen API). -->
+        <item name="android:windowBackground">@drawable/splash_legacy</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <color name="voicio_paper">#F3EFE6</color>
+    <color name="voicio_ink">#16130F</color>
+    <!-- The "Clean up" sheet floats over the app the text came from. -->
+    <style name="Theme.Voicio.Sheet" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
 </resources>

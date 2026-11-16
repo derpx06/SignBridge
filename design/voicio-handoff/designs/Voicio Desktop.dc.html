@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>html,body{margin:0;background:#C9CFD1}a{color:#0F766E}a:hover{color:#115E59}textarea::-webkit-scrollbar{width:0}</style>
+</helmet>
+<div style="zoom:{{ z }};width:1728px;padding:16px 20px 24px;box-sizing:border-box;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;display:flex;flex-direction:column;gap:12px;-webkit-font-smoothing:antialiased">
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:12px 14px;border-radius:14px;background:#FFFFFF;border:1px solid #D2D7D9;color:#101417">
+    <div style="display:flex;flex-direction:column;gap:2px;margin-right:auto"><div style="font-weight:600">Voicio desktop · live prototype</div><div style="font-size:12.5px;color:#475157">Click into the note, press <b style="font:500 12px/1 'JetBrains Mono',monospace">Alt + Space</b> (stands in for Super + Alt + Space) and talk. Press again to type it. Esc cancels. Try the tray icon top-right.</div></div>
+    <sc-for list="{{ demo }}" as="g" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;gap:6px"><span style="font-size:12px;color:#475157">{{ g.label }}</span>
+        <div style="display:flex;height:28px;padding:2px;gap:2px;border-radius:8px;background:#EDEFEF;border:1px solid #E2E6E7;box-sizing:border-box"><sc-for list="{{ g.opts }}" as="o"><button onClick="{{ o.pick }}" aria-pressed="{{ o.on }}" style="padding:0 9px;border-radius:6px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }};font:500 12px/1 Inter,sans-serif;cursor:pointer;white-space:nowrap">{{ o.label }}</button></sc-for></div></div>
+    </sc-for>
+  </div>
+
+  <div data-screen-label="Desktop" onMouseDown="{{ deskDown }}" style="{{ vars }};width:1688px;height:900px;position:relative;overflow:hidden;border-radius:16px;background:{{ wall }};color:var(--tx)">
+    <span aria-hidden="true" style="position:absolute;left:-120px;top:-80px;width:760px;height:560px;border-radius:50%;background:oklch(0.62 0.09 190 / .55);filter:blur(100px)"></span>
+    <span aria-hidden="true" style="position:absolute;right:-100px;top:120px;width:700px;height:520px;border-radius:50%;background:oklch(0.6 0.09 270 / .45);filter:blur(110px)"></span>
+    <span aria-hidden="true" style="position:absolute;left:600px;bottom:-260px;width:640px;height:480px;border-radius:50%;background:oklch(0.8 0.09 70 / .4);filter:blur(110px)"></span>
+
+    <div style="position:absolute;left:0;right:0;top:0;height:32px;display:flex;align-items:center;padding:0 10px 0 16px;background:{{ barBg }};color:{{ barTx }};font-size:13px;font-weight:500;z-index:40">
+      <span>Activities</span>
+      <span style="position:absolute;left:50%;transform:translateX(-50%)">{{ clock }}</span>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:4px;position:relative">
+        <button onMouseDown="{{ keep }}" onClick="{{ toggleTray }}" aria-label="Voicio" aria-expanded="{{ trayOpen }}" title="Voicio" style="height:26px;padding:0 8px;border-radius:999px;border:none;background:{{ trayBtnBg }};color:inherit;display:flex;align-items:center;gap:6px;cursor:pointer;position:relative">{{ logoTray }}<sc-if value="{{ isListening }}"><span style="font:500 11.5px/1 'JetBrains Mono',monospace">{{ timer }}</span></sc-if><span style="position:absolute;left:19px;top:3px;width:7px;height:7px;border-radius:50%;background:{{ trayDot }};display:{{ trayDotShow }}"></span></button>
+        <span style="width:26px;height:26px;display:flex;align-items:center;justify-content:center;opacity:.85">{{ ic14.globe }}</span>
+        <span style="width:26px;height:26px;display:flex;align-items:center;justify-content:center;opacity:.85">{{ ic14.power }}</span>
+        <sc-if value="{{ trayOpen }}">
+          <div role="menu" onMouseDown="{{ keep }}" style="position:absolute;right:0;top:32px;width:248px;background:var(--bg);color:var(--tx);border:1px solid var(--line2);border-radius:12px;padding:4px;box-shadow:var(--shadow);font-weight:400;animation:vk-pop .15s ease-out;transform-origin:top right">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:12px;color:var(--tx3)"><span style="width:6px;height:6px;border-radius:50%;background:{{ trayDot2 }}"></span>{{ trayStatus }}</div>
+            <div style="height:1px;background:var(--line);margin:2px 0"></div>
+            <button role="menuitem" onClick="{{ trayDictate }}" style="width:100%;display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border:none;border-radius:8px;background:transparent;color:var(--tx);font:400 13px/1 Inter,sans-serif;cursor:pointer;text-align:left" style-hover="background:var(--surf2)">{{ ic14.mic }}<span style="flex:1">{{ trayDictLabel }}</span><span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--tx3)">Super Alt Space</span></button>
+            <button role="menuitem" onClick="{{ openApp }}" style="width:100%;display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border:none;border-radius:8px;background:transparent;color:var(--tx);font:400 13px/1 Inter,sans-serif;cursor:pointer;text-align:left" style-hover="background:var(--surf2)">{{ ic14.home }}<span style="flex:1">Open Voicio</span></button>
+            <button role="menuitem" onClick="{{ openSettings }}" style="width:100%;display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border:none;border-radius:8px;background:transparent;color:var(--tx);font:400 13px/1 Inter,sans-serif;cursor:pointer;text-align:left" style-hover="background:var(--surf2)">{{ ic14.settings }}<span style="flex:1">Settings</span></button>
+            <div style="height:1px;background:var(--line);margin:2px 0"></div>
+            <button role="menuitem" onClick="{{ quit }}" style="width:100%;display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border:none;border-radius:8px;background:transparent;color:var(--tx);font:400 13px/1 Inter,sans-serif;cursor:pointer;text-align:left" style-hover="background:var(--surf2)">{{ ic14.power }}<span style="flex:1">Quit</span><span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--tx3)">Ctrl Q</span></button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div onMouseDown="{{ frontEditor }}" style="position:absolute;left:40px;top:72px;width:620px;height:640px;border-radius:14px;background:var(--surf);border:1px solid var(--line2);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;z-index:{{ zEditor }}">
+      <div style="height:40px;flex:none;display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--tx2)">
+        <span style="display:flex;color:var(--tx3)">{{ ic14.file }}</span><span style="flex:1;font-weight:500;color:var(--tx)">launch-notes.md</span><span>Text Editor</span>
+      </div>
+      <textarea ref="{{ edRef }}" value="{{ edVal }}" onChange="{{ edChange }}" onFocus="{{ edFocus }}" aria-label="Note" spellcheck="false" style="flex:1;border:none;outline:none;resize:none;background:transparent;color:var(--tx);padding:20px 28px;font:400 15px/26px Inter,sans-serif"></textarea>
+      <div style="height:30px;flex:none;display:flex;align-items:center;gap:12px;padding:0 14px;border-top:1px solid var(--line);font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--tx3)"><span>Markdown</span><span>{{ edWords }} words</span><span style="margin-left:auto">{{ edFocusLabel }}</span></div>
+    </div>
+
+    <sc-if value="{{ appOpen }}" hint-placeholder-val="{{ true }}">
+      <div onMouseDown="{{ frontApp }}" style="position:absolute;left:688px;top:88px;z-index:{{ zApp }};border-radius:16px;box-shadow:var(--shadow);animation:vk-pop .18s ease-out">
+        <dc-import name="Voicio App" screen="{{ appScreen }}" nav-key="{{ navKey }}" rec="{{ appRec }}" timer="{{ timer }}" items="{{ items }}" last-text="{{ lastText }}" last-meta="{{ lastMeta }}" last-stats="{{ lastStats }}" on-rec="{{ appRecClick }}" on-close="{{ closeApp }}" hint-size="960px,640px"></dc-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ pillOn }}">
+      <div style="position:absolute;left:50%;bottom:56px;transform:translate(calc(-50% + {{ dx }}px),{{ dy }}px);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:60;color:var(--tx)">
+        <sc-if value="{{ isListening }}">
+          <div aria-live="polite" style="width:420px;box-sizing:border-box;padding:12px 16px;border-radius:16px;background:var(--pill);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border:1px solid var(--line2);box-shadow:var(--shadow);animation:vk-pop .16s ease-out">
+            <div style="height:66px;overflow:hidden;display:flex;align-items:flex-end;font-size:14.5px;line-height:22px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18px)"><div>{{ liveA }}<span style="color:var(--tx3)">{{ liveB }}</span><sc-if value="{{ liveEmpty }}"><span style="color:var(--tx3)">Listening… start talking</span></sc-if></div></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isError }}">
+          <div role="alert" style="width:380px;box-sizing:border-box;padding:14px 16px;border-radius:16px;background:var(--pill);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line2);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:600"><span style="color:var(--err);display:flex">{{ ic16.alertCircle }}</span>{{ errTitle }}</div>
+            <div style="font-size:13px;color:var(--tx2);text-wrap:pretty">{{ errBody }}</div>
+            <sc-if value="{{ hasErrText }}"><div style="background:var(--surf2);border-radius:8px;padding:8px 10px;font-size:13px;line-height:19px;max-height:58px;overflow:hidden">{{ errText }}</div></sc-if>
+            <div style="display:flex;gap:6px">
+              <button onMouseDown="{{ keep }}" onClick="{{ errCopy }}" style="height:30px;padding:0 12px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 12.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="filter:brightness(1.1)">{{ ic14.copy }}{{ copyLabel }}</button>
+              <button onMouseDown="{{ keep }}" onClick="{{ retry }}" style="height:30px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);font:500 12.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:var(--surf2)">{{ ic14.retry }}Retry</button>
+              <button onMouseDown="{{ keep }}" onClick="{{ openSettings }}" style="height:30px;padding:0 10px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 12.5px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">Open settings</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isNoModel }}">
+          <div role="alert" style="width:360px;box-sizing:border-box;padding:14px 16px;border-radius:16px;background:var(--pill);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line2);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px">
+            <div style="font-weight:600">Download a speech model first</div>
+            <div style="font-size:13px;color:var(--tx2);text-wrap:pretty">Standard is 1.7 GB and works offline once installed.</div>
+            <div style="display:flex;gap:6px"><button onMouseDown="{{ keep }}" onClick="{{ openModels }}" style="height:30px;padding:0 12px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 12.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer">{{ ic14.download }}Open Models</button><button onMouseDown="{{ keep }}" onClick="{{ cancel }}" style="height:30px;padding:0 10px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 12.5px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--surf2)">Not now</button></div>
+          </div>
+        </sc-if>
+        <div onMouseDown="{{ dragStart }}" onMouseEnter="{{ pillEnter }}" onMouseLeave="{{ pillLeave }}" aria-label="Voicio dictation" style="width:220px;height:44px;box-sizing:border-box;border-radius:999px;background:var(--pill);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border:1px solid {{ pillBd }};box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;padding:0 6px 0 16px;cursor:grab;user-select:none">
+          <sc-if value="{{ isListening }}"><span style="width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px var(--ac-soft);flex:none;animation:vk-breathe 1.4s ease-in-out infinite"></span><div style="flex:1;display:flex;justify-content:center">{{ pillWave }}</div><sc-if value="{{ pillHover }}"><button onMouseDown="{{ keep }}" onClick="{{ cancel }}" aria-label="Cancel dictation" title="Cancel · Esc" style="width:30px;height:30px;border-radius:50%;border:none;background:var(--surf2);color:var(--tx);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none" style-hover="background:var(--err-soft);color:var(--err)">{{ ic14.x }}</button></sc-if><sc-if value="{{ pillNoHover }}"><span style="width:30px;text-align:center;font:500 12px/1 'JetBrains Mono',monospace;color:var(--tx2)">{{ timer }}</span></sc-if></sc-if>
+          <sc-if value="{{ isProcessing }}"><span style="position:relative;width:14px;height:14px;flex:none">{{ spin }}</span><span style="font-size:13px;font-weight:500;flex:1">{{ procText }}</span><div style="padding-right:10px">{{ procWave }}</div></sc-if>
+          <sc-if value="{{ isDone }}"><span style="color:var(--ac-tx);display:flex;animation:vk-pop .18s ease-out">{{ ic16.circleCheck }}</span><span style="font-size:13px;font-weight:500;flex:1;white-space:nowrap">{{ doneText }}</span><span style="font:400 12px/1 'JetBrains Mono',monospace;color:var(--tx3);padding-right:10px">{{ doneWords }}</span></sc-if>
+          <sc-if value="{{ isError }}"><span style="color:var(--err);display:flex">{{ ic16.alertCircle }}</span><span style="font-size:13px;font-weight:500;flex:1">{{ errShort }}</span><button onMouseDown="{{ keep }}" onClick="{{ cancel }}" aria-label="Dismiss" style="width:30px;height:30px;border-radius:50%;border:none;background:transparent;color:var(--tx2);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2)">{{ ic14.x }}</button></sc-if>
+          <sc-if value="{{ isNoModel }}"><span style="color:var(--warn);display:flex">{{ ic16.download }}</span><span style="font-size:12.5px;font-weight:500;flex:1;white-space:nowrap">Speech model not installed</span></sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ toastOn }}"><div role="status" style="position:absolute;right:20px;bottom:20px;z-index:70;display:flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 12px;border-radius:10px;background:var(--tx);color:var(--bg);font-size:13px;font-weight:500;animation:vk-pop .18s ease-out"><span style="display:flex;color:var(--ac)">{{ ic14.check }}</span>{{ toast }}</div></sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const DARK = '--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--ac2:#22D3EE;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--pill:rgba(23,28,32,.88);--shadow:0 16px 40px rgba(0,0,0,.45);--scrim:#0A0D10;--focus:#5EEAD4';
+const LIGHT = '--bg:#F6F7F7;--sunk:#EDEFEF;--surf:#FFFFFF;--surf2:#EEF1F1;--line:#E2E6E7;--line2:#CED4D6;--tx:#101417;--tx2:#475157;--tx3:#646E74;--ac:#0F766E;--ac2:#0E7490;--on-ac:#FFFFFF;--ac-tx:#0F766E;--ac-soft:rgba(15,118,110,.09);--ac-line:rgba(15,118,110,.3);--err:#B91C1C;--err-soft:rgba(220,38,38,.08);--warn:#A16207;--warn-soft:rgba(234,179,8,.14);--key:#FFFFFF;--key-edge:#C3CBCE;--knob:#FFFFFF;--pill:rgba(255,255,255,.9);--shadow:0 16px 40px rgba(16,20,23,.14);--scrim:#F0F2F2;--focus:#0F766E';
+const RAW = 'okay so um notes from standup the linux build is ready for testing uh maya fixed the tray icon flicker on wayland and we still need release notes by thursday noon new line next up is the chrome extension store listing';
+const CLEAN = 'Notes from standup: the Linux build is ready for testing. Maya fixed the tray icon flicker on Wayland, and we still need release notes by Thursday noon.\nNext up is the Chrome extension store listing.';
+const SEED = [
+  ['t1', 'today', '14:05', 'VS Code', "TODO: debounce the level meter so it doesn't redraw on every audio frame."],
+  ['t2', 'today', '13:47', 'Gmail', "Hi Daniel, thanks for the quick turnaround on the contract. I've signed page four and sent it back."],
+  ['t3', 'today', '11:20', 'Notion', 'Q4 goals: ship the offline clean-up model, get cold start under 400 ms, and finish the Chrome extension.'],
+  ['y1', 'yest', '18:12', 'Firefox', 'quiet mechanical keyboard for an open office']
+];
+class Component extends DCLogic {
+  state = { theme: 'Light', speech: 'Simulated', result: 'Normal', model: 'Installed', rec: 'ready', target: 'editor', front: 'app', words: [], secs: 0, edVal: '# Launch checklist — 1.4.2\n\n- Release notes\n- Linux build: tray icon, Wayland, autostart\n- Chrome extension store listing\n\n', edFocused: false, appOpen: true, appScreen: 'home', navKey: 0, items: SEED, last: null, trayOpen: false, hover: false, dx: 0, dy: 0, procText: 'Cleaning up…', doneText: '', doneWords: '', err: null, toast: null, copied: false, z: 1 };
+  ed = React.createRef();
+  componentDidMount() {
+    if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true });
+    this._kd = (e) => this.onKey(e); window.addEventListener('keydown', this._kd, true);
+    this._rs = () => this.setState({ z: Math.min(1, window.innerWidth / 1728) }); this._rs(); window.addEventListener('resize', this._rs);
+    this._ck = setInterval(() => this.forceUpdate(), 30000);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this._kd, true); window.removeEventListener('resize', this._rs); clearInterval(this._ck); this.clear(); }
+  clear() { clearInterval(this._w); clearInterval(this._s); clearInterval(this._ty); clearTimeout(this._a); clearTimeout(this._b); clearTimeout(this._c); if (this._sr) { try { this._sr.onend = null; this._sr.abort(); } catch (e) {} this._sr = null; } }
+  flash(t) { clearTimeout(this._tt); this.setState({ toast: t }); this._tt = setTimeout(() => this.setState({ toast: null }), 2000); }
+  onKey(e) {
+    if (e.altKey && (e.code === 'Space' || e.key === ' ')) {
+      e.preventDefault(); e.stopPropagation(); if (e.repeat) return;
+      const r = this.state.rec;
+      if (r === 'listening') this.stop(); else if (r !== 'processing') this.start(document.activeElement === this.ed.current ? 'editor' : (this.state.front === 'editor' ? 'editor' : 'app'));
+      return;
+    }
+    if (e.key === 'Escape' && ['listening', 'error', 'nomodel'].includes(this.state.rec)) { e.preventDefault(); this.cancel(); }
+  }
+  start(target) {
+    this.clear();
+    if (target === 'editor' && this.ed.current) this.ed.current.focus();
+    if (this.state.model === 'Missing') { this.setState({ rec: 'nomodel', target, trayOpen: false, dx: 0, dy: 0 }); return; }
+    this.setState({ rec: 'listening', target, words: [], secs: 0, err: null, trayOpen: false, dx: 0, dy: 0, copied: false });
+    this._s = setInterval(() => this.setState((s) => ({ secs: s.secs + 1 })), 1000);
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (this.state.speech === 'Real mic' && SR) {
+      const r = new SR(); this._sr = r; r.continuous = true; r.interimResults = true; r.lang = 'en-US'; this._real = '';
+      r.onresult = (ev) => { let t = ''; for (let i = 0; i < ev.results.length; i++) t += ev.results[i][0].transcript + (ev.results[i].isFinal ? ' ' : ''); this._real = t.trim(); this.setState({ words: this._real ? this._real.split(/\s+/) : [] }); };
+      r.onerror = (ev) => { if (ev.error === 'not-allowed') this.fail('Microphone blocked', 'Allow microphone access for this page, then try again.', "Mic blocked"); };
+      r.onend = () => { if (this.state.rec === 'listening') this.stop(); };
+      try { r.start(); } catch (e) { this.fail('Microphone unavailable', 'Voicio couldn’t open the microphone.', 'No mic'); }
+      return;
+    }
+    const raw = RAW.split(' '); let i = 0;
+    this._w = setInterval(() => {
+      if (i < raw.length) { const w = raw[i++]; this.setState((s) => ({ words: [...s.words, w] })); return; }
+      clearInterval(this._w); this._a = setTimeout(() => { if (this.state.rec === 'listening') this.stop(); }, 2500);
+    }, 170);
+  }
+  fail(title, body, short, text) { this.clear(); this.setState({ rec: 'error', err: { title, body, short, text: text || '' } }); }
+  stop() {
+    const s = this.state; const real = !!this._sr;
+    clearInterval(this._w); clearInterval(this._s); clearTimeout(this._a);
+    if (this._sr) { try { this._sr.onend = null; this._sr.stop(); } catch (e) {} this._sr = null; }
+    if (!s.words.length) return this.fail("Didn't catch that", 'No speech detected. Check the microphone in Settings.', "Didn't catch that");
+    this.setState({ rec: 'processing', procText: 'Cleaning up…' });
+    this._b = setTimeout(() => {
+      let text;
+      if (real) { const r = (this._real || s.words.join(' ')).replace(/\b(um+|uh+|erm)\b\s*/gi, '').replace(/\s*new line\s*/gi, '\n').trim(); text = r.charAt(0).toUpperCase() + r.slice(1) + (/[.?!]$/.test(r) ? '' : '.'); }
+      else if (s.words.length >= RAW.split(' ').length) text = CLEAN;
+      else { const r = s.words.filter((w) => !/^(um+|uh+|okay|so)$/i.test(w)).join(' '); text = r.charAt(0).toUpperCase() + r.slice(1) + '…'; }
+      const secs = s.secs;
+      if (s.result === 'Error' && s.target === 'editor') return this.fail("Couldn't type into Text Editor", 'The window blocked typed input. Your text is safe.', "Couldn't type", text);
+      if (s.target === 'editor') this.typeInto(text, secs); else this.finish(text, secs, 'Voicio');
+    }, 800);
+  }
+  typeInto(text, secs) {
+    const base = this.state.edVal, full = base + text + '\n', el = this.ed.current;
+    this.setState({ procText: 'Typing…' });
+    let n = base.length;
+    this._ty = setInterval(() => {
+      n = Math.min(full.length, n + 3);
+      this.setState({ edVal: full.slice(0, n) });
+      if (el) { el.scrollTop = el.scrollHeight; }
+      if (n >= full.length) { clearInterval(this._ty); if (el) { el.focus(); el.setSelectionRange(full.length, full.length); } this.finish(text, secs, 'Text Editor'); }
+    }, 14);
+  }
+  finish(text, secs, app) {
+    const d = new Date(), time = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    const words = text.split(/\s+/).length;
+    this.setState((s) => ({ rec: 'done', doneText: app === 'Voicio' ? 'Saved in Voicio' : 'Typed into Text Editor', doneWords: words + ' words', items: [['n' + Date.now(), 'today', time, app, text.replace(/\n/g, ' ')], ...s.items], last: { text, app, words, secs } }));
+    if (app === 'Voicio') this.flash('Not typed anywhere — copy it from Last dictation');
+    this._c = setTimeout(() => this.setState({ rec: 'ready' }), 1400);
+  }
+  cancel() { this.clear(); this.setState({ rec: 'ready', words: [], err: null }); }
+  renderVals() {
+    const K = window.VK, R = React, s = this.state;
+    const ic14 = K ? K.icons(R, 14) : {}, ic16 = K ? K.icons(R, 16) : {};
+    const L = s.rec === 'listening';
+    const seg = (label, key, opts) => ({ label, opts: opts.map((o) => { const on = s[key] === o; return { label: o, on, bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#101417' : '#475157', bd: on ? '#CED4D6' : 'transparent', pick: () => this.setState({ [key]: o }) }; }) });
+    const ws = s.words, tn = Math.min(3, ws.length);
+    const dark = s.theme === 'Dark';
+    const d = new Date();
+    const clock = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) + '  ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    const last = s.last;
+    const mmss = (x) => Math.floor(x / 60) + ':' + String(x % 60).padStart(2, '0');
+    const appScreen = s.appScreen;
+    const appRec = L ? 'listening' : s.rec === 'processing' ? 'processing' : 'ready';
+    const ed = s.edVal.trim();
+    return {
+      ic14, ic16, logoTray: K ? K.logo(R, 18) : null, z: s.z,
+      demo: [seg('Theme', 'theme', ['Light', 'Dark']), seg('Speech', 'speech', ['Simulated', 'Real mic']), seg('Next result', 'result', ['Normal', 'Error']), seg('Model', 'model', ['Installed', 'Missing'])],
+      vars: dark ? DARK : LIGHT, wall: dark ? '#141B1F' : '#D9E1E2', barBg: dark ? 'rgba(0,0,0,.45)' : 'rgba(255,255,255,.55)', barTx: dark ? '#E9EDEF' : '#101417',
+      clock, keep: (e) => e.preventDefault(),
+      deskDown: () => { if (s.trayOpen) this.setState({ trayOpen: false }); },
+      toggleTray: () => this.setState({ trayOpen: !s.trayOpen }), trayOpen: s.trayOpen,
+      trayBtnBg: s.trayOpen || L ? (dark ? 'rgba(255,255,255,.12)' : 'rgba(16,20,23,.08)') : 'transparent',
+      trayDot: L ? 'var(--ac)' : s.rec === 'error' ? 'var(--warn)' : 'var(--tx3)', trayDotShow: L || s.rec === 'error' || s.model === 'Missing' ? 'block' : 'none',
+      trayDot2: s.model === 'Missing' ? 'var(--warn)' : 'var(--ac)', trayStatus: s.model === 'Missing' ? 'Voicio · speech model not installed' : L ? 'Voicio · listening' : 'Voicio · ready, on this device',
+      trayDictLabel: L ? 'Stop and type' : 'Start dictation',
+      trayDictate: () => { if (L) this.stop(); else this.start(s.front === 'editor' ? 'editor' : 'app'); },
+      openApp: () => this.setState({ appOpen: true, front: 'app', trayOpen: false, appScreen: 'home', navKey: s.navKey + 1 }),
+      openSettings: () => { this.setState({ appOpen: true, front: 'app', trayOpen: false, appScreen: 'settings', navKey: s.navKey + 1 }); if (s.rec === 'error') this.cancel(); },
+      openModels: () => { this.cancel(); this.setState({ appOpen: true, front: 'app', appScreen: 'models', navKey: s.navKey + 1 }); },
+      quit: () => { this.cancel(); this.setState({ appOpen: false, trayOpen: false }); this.flash('Voicio closed to the tray'); },
+      isListening: L, timer: mmss(s.secs),
+      frontEditor: () => s.front !== 'editor' && this.setState({ front: 'editor' }), frontApp: () => s.front !== 'app' && this.setState({ front: 'app' }),
+      zEditor: s.front === 'editor' ? 20 : 10, zApp: s.front === 'app' ? 20 : 10,
+      edRef: this.ed, edVal: s.edVal, edChange: (e) => this.setState({ edVal: e.target.value }), edFocus: () => this.setState({ front: 'editor', edFocused: true }),
+      edWords: ed ? ed.split(/\s+/).length : 0, edFocusLabel: s.front === 'editor' ? 'Focused — Voicio will type here' : 'Click to focus',
+      appOpen: s.appOpen, appScreen, navKey: s.navKey, appRec, items: s.items,
+      lastText: last ? last.text : undefined, lastMeta: last ? last.app + ' · just now' : undefined, lastStats: last ? `${last.words} words · ${mmss(last.secs)} · cleaned up` : undefined,
+      appRecClick: () => { if (L) this.stop(); else if (s.rec !== 'processing') this.start('app'); },
+      closeApp: () => this.setState({ appOpen: false }),
+      pillOn: s.rec !== 'ready',
+      dx: s.dx, dy: s.dy,
+      dragStart: (e) => {
+        if (e.target.closest && e.target.closest('button')) return;
+        e.preventDefault(); const sx = e.clientX, sy = e.clientY, x0 = s.dx, y0 = s.dy, z = s.z || 1;
+        const mv = (ev) => this.setState({ dx: x0 + (ev.clientX - sx) / z, dy: y0 + (ev.clientY - sy) / z });
+        const up = () => { window.removeEventListener('mousemove', mv); window.removeEventListener('mouseup', up); };
+        window.addEventListener('mousemove', mv); window.addEventListener('mouseup', up);
+      },
+      pillEnter: () => this.setState({ hover: true }), pillLeave: () => this.setState({ hover: false }), pillHover: s.hover, pillNoHover: !s.hover,
+      liveA: ws.slice(0, ws.length - tn).join(' ') + (ws.length > tn ? ' ' : ''), liveB: ws.slice(ws.length - tn).join(' '), liveEmpty: ws.length === 0,
+      isProcessing: s.rec === 'processing', isDone: s.rec === 'done', isError: s.rec === 'error', isNoModel: s.rec === 'nomodel',
+      pillBd: s.rec === 'error' ? 'var(--err)' : 'var(--line2)',
+      procText: s.procText, doneText: s.doneText, doneWords: s.doneWords,
+      errTitle: s.err ? s.err.title : '', errBody: s.err ? s.err.body : '', errShort: s.err ? s.err.short : '', errText: s.err ? s.err.text : '', hasErrText: !!(s.err && s.err.text),
+      errCopy: () => { try { navigator.clipboard.writeText(s.err.text || ''); } catch (e) {} this.setState({ copied: true }); },
+      copyLabel: s.copied ? 'Copied' : 'Copy',
+      retry: () => { const t = s.err && s.err.text; if (t && s.target === 'editor') { this.setState({ rec: 'processing', err: null }); this.typeInto(t, s.secs); } else this.start(s.target); },
+      cancel: () => this.cancel(),
+      pillWave: K ? K.wave(R, { n: 20, h: 22, w: 3, g: 3, grad: true }) : null,
+      procWave: K ? K.wave(R, { n: 7, h: 14, w: 3, g: 3, mode: 'processing' }) : null,
+      spin: K ? K.spinner(R, 0, 2) : null,
+      toastOn: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

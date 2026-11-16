@@ -1,0 +1,40 @@
+/* Floating dictation capsule (Capsule.dc.html): ink, 40 px tall, the Voicio honeycomb v2. */
+.voicio-pill {
+  spacing: 10px;
+  padding: 0 16px 0 10px;
+  height: 40px;
+  min-width: 58px;
+  max-width: 360px;
+  border-radius: 20px;
+  background-color: #16130f;
+  box-shadow: 0 6px 22px rgba(22, 19, 15, 0.14);
+}
+
+/* the honeycomb itself is drawn with Cairo (extension.js): 37 hexagons in a 32 px box */
+.voicio-lattice {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+}
+
+.voicio-text {
+  color: #efe7d7;
+  font-size: 14px;
+  font-weight: 500;
+  max-width: 270px;
+}
+.voicio-pill:finishing .voicio-text,
+.voicio-pill:warn .voicio-text { color: #ffc24b; font-weight: 600; }
+.voicio-pill:done .voicio-text { color: #b8f06a; font-weight: 600; }
+.voicio-pill:error .voicio-text { color: #ffb3a8; }
+
+/* an action the capsule cannot take itself (it never takes focus): a quiet hint */
+.voicio-hint {
+  color: rgba(233, 226, 211, 0.6);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* messages are longer than live words: give them room */
+.voicio-pill:error { max-width: 480px; }
+.voicio-pill:error .voicio-text { max-width: 330px; }

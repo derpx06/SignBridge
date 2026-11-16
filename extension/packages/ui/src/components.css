@@ -1,0 +1,77 @@
+/* Component styles. Every class is prefixed v- and relies on tokens.css variables. */
+.v-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 16px;border-radius:var(--r-btn);border:0;font:600 13.5px/16px var(--font);white-space:nowrap;transition:background .18s var(--ease),transform .18s var(--ease),box-shadow .18s,color .18s;user-select:none}
+.v-btn.lg{height:46px;padding:0 20px;border-radius:16px;font-size:14.5px}
+.v-btn:active:not(:disabled){transform:translateY(1px)}
+.v-btn.primary{background:var(--ink);color:var(--on-ink)}
+.v-btn.primary:hover:not(:disabled){box-shadow:0 6px 16px rgba(22,19,15,.18)}
+.v-btn.secondary{background:var(--surf2);color:var(--tx);box-shadow:inset 0 0 0 1px var(--line)}
+.v-btn.secondary:hover:not(:disabled){background:var(--sunk)}
+.v-btn.ghost{background:transparent;color:var(--tx2)}
+.v-btn.ghost:hover:not(:disabled){background:var(--surf2);color:var(--tx)}
+.v-btn.danger{background:var(--err-soft);color:var(--err)}
+.v-btn.danger:hover:not(:disabled){box-shadow:inset 0 0 0 1.5px var(--err)}
+.v-btn:disabled{opacity:.42}
+.v-btn.block{width:100%}
+.v-spin{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;opacity:.8;animation:vk-spin .9s linear infinite}
+
+.v-ib{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:11px;border:0;background:transparent;color:var(--tx3);transition:background .15s,color .15s}
+.v-ib.lg{width:36px;height:36px}
+.v-ib:hover:not(:disabled){background:var(--surf2);color:var(--tx)}
+.v-ib.destructive:hover:not(:disabled){background:var(--err-soft);color:var(--err)}
+.v-ib:disabled{opacity:.45}
+
+.v-seg{display:inline-flex;padding:3px;gap:2px;height:38px;border-radius:13px;background:var(--sunk)}
+.v-seg.block{display:flex;width:100%}
+.v-seg button{flex:1;border:0;border-radius:10px;background:transparent;color:var(--tx2);padding:0 13px;font:600 13px/1 var(--font);white-space:nowrap;transition:background .18s var(--ease),color .18s,box-shadow .18s}
+.v-seg button[aria-checked="true"]{background:var(--surf);color:var(--tx);box-shadow:0 2px 6px rgba(60,40,10,.10)}
+.v-seg button:hover:not([aria-checked="true"]){color:var(--tx)}
+
+.v-switch{position:relative;width:42px;height:24px;flex:none;border-radius:999px;border:0;padding:0;background:var(--line2);transition:background .2s var(--ease)}
+.v-switch[aria-checked="true"]{background:var(--ac)}
+.v-switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--knob);box-shadow:0 1px 3px rgba(22,19,15,.2);transition:transform .2s var(--spring)}
+.v-switch[aria-checked="true"]::after{transform:translateX(18px)}
+.v-switch:disabled{opacity:.45}
+
+.v-keys{display:inline-flex;align-items:center;gap:5px;color:var(--tx3);font:600 12px var(--font)}
+.v-key{display:inline-flex;align-items:center;justify-content:center;height:26px;min-width:26px;padding:0 8px;border-radius:var(--r-key);background:var(--key);box-shadow:inset 0 0 0 1.5px var(--key-edge),0 2px 0 var(--key-edge);color:var(--tx);font:700 12px/1 var(--font)}
+.v-keys.lg .v-key{height:42px;min-width:42px;padding:0 14px;border-radius:11px;font-size:15px;box-shadow:inset 0 0 0 2px var(--key-edge),0 4px 0 var(--key-edge)}
+
+.v-chip{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-radius:999px;font:600 12px/1 var(--font);background:var(--surf2);color:var(--tx2);white-space:nowrap}
+.v-chip.ok{background:var(--ok-soft);color:var(--ok-tx)}
+.v-chip.warn{background:var(--warn-soft);color:var(--warn)}
+.v-chip.err{background:var(--err-soft);color:var(--err)}
+.v-chip.line{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line2)}
+.v-chip.ink{background:var(--ink);color:var(--on-ink)}
+.v-chip.sky{background:var(--sky);color:var(--sky-tx)}
+.v-chip.ac{background:var(--ac-soft);color:var(--ac-tx)}
+.v-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.v-dot.breathe{animation:vk-breathe 1.8s ease-in-out infinite}
+.v-chip.line .v-dot{color:var(--ok)}
+
+.v-progress{height:6px;border-radius:999px;background:var(--sunk);overflow:hidden}
+.v-progress.lg{height:8px}
+.v-progress>i{display:block;height:100%;border-radius:inherit;background:var(--ac);transition:width .2s var(--ease)}
+.v-progress.paused>i{background:var(--tx3)}
+.v-progress.error>i{background:var(--err)}
+
+.v-card{background:var(--surf);border-radius:var(--r-card);padding:16px 20px;box-shadow:0 18px 40px rgba(60,40,10,.05)}
+.v-card.accent{box-shadow:inset 0 0 0 2px var(--ink),0 18px 40px rgba(60,40,10,.05)}
+.v-row{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 10px;border-radius:var(--r-row)}
+.v-row:hover{background:var(--surf2)}
+
+.v-toast{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;background:#16130F;color:#F7F3EA;font:500 13px var(--font);box-shadow:0 8px 20px rgba(22,19,15,.22);animation:vk-pop .2s var(--spring)}
+.v-toast .ok{color:#B8F06A}
+.v-toast.error .ok,.v-toast.error>span:first-child{color:#FFB3A8}
+
+.v-tip{position:relative;display:inline-flex}
+.v-tip>.tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);display:none;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:999px;background:#16130F;color:#F7F3EA;font:500 12px var(--font);white-space:nowrap;pointer-events:none;z-index:10}
+.v-tip.show>.tip{display:inline-flex}
+.v-tip .tip kbd{font:600 11px var(--font);opacity:.7}
+
+.v-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:24px}
+.v-empty h3{margin:8px 0 0;font:800 20px/24px var(--head);letter-spacing:-.02em}
+.v-empty p{margin:0;color:var(--tx2);font-size:13px;line-height:19px;max-width:280px}
+.v-empty .badge{display:grid;place-items:center;width:76px;height:76px;border-radius:24px;background:var(--ac-soft);color:var(--ac-tx)}
+
+/* Tinted icon square (sidebar, list rows). */
+.v-tile{width:32px;height:32px;flex:none;border-radius:11px;display:grid;place-items:center;color:#16130F;background:var(--surf2)}

@@ -1,0 +1,1166 @@
+{
+  "version": 1,
+  "checked": "2026-11-13",
+  "about": "Cloud speech-to-text providers shared by the desktop app (include_str!), Android (core resources) and Chrome (JSON import + manifest CSP). Every request fact below was checked against the provider's official docs on the date above; entries with experimental=true have at least one fact the docs did not confirm (see notes). Placeholders: {model}, {region}, {id} (job id), {file} (uploaded file id). max_seconds is the per-request cap (the lower of the provider's duration limit and its upload size limit at 32 kB per second of 16 kHz mono 16-bit WAV); longer recordings are split at quiet points and the texts joined. live: the provider's streaming WebSocket (see docs/research/cloud-integration.md): url/query/lang, native header auth (live.auth or auth), browser short-lived token (never the key in a URL), start/ready, audio (binary pcm_s16le at rate, or a JSON template with {audio} base64), messages (match -> partial|delta|final|tokens|result|error|done), join, end ({seq} = audio frames sent), end_done. live.map: the chosen batch model -> its live counterpart; otherwise a batch model that is also a live model is kept, else live.default_model.",
+  "prompt": "Transcribe the speech in this audio verbatim. Output only the transcript text: no quotes, labels, timestamps or commentary. If there is no speech, output nothing.",
+  "locales": {
+    "en": "en-US",
+    "hi": "hi-IN",
+    "es": "es-ES",
+    "fr": "fr-FR",
+    "de": "de-DE",
+    "pt": "pt-BR",
+    "it": "it-IT",
+    "nl": "nl-NL",
+    "ja": "ja-JP",
+    "zh": "zh-CN",
+    "ko": "ko-KR",
+    "ar": "ar-SA",
+    "ru": "ru-RU",
+    "ta": "ta-IN",
+    "te": "te-IN",
+    "bn": "bn-IN",
+    "mr": "mr-IN",
+    "gu": "gu-IN",
+    "kn": "kn-IN",
+    "ml": "ml-IN",
+    "pa": "pa-IN"
+  },
+  "language_names": {
+    "en": "english",
+    "hi": "hindi",
+    "es": "spanish",
+    "fr": "french",
+    "de": "german",
+    "pt": "portuguese",
+    "it": "italian",
+    "nl": "dutch",
+    "ja": "japanese",
+    "zh": "chinese",
+    "ko": "korean",
+    "ar": "arabic",
+    "ru": "russian",
+    "ta": "tamil",
+    "te": "telugu",
+    "bn": "bengali",
+    "mr": "marathi",
+    "gu": "gujarati",
+    "kn": "kannada",
+    "ml": "malayalam",
+    "pa": "punjabi"
+  },
+  "providers": [
+    {
+      "id": "groq",
+      "name": "Groq Whisper",
+      "maker": "Groq",
+      "models": [
+        "whisper-large-v3-turbo",
+        "whisper-large-v3"
+      ],
+      "default_model": "whisper-large-v3-turbo",
+      "price_note": "About $0.04 per hour (turbo), 10 s minimum per request",
+      "speed_note": "Fast (under 1 s)",
+      "docs": "https://console.groq.com/docs/speech-to-text",
+      "host": "api.groq.com",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 600,
+      "style": "multipart",
+      "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "file_field": "file",
+      "model_field": "model",
+      "fields": {
+        "response_format": "json",
+        "temperature": "0"
+      },
+      "lang": {
+        "field": "language",
+        "format": "iso"
+      },
+      "text": "/text",
+      "featured": true
+    },
+    {
+      "id": "openai",
+      "name": "GPT Transcribe",
+      "maker": "OpenAI",
+      "models": [
+        "gpt-transcribe",
+        "gpt-4o-mini-transcribe"
+      ],
+      "default_model": "gpt-transcribe",
+      "price_note": "Billed per minute of audio (see openai.com/api/pricing); gpt-4o-mini-transcribe until 2027-02",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://developers.openai.com/api/reference/resources/audio/subresources/transcriptions/methods/create",
+      "host": "api.openai.com",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 600,
+      "style": "multipart",
+      "url": "https://api.openai.com/v1/audio/transcriptions",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "file_field": "file",
+      "model_field": "model",
+      "fields": {
+        "response_format": "json"
+      },
+      "lang": {
+        "field": "language",
+        "format": "iso"
+      },
+      "text": "/text",
+      "featured": true,
+      "live": {
+        "docs": "https://developers.openai.com/api/docs/guides/realtime-transcription",
+        "models": [
+          "gpt-live-transcribe",
+          "gpt-transcribe"
+        ],
+        "default_model": "gpt-live-transcribe",
+        "url": "wss://api.openai.com/v1/realtime?intent=transcription",
+        "browser": {
+          "token": {
+            "url": "https://api.openai.com/v1/realtime/client_secrets",
+            "body": "{\"expires_after\":{\"anchor\":\"created_at\",\"seconds\":60},\"session\":{\"type\":\"transcription\",\"audio\":{\"input\":{\"format\":{\"type\":\"audio/pcm\",\"rate\":24000},\"transcription\":{\"model\":\"{model}\"},\"turn_detection\":null}}}}",
+            "text": "/value"
+          },
+          "protocols": [
+            "realtime",
+            "openai-insecure-api-key.{token}"
+          ]
+        },
+        "lang": {
+          "format": "iso"
+        },
+        "start": "{\"type\":\"session.update\",\"session\":{\"type\":\"transcription\",\"audio\":{\"input\":{\"format\":{\"type\":\"audio/pcm\",\"rate\":24000},\"transcription\":{\"model\":\"{model}\",\"language\":\"{lang}\"},\"turn_detection\":null}}}}",
+        "start_auto": "{\"type\":\"session.update\",\"session\":{\"type\":\"transcription\",\"audio\":{\"input\":{\"format\":{\"type\":\"audio/pcm\",\"rate\":24000},\"transcription\":{\"model\":\"{model}\"},\"turn_detection\":null}}}}",
+        "rate": 24000,
+        "audio": "{\"type\":\"input_audio_buffer.append\",\"audio\":\"{audio}\"}",
+        "messages": [
+          {
+            "match": {
+              "/type": "conversation.item.input_audio_transcription.delta"
+            },
+            "do": "delta",
+            "text": "/delta"
+          },
+          {
+            "match": {
+              "/type": "conversation.item.input_audio_transcription.completed"
+            },
+            "do": "final",
+            "text": "/transcript"
+          },
+          {
+            "match": {
+              "/type": "error"
+            },
+            "do": "error",
+            "text": "/error/message"
+          }
+        ],
+        "join": " ",
+        "end": "{\"type\":\"input_audio_buffer.commit\"}",
+        "end_done": "final",
+        "max_seconds": 3600,
+        "experimental": true,
+        "notes": "No server turn detection for gpt-live-transcribe: the whole dictation is one turn, committed when you stop; words stream as deltas.",
+        "map": {
+          "gpt-transcribe": "gpt-live-transcribe"
+        }
+      }
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini Flash",
+      "maker": "Google",
+      "models": [
+        "gemini-3.5-flash-lite",
+        "gemini-3.8-flash"
+      ],
+      "default_model": "gemini-3.5-flash-lite",
+      "price_note": "Billed per audio token (see ai.google.dev pricing); free tier available",
+      "speed_note": "Fast (1-2 s)",
+      "docs": "https://aistudio.google.com/api-reference/generate-content",
+      "host": "generativelanguage.googleapis.com",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 300,
+      "style": "json_audio",
+      "body": "gemini",
+      "url": "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+      "auth": [
+        "x-goog-api-key",
+        ""
+      ],
+      "lang": {
+        "format": "iso"
+      },
+      "text": "/candidates/0/content/parts/0/text",
+      "featured": true,
+      "generation_config": {
+        "temperature": 0
+      },
+      "live": {
+        "docs": "https://aistudio.google.com/docs/live-api/live-transcribe",
+        "models": [
+          "gemini-3.5-transcribe-live"
+        ],
+        "default_model": "gemini-3.5-transcribe-live",
+        "url": "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent",
+        "start": "{\"setup\":{\"model\":\"models/{model}\",\"generationConfig\":{\"responseModalities\":[\"TEXT\"]},\"inputAudioTranscription\":{\"languageCodes\":[\"{lang}\"]}}}",
+        "start_auto": "{\"setup\":{\"model\":\"models/{model}\",\"generationConfig\":{\"responseModalities\":[\"TEXT\"]},\"inputAudioTranscription\":{}}}",
+        "lang": {
+          "format": "iso"
+        },
+        "ready": {
+          "/setupComplete": "*"
+        },
+        "audio": "{\"realtimeInput\":{\"audio\":{\"data\":\"{audio}\",\"mimeType\":\"audio/pcm;rate=16000\"}}}",
+        "messages": [
+          {
+            "match": {
+              "/serverContent/inputTranscription/text": "*"
+            },
+            "do": "final",
+            "text": "/serverContent/inputTranscription/text"
+          },
+          {
+            "match": {
+              "/serverContent/interimInputTranscription/text": "*"
+            },
+            "do": "partial",
+            "text": "/serverContent/interimInputTranscription/text"
+          },
+          {
+            "match": {
+              "/error": "*"
+            },
+            "do": "error",
+            "text": "/error/message"
+          }
+        ],
+        "join": " ",
+        "end": "{\"realtimeInput\":{\"audioStreamEnd\":true}}",
+        "max_seconds": 600,
+        "experimental": true,
+        "notes": "Desktop and Android only (the browser token needs a session-bound request). Whether interim text is cumulative and which message ends the stream are not documented; sessions are capped at 10 minutes."
+      }
+    },
+    {
+      "id": "deepgram",
+      "name": "Nova-3",
+      "maker": "Deepgram",
+      "models": [
+        "nova-3"
+      ],
+      "default_model": "nova-3",
+      "price_note": "About $0.0043 per minute; $200 free credit",
+      "speed_note": "Fast (under 1 s)",
+      "docs": "https://developers.deepgram.com/reference/speech-to-text/listen-pre-recorded",
+      "host": "api.deepgram.com",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 3600,
+      "style": "raw",
+      "url": "https://api.deepgram.com/v1/listen",
+      "auth": [
+        "Authorization",
+        "Token "
+      ],
+      "query": {
+        "model": "{model}",
+        "smart_format": "true"
+      },
+      "lang": {
+        "field": "language",
+        "format": "iso",
+        "auto": "multi"
+      },
+      "text": "/results/channels/0/alternatives/0/transcript",
+      "featured": true,
+      "live": {
+        "docs": "https://developers.deepgram.com/reference/speech-to-text/listen-streaming",
+        "models": [
+          "nova-3"
+        ],
+        "default_model": "nova-3",
+        "url": "wss://api.deepgram.com/v1/listen",
+        "query": {
+          "model": "{model}",
+          "encoding": "linear16",
+          "sample_rate": "16000",
+          "channels": "1",
+          "interim_results": "true",
+          "smart_format": "true"
+        },
+        "lang": {
+          "field": "language",
+          "format": "iso",
+          "auto": "multi"
+        },
+        "browser": {
+          "token": {
+            "url": "https://api.deepgram.com/v1/auth/grant",
+            "body": "{\"ttl_seconds\":30}",
+            "text": "/access_token"
+          },
+          "protocols": [
+            "bearer",
+            "{token}"
+          ]
+        },
+        "messages": [
+          {
+            "match": {
+              "/type": "Results",
+              "/is_final": false
+            },
+            "do": "partial",
+            "text": "/channel/alternatives/0/transcript"
+          },
+          {
+            "match": {
+              "/type": "Results",
+              "/is_final": true
+            },
+            "do": "final",
+            "text": "/channel/alternatives/0/transcript"
+          },
+          {
+            "match": {
+              "/type": "Error"
+            },
+            "do": "error",
+            "text": "/description"
+          },
+          {
+            "match": {
+              "/type": "Metadata"
+            },
+            "do": "done"
+          }
+        ],
+        "join": " ",
+        "end": "{\"type\":\"CloseStream\"}",
+        "max_seconds": 3600,
+        "notes": "Browser: the temporary token goes in the Sec-WebSocket-Protocol as bearer, <token>; the docs show only the key form (token, <key>)."
+      }
+    },
+    {
+      "id": "elevenlabs",
+      "name": "Scribe",
+      "maker": "ElevenLabs",
+      "models": [
+        "scribe_v3",
+        "scribe_v2"
+      ],
+      "default_model": "scribe_v3",
+      "price_note": "About $0.22 per hour of audio",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://elevenlabs.io/docs/api-reference/speech-to-text/convert",
+      "host": "api.elevenlabs.io",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 3600,
+      "style": "multipart",
+      "url": "https://api.elevenlabs.io/v1/speech-to-text",
+      "auth": [
+        "xi-api-key",
+        ""
+      ],
+      "file_field": "file",
+      "model_field": "model_id",
+      "lang": {
+        "field": "language_code",
+        "format": "iso"
+      },
+      "text": "/text",
+      "featured": true,
+      "live": {
+        "docs": "https://elevenlabs.io/docs/api-reference/speech-to-text/v-1-speech-to-text-realtime",
+        "models": [
+          "scribe_v2_realtime",
+          "scribe_v3_live"
+        ],
+        "default_model": "scribe_v2_realtime",
+        "url": "wss://api.elevenlabs.io/v1/speech-to-text/realtime",
+        "query": {
+          "model_id": "{model}",
+          "audio_format": "pcm_16000",
+          "commit_strategy": "vad"
+        },
+        "lang": {
+          "field": "language_code",
+          "format": "iso"
+        },
+        "browser": {
+          "token": {
+            "url": "https://api.elevenlabs.io/v1/single-use-token/realtime_scribe",
+            "body": "",
+            "text": "/token"
+          },
+          "query": "token"
+        },
+        "audio": "{\"message_type\":\"input_audio_chunk\",\"audio_base_64\":\"{audio}\",\"commit\":false,\"sample_rate\":16000}",
+        "messages": [
+          {
+            "match": {
+              "/message_type": "partial_transcript"
+            },
+            "do": "partial",
+            "text": "/text"
+          },
+          {
+            "match": {
+              "/message_type": "committed_transcript"
+            },
+            "do": "final",
+            "text": "/text"
+          },
+          {
+            "match": {
+              "/error": "*"
+            },
+            "do": "error",
+            "text": "/error"
+          }
+        ],
+        "join": " ",
+        "end": "{\"message_type\":\"input_audio_chunk\",\"audio_base_64\":\"\",\"commit\":true,\"sample_rate\":16000}",
+        "end_done": "final",
+        "max_seconds": 3600,
+        "notes": "End of stream is not documented: a final chunk with commit=true, then the next committed transcript.",
+        "map": {
+          "scribe_v3": "scribe_v3_live",
+          "scribe_v2": "scribe_v2_realtime"
+        }
+      }
+    },
+    {
+      "id": "mistral",
+      "name": "Voxtral Mini Transcribe",
+      "maker": "Mistral",
+      "models": [
+        "voxtral-mini-latest"
+      ],
+      "default_model": "voxtral-mini-latest",
+      "price_note": "See provider pricing (mistral.ai/pricing)",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://docs.mistral.ai/api/endpoint/audio/transcriptions",
+      "host": "api.mistral.ai",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 600,
+      "style": "multipart",
+      "url": "https://api.mistral.ai/v1/audio/transcriptions",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "file_field": "file",
+      "model_field": "model",
+      "lang": {
+        "field": "language",
+        "format": "iso"
+      },
+      "text": "/text",
+      "featured": true,
+      "live": {
+        "docs": "https://docs.mistral.ai/studio/audio/speech-to-text/transcribe-in-realtime",
+        "models": [
+          "voxtral-mini-transcribe-realtime-3"
+        ],
+        "default_model": "voxtral-mini-transcribe-realtime-3",
+        "url": "wss://api.mistral.ai/v1/audio/transcriptions/realtime",
+        "query": {
+          "model": "{model}"
+        },
+        "browser": {
+          "token": {
+            "url": "https://api.mistral.ai/v1/client/sessions",
+            "body": "{\"purpose\":\"realtime\",\"model\":\"{model}\"}",
+            "text": "/client_secret/value"
+          },
+          "protocols": [
+            "realtime",
+            "{token}"
+          ]
+        },
+        "ready": {
+          "/type": "session.created"
+        },
+        "audio": "{\"type\":\"input_audio.append\",\"audio\":\"{audio}\"}",
+        "messages": [
+          {
+            "match": {
+              "/type": "transcription.text.delta"
+            },
+            "do": "delta",
+            "text": "/text"
+          },
+          {
+            "match": {
+              "/type": "transcription.done"
+            },
+            "do": "result",
+            "text": "/text"
+          },
+          {
+            "match": {
+              "/type": "error"
+            },
+            "do": "error",
+            "text": "/error/message"
+          }
+        ],
+        "join": "",
+        "end": "{\"type\":\"input_audio.end\"}",
+        "max_seconds": 3600
+      }
+    },
+    {
+      "id": "assemblyai",
+      "name": "Universal-3.5 Pro",
+      "maker": "AssemblyAI",
+      "models": [
+        "universal-3-5-pro",
+        "universal-2"
+      ],
+      "default_model": "universal-3-5-pro",
+      "price_note": "About $0.21 per hour; $50 free credit",
+      "speed_note": "Slower (1-3 s): upload, then wait for the job",
+      "docs": "https://www.assemblyai.com/docs/api-reference/transcripts/submit",
+      "host": "api.assemblyai.com",
+      "needs_region": false,
+      "slow": true,
+      "experimental": false,
+      "max_seconds": 3600,
+      "style": "upload_poll",
+      "auth": [
+        "authorization",
+        ""
+      ],
+      "upload": {
+        "url": "https://api.assemblyai.com/v2/upload",
+        "body": "raw",
+        "id": "/upload_url"
+      },
+      "create": {
+        "url": "https://api.assemblyai.com/v2/transcript",
+        "ref_field": "audio_url",
+        "model_field": "speech_models",
+        "model_list": true,
+        "id": "/id",
+        "model_fallback": "universal-2"
+      },
+      "lang": {
+        "field": "language_code",
+        "format": "iso"
+      },
+      "status": {
+        "url": "https://api.assemblyai.com/v2/transcript/{id}",
+        "field": "/status",
+        "done": "completed",
+        "failed": "error"
+      },
+      "text": "/text",
+      "featured": true,
+      "live": {
+        "docs": "https://www.assemblyai.com/docs/api-reference/streaming-api/streaming-api",
+        "models": [
+          "universal-3-6-pro",
+          "universal-streaming-multilingual"
+        ],
+        "default_model": "universal-3-6-pro",
+        "url": "wss://streaming.assemblyai.com/v3/ws",
+        "query": {
+          "sample_rate": "16000",
+          "encoding": "pcm_s16le",
+          "speech_model": "{model}"
+        },
+        "browser": {
+          "token": {
+            "url": "https://token.assemblyai.com/v1/token",
+            "body": "{\"product\":\"streaming\",\"expires_in_seconds\":60}",
+            "text": "/token"
+          },
+          "query": "token"
+        },
+        "messages": [
+          {
+            "match": {
+              "/type": "Turn",
+              "/end_of_turn": false
+            },
+            "do": "partial",
+            "text": "/transcript"
+          },
+          {
+            "match": {
+              "/type": "Turn",
+              "/end_of_turn": true
+            },
+            "do": "final",
+            "text": "/transcript"
+          },
+          {
+            "match": {
+              "/type": "Termination"
+            },
+            "do": "done"
+          },
+          {
+            "match": {
+              "/error": "*"
+            },
+            "do": "error",
+            "text": "/error"
+          }
+        ],
+        "join": " ",
+        "end": "{\"type\":\"Terminate\"}",
+        "max_seconds": 10800
+      }
+    },
+    {
+      "id": "azure",
+      "name": "Fast Transcription",
+      "maker": "Microsoft Azure",
+      "models": [
+        "default"
+      ],
+      "default_model": "default",
+      "price_note": "See provider pricing (Azure Speech)",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/fast-transcription-create",
+      "host": "{region}.api.cognitive.microsoft.com",
+      "needs_region": true,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 3600,
+      "style": "multipart",
+      "url": "https://{region}.api.cognitive.microsoft.com/speechtotext/transcriptions:transcribe?api-version=2025-10-15",
+      "auth": [
+        "Ocp-Apim-Subscription-Key",
+        ""
+      ],
+      "file_field": "audio",
+      "json_field": {
+        "name": "definition",
+        "value": "{\"locales\":[\"{lang}\"]}",
+        "value_auto": "{}"
+      },
+      "lang": {
+        "format": "locale"
+      },
+      "text": "/combinedPhrases/0/text",
+      "featured": true
+    },
+    {
+      "id": "sarvam",
+      "name": "Saaras v4",
+      "maker": "Sarvam AI",
+      "models": [
+        "saaras:v4",
+        "saaras:v3"
+      ],
+      "default_model": "saaras:v4",
+      "price_note": "About Rs 29.40 per hour; Rs 100 free credit. Clips under 30 s",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://docs.sarvam.ai/api-reference-docs/speech-to-text/transcribe",
+      "host": "api.sarvam.ai",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 29,
+      "style": "multipart",
+      "url": "https://api.sarvam.ai/speech-to-text",
+      "auth": [
+        "api-subscription-key",
+        ""
+      ],
+      "file_field": "file",
+      "model_field": "model",
+      "lang": {
+        "field": "language_code",
+        "format": "indic",
+        "auto": "unknown"
+      },
+      "text": "/transcript",
+      "featured": true
+    },
+    {
+      "id": "soniox",
+      "name": "Soniox v6",
+      "maker": "Soniox",
+      "models": [
+        "stt-async-v6"
+      ],
+      "default_model": "stt-async-v6",
+      "price_note": "See provider pricing (soniox.com/pricing)",
+      "speed_note": "Slower (1-3 s): upload, then wait for the job",
+      "docs": "https://docs.soniox.com/stt/api-reference/transcriptions/create_transcription",
+      "host": "api.soniox.com",
+      "needs_region": false,
+      "slow": true,
+      "experimental": false,
+      "max_seconds": 3600,
+      "style": "upload_poll",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "upload": {
+        "url": "https://api.soniox.com/v1/files",
+        "body": "multipart",
+        "id": "/id"
+      },
+      "create": {
+        "url": "https://api.soniox.com/v1/transcriptions",
+        "ref_field": "file_id",
+        "model_field": "model",
+        "id": "/id"
+      },
+      "lang": {
+        "field": "language_hints",
+        "format": "iso",
+        "list": true
+      },
+      "status": {
+        "url": "https://api.soniox.com/v1/transcriptions/{id}",
+        "field": "/status",
+        "done": "completed",
+        "failed": "error"
+      },
+      "result": "https://api.soniox.com/v1/transcriptions/{id}/transcript",
+      "cleanup": [
+        "https://api.soniox.com/v1/transcriptions/{id}",
+        "https://api.soniox.com/v1/files/{file}"
+      ],
+      "text": "/text",
+      "featured": true,
+      "live": {
+        "docs": "https://docs.soniox.com/stt/api-reference/websocket-api",
+        "models": [
+          "stt-rt-v6"
+        ],
+        "default_model": "stt-rt-v6",
+        "url": "wss://stt-rt.soniox.com/transcribe-websocket",
+        "browser": {
+          "token": {
+            "url": "https://api.soniox.com/v1/auth/temporary-api-key",
+            "body": "{\"usage_type\":\"transcribe_websocket\",\"expires_in_seconds\":60}",
+            "text": "/api_key"
+          },
+          "protocols": [
+            "soniox-api-key",
+            "{token}"
+          ]
+        },
+        "lang": {
+          "format": "iso"
+        },
+        "start": "{\"model\":\"{model}\",\"audio_format\":\"s16le\",\"sample_rate\":16000,\"num_channels\":1,\"language_hints\":[\"{lang}\"]}",
+        "start_auto": "{\"model\":\"{model}\",\"audio_format\":\"s16le\",\"sample_rate\":16000,\"num_channels\":1}",
+        "messages": [
+          {
+            "match": {
+              "/finished": true
+            },
+            "do": "done"
+          },
+          {
+            "match": {
+              "/error_code": "*"
+            },
+            "do": "error",
+            "text": "/error_message"
+          },
+          {
+            "match": {
+              "/tokens": "*"
+            },
+            "do": "tokens",
+            "text": "/tokens"
+          }
+        ],
+        "join": "",
+        "end": "",
+        "max_seconds": 18000
+      }
+    },
+    {
+      "id": "speechmatics",
+      "name": "Speechmatics Enhanced",
+      "maker": "Speechmatics",
+      "models": [
+        "enhanced",
+        "standard"
+      ],
+      "default_model": "enhanced",
+      "price_note": "See provider pricing (speechmatics.com/pricing)",
+      "speed_note": "Slower (1-3 s): a batch job the server waits on",
+      "docs": "https://docs.speechmatics.com/api-ref/batch/create-a-new-job",
+      "host": "eu1.asr.api.speechmatics.com",
+      "needs_region": false,
+      "slow": true,
+      "experimental": true,
+      "max_seconds": 600,
+      "notes": "The server-side cap on ?wait= and a verbatim waited response ({status:'done', txt}) are not shown by an example in the docs; a job still 'created' when the wait ends falls back to on-device text. Automatic language sets default_language en, since language identification needs about 60 s of speech.",
+      "style": "multipart",
+      "url": "https://eu1.asr.api.speechmatics.com/v2/jobs",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "query": {
+        "wait": "25",
+        "format": "txt"
+      },
+      "file_field": "data_file",
+      "json_field": {
+        "name": "config",
+        "value": "{\"type\":\"transcription\",\"transcription_config\":{\"language\":\"{lang}\",\"operating_point\":\"{model}\"}}",
+        "value_auto": "{\"type\":\"transcription\",\"transcription_config\":{\"language\":\"auto\",\"operating_point\":\"{model}\"},\"language_identification_config\":{\"default_language\":\"en\"}}"
+      },
+      "lang": {
+        "format": "iso"
+      },
+      "text": "/txt",
+      "featured": false,
+      "live": {
+        "docs": "https://docs.speechmatics.com/api-ref/realtime-transcription-websocket",
+        "models": [
+          "enhanced",
+          "standard"
+        ],
+        "default_model": "enhanced",
+        "url": "wss://eu.rt.speechmatics.com/v2",
+        "browser": {
+          "token": {
+            "url": "https://mp.speechmatics.com/v1/jwts?type=rt",
+            "body": "{\"ttl\":60}",
+            "text": "/key_value"
+          },
+          "query": "jwt"
+        },
+        "lang": {
+          "format": "iso",
+          "auto": "en"
+        },
+        "start": "{\"message\":\"StartRecognition\",\"audio_format\":{\"type\":\"raw\",\"encoding\":\"pcm_s16le\",\"sample_rate\":16000},\"transcription_config\":{\"language\":\"{lang}\",\"enable_partials\":true,\"max_delay\":1.0,\"model\":\"{model}\"}}",
+        "ready": {
+          "/message": "RecognitionStarted"
+        },
+        "messages": [
+          {
+            "match": {
+              "/message": "AddPartialTranscript"
+            },
+            "do": "partial",
+            "text": "/metadata/transcript"
+          },
+          {
+            "match": {
+              "/message": "AddTranscript"
+            },
+            "do": "final",
+            "text": "/metadata/transcript"
+          },
+          {
+            "match": {
+              "/message": "EndOfTranscript"
+            },
+            "do": "done"
+          },
+          {
+            "match": {
+              "/message": "Error"
+            },
+            "do": "error",
+            "text": "/reason"
+          }
+        ],
+        "join": " ",
+        "end": "{\"message\":\"EndOfStream\",\"last_seq_no\":{seq}}",
+        "max_seconds": 3600,
+        "notes": "Realtime has no automatic language for these models: English unless a language is chosen."
+      }
+    },
+    {
+      "id": "together",
+      "name": "Whisper Large v3",
+      "maker": "Together AI",
+      "models": [
+        "openai/whisper-large-v3"
+      ],
+      "default_model": "openai/whisper-large-v3",
+      "price_note": "See provider pricing (together.ai/pricing)",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://docs.together.ai/reference/audio-transcriptions",
+      "host": "api.together.ai",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 600,
+      "style": "multipart",
+      "url": "https://api.together.ai/v1/audio/transcriptions",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "file_field": "file",
+      "model_field": "model",
+      "fields": {
+        "response_format": "json",
+        "temperature": "0"
+      },
+      "lang": {
+        "field": "language",
+        "format": "iso",
+        "auto": "auto"
+      },
+      "text": "/text",
+      "featured": false
+    },
+    {
+      "id": "lemonfox",
+      "name": "Lemonfox Whisper",
+      "maker": "Lemonfox",
+      "models": [
+        "whisper-large-v3"
+      ],
+      "default_model": "whisper-large-v3",
+      "price_note": "About $0.17 per hour ($0.50 per 3 hours)",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://www.lemonfox.ai/apis/speech-to-text",
+      "host": "api.lemonfox.ai",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 600,
+      "style": "multipart",
+      "url": "https://api.lemonfox.ai/v1/audio/transcriptions",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "file_field": "file",
+      "fields": {
+        "response_format": "json"
+      },
+      "lang": {
+        "field": "language",
+        "format": "name"
+      },
+      "text": "/text",
+      "featured": false
+    },
+    {
+      "id": "lemonfoxeu",
+      "name": "Lemonfox Whisper (EU)",
+      "maker": "Lemonfox",
+      "models": [
+        "whisper-large-v3"
+      ],
+      "default_model": "whisper-large-v3",
+      "price_note": "About $0.20 per hour (EU processing, +20%)",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://www.lemonfox.ai/apis/speech-to-text",
+      "host": "eu-api.lemonfox.ai",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 600,
+      "style": "multipart",
+      "url": "https://eu-api.lemonfox.ai/v1/audio/transcriptions",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "file_field": "file",
+      "fields": {
+        "response_format": "json"
+      },
+      "lang": {
+        "field": "language",
+        "format": "name"
+      },
+      "text": "/text",
+      "featured": false
+    },
+    {
+      "id": "cartesia",
+      "name": "Ink Whisper",
+      "maker": "Cartesia",
+      "models": [
+        "ink-whisper"
+      ],
+      "default_model": "ink-whisper",
+      "price_note": "See provider pricing (cartesia.ai/pricing)",
+      "speed_note": "Fast (about 1 s)",
+      "docs": "https://docs.cartesia.ai/api-reference/stt/transcribe",
+      "host": "api.cartesia.ai",
+      "needs_region": false,
+      "slow": false,
+      "experimental": false,
+      "max_seconds": 600,
+      "style": "multipart",
+      "url": "https://api.cartesia.ai/stt",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "headers": {
+        "Cartesia-Version": "2026-08-14"
+      },
+      "file_field": "file",
+      "model_field": "model",
+      "lang": {
+        "field": "language",
+        "format": "iso"
+      },
+      "text": "/text",
+      "featured": false,
+      "notes": "Automatic language is not documented: with no language chosen the provider assumes English.",
+      "live": {
+        "docs": "https://docs.cartesia.ai/api-reference/stt/websocket",
+        "models": [
+          "ink-2"
+        ],
+        "default_model": "ink-2",
+        "url": "wss://api.cartesia.ai/stt/websocket",
+        "query": {
+          "model": "{model}",
+          "encoding": "pcm_s16le",
+          "sample_rate": "16000",
+          "cartesia_version": "2026-08-14"
+        },
+        "auth": [
+          "X-API-Key",
+          ""
+        ],
+        "browser": {
+          "token": {
+            "url": "https://api.cartesia.ai/access-token",
+            "body": "{\"grants\":{\"stt\":true},\"expires_in\":60}",
+            "text": "/token"
+          },
+          "query": "access_token"
+        },
+        "messages": [
+          {
+            "match": {
+              "/type": "transcript",
+              "/is_final": true
+            },
+            "do": "final",
+            "text": "/text"
+          },
+          {
+            "match": {
+              "/type": "transcript",
+              "/is_final": false
+            },
+            "do": "partial",
+            "text": "/text"
+          },
+          {
+            "match": {
+              "/type": "error"
+            },
+            "do": "error",
+            "text": "/message"
+          },
+          {
+            "match": {
+              "/type": "done"
+            },
+            "do": "done"
+          }
+        ],
+        "join": "",
+        "end": "close",
+        "max_seconds": 3600
+      }
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter audio models",
+      "maker": "OpenRouter",
+      "models": [
+        "google/gemini-4-hydrogen",
+        "google/gemini-4-carbon"
+      ],
+      "default_model": "google/gemini-4-hydrogen",
+      "price_note": "Billed per token by the chosen model (see openrouter.ai/models)",
+      "speed_note": "Fast to moderate (1-3 s)",
+      "docs": "https://openrouter.ai/docs/guides/overview/multimodal/audio",
+      "host": "openrouter.ai",
+      "needs_region": false,
+      "slow": false,
+      "experimental": true,
+      "max_seconds": 300,
+      "notes": "The docs show audio input on the Responses API and only imply input_audio parts on Chat Completions; the model ids are the ones OpenRouter's audio-input filter listed on 2026-11-13 and change often.",
+      "style": "json_audio",
+      "body": "chat",
+      "url": "https://openrouter.ai/api/v1/chat/completions",
+      "auth": [
+        "Authorization",
+        "Bearer "
+      ],
+      "lang": {
+        "format": "iso"
+      },
+      "text": "/choices/0/message/content",
+      "featured": false
+    }
+  ],
+  "excluded": [
+    {
+      "id": "amazon",
+      "name": "Amazon Transcribe",
+      "reason": "Needs an S3 bucket or SigV4-signed streaming; a single API key cannot be used."
+    },
+    {
+      "id": "google-stt",
+      "name": "Google Cloud Speech-to-Text",
+      "reason": "Needs OAuth or a service account, not an API key. Use Gemini instead."
+    },
+    {
+      "id": "fireworks",
+      "name": "Fireworks",
+      "reason": "Its speech-to-text docs returned 404 when checked."
+    },
+    {
+      "id": "ibm",
+      "name": "IBM Watson Speech to Text",
+      "reason": "Legacy service."
+    },
+    {
+      "id": "revai",
+      "name": "Rev.ai",
+      "reason": "Async jobs only; adds nothing over AssemblyAI and Soniox."
+    },
+    {
+      "id": "gladia",
+      "name": "Gladia",
+      "reason": "Async jobs only; adds nothing over AssemblyAI and Soniox."
+    }
+  ]
+}

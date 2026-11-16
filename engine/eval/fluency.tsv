@@ -1,0 +1,110 @@
+# category<TAB>input<TAB>reference. Inputs look like raw dictation; references fix grammar, fluency and formatting only.
+grammar	me and him goes to the store yesterday and buyed some milk	He and I went to the store yesterday and bought some milk.
+grammar	the team have finished there part of the project and is waiting for the review	The team has finished their part of the project and is waiting for the review.
+grammar	i dont think we should of shipped it before testing	I don't think we should have shipped it before testing.
+grammar	she said she will came to the meeting but she did not showed up	She said she would come to the meeting, but she did not show up.
+grammar	we was going to deploy on friday but the build were broken	We were going to deploy on Friday, but the build was broken.
+grammar	please let me know if you has any question about the invoice	Please let me know if you have any questions about the invoice.
+grammar	their is a problem with the login page it dont accept my password	There is a problem with the login page; it doesn't accept my password.
+grammar	i seen the email you send me last week and i forgot to replied	I saw the email you sent me last week and I forgot to reply.
+grammar	the customers is complaining about the slow response and wants a refund	The customers are complaining about the slow response and want a refund.
+grammar	he dont know where is the file that i putted in the shared folder	He doesn't know where the file is that I put in the shared folder.
+grammar	tomorrow we meets at ten in the conference room and discuss about the budget	Tomorrow we meet at ten in the conference room and discuss the budget.
+grammar	could you please to check if the server is running because the website are down	Could you please check if the server is running, because the website is down?
+grammar	my laptop battery drain very fast since the update and it overheat sometimes	My laptop battery drains very fast since the update and it overheats sometimes.
+grammar	we need to hire more peoples for the support team because the tickets is increasing	We need to hire more people for the support team because the tickets are increasing.
+grammar	i am writing to inform you that your order have been shipped and will arrive on monday	I am writing to inform you that your order has been shipped and will arrive on Monday.
+grammar	yesterday i go to the doctor and he tell me to rest for two weeks	Yesterday I went to the doctor and he told me to rest for two weeks.
+grammar	after the meeting we decide to postpone the launch until next quarter	After the meeting, we decided to postpone the launch until next quarter.
+grammar	this are the files that you was looking for	These are the files that you were looking for.
+grammar	if i would have known earlier i will have told you	If I had known earlier, I would have told you.
+grammar	she have a lot of experience in manage large teams	She has a lot of experience in managing large teams.
+disfluency	so um i need to send the the report by uh friday	So I need to send the report by Friday.
+disfluency	hey can you uh can you ping me when the build is done	Hey, can you ping me when the build is done?
+disfluency	we should uh go with with option b	We should go with option B.
+disfluency	i was like totally gonna call you but my phone died	I was totally going to call you, but my phone died.
+disfluency	the server crashed at uh two a m and we lost about um fifteen minutes of logs	The server crashed at 2 a.m. and we lost about fifteen minutes of logs.
+disfluency	so basically the the problem is that the cache is is not clearing	So basically, the problem is that the cache is not clearing.
+disfluency	i i think we should we should wait until monday	I think we should wait until Monday.
+disfluency	um let me check with the team and and get back to you	Let me check with the team and get back to you.
+disfluency	okay so uh the plan is to to migrate the database first	Okay, so the plan is to migrate the database first.
+disfluency	it's it's not working because the the config is wrong	It's not working because the config is wrong.
+disfluency	well you know i mean the client wants the demo on tuesday	Well, I mean, the client wants the demo on Tuesday.
+disfluency	can you can you send me the link to the the document	Can you send me the link to the document?
+disfluency	so i was thinking uh maybe we could meet at the the cafe	So I was thinking maybe we could meet at the cafe.
+disfluency	the uh the deadline is is next friday	The deadline is next Friday.
+disfluency	honestly um i dont really care which one we pick	Honestly, I don't really care which one we pick.
+selfcorrect	i need to send the report by friday no wait make that thursday	I need to send the report by Thursday.
+selfcorrect	the answer is forty two no sorry forty three	The answer is 43.
+selfcorrect	we should go with option b i mean option c	We should go with option C.
+selfcorrect	meet me at the cafe no actually at the office	Meet me at the office.
+selfcorrect	call john no sorry call james about the invoice	Call James about the invoice.
+selfcorrect	the meeting is on monday scratch that tuesday at noon	The meeting is on Tuesday at noon.
+formatting	the meeting is at three thirty p m tomorrow in room four oh two	The meeting is at 3:30 p.m. tomorrow in room 402.
+formatting	please email it to support at whispr dot dev before noon	Please email it to support@whispr.dev before noon.
+formatting	the total came to twenty three thousand four hundred and fifty dollars	The total came to $23,450.
+formatting	can we move the standup to ten fifteen instead of ten	Can we move the standup to 10:15 instead of 10?
+formatting	the invoice number is eight four seven two one	The invoice number is 84721.
+formatting	we grew revenue by twelve point five percent last quarter	We grew revenue by 12.5% last quarter.
+formatting	the file is about two hundred megabytes	The file is about 200 megabytes.
+formatting	my number is nine eight seven six five four three two one zero	My number is 9876543210.
+formatting	send it to john dot smith at example dot com	Send it to john.smith@example.com.
+formatting	the flight leaves at six forty five a m on march third	The flight leaves at 6:45 a.m. on March 3.
+formatting	it costs ninety nine dollars and fifty cents	It costs $99.50.
+formatting	we have about three hundred and fifty users online right now	We have about 350 users online right now.
+formatting	the event is on the twenty first of december	The event is on the 21st of December.
+formatting	we need at least five people for the first phase and ten for the second	We need at least five people for the first phase and ten for the second.
+formatting	version two point four point one fixes the crash	Version 2.4.1 fixes the crash.
+formatting	the temperature dropped to minus five degrees	The temperature dropped to minus five degrees.
+formatting	call me at five p m or after six	Call me at 5 p.m. or after 6.
+formatting	the budget is two point five million dollars	The budget is $2.5 million.
+formatting	it takes around forty five minutes to get there	It takes around 45 minutes to get there.
+formatting	the conference is in room b twelve on the third floor	The conference is in room B12 on the third floor.
+correct	I will send you the report by Friday.	I will send you the report by Friday.
+correct	Thanks for the update, I will take a look this afternoon.	Thanks for the update, I will take a look this afternoon.
+correct	Can you join the call at 3 p.m. tomorrow?	Can you join the call at 3 p.m. tomorrow?
+correct	The new design looks great, but the buttons feel too small.	The new design looks great, but the buttons feel too small.
+correct	We shipped the release last night and everything is stable.	We shipped the release last night and everything is stable.
+correct	Please review the pull request when you have a moment.	Please review the pull request when you have a moment.
+correct	I don't think that's a good idea, but let's discuss it.	I don't think that's a good idea, but let's discuss it.
+correct	She is meeting the client on Monday to go over the contract.	She is meeting the client on Monday to go over the contract.
+correct	The meeting has been moved to Thursday at 10 a.m.	The meeting has been moved to Thursday at 10 a.m.
+correct	Let me know if you need anything else from my side.	Let me know if you need anything else from my side.
+correct	We are going to need more time to finish the testing.	We are going to need more time to finish the testing.
+correct	The database migration completed without any errors.	The database migration completed without any errors.
+correct	I'll be out of the office next week, back on the 14th.	I'll be out of the office next week, back on the 14th.
+correct	Could you share the slides before the presentation?	Could you share the slides before the presentation?
+correct	Everything is on track, and we expect to launch on schedule.	Everything is on track, and we expect to launch on schedule.
+correct	My flight lands at 6:45, so I should be there by 8.	My flight lands at 6:45, so I should be there by 8.
+correct	They have not replied to our email yet.	They have not replied to our email yet.
+correct	I really appreciate your help with this.	I really appreciate your help with this.
+correct	The server has been running smoothly since the update.	The server has been running smoothly since the update.
+correct	Let's grab lunch tomorrow if you're free.	Let's grab lunch tomorrow if you're free.
+trap	i do not want to ship it on friday	I do not want to ship it on Friday.
+trap	we should never deploy on a friday	We should never deploy on a Friday.
+trap	i can't make it on tuesday but i can do wednesday	I can't make it on Tuesday, but I can do Wednesday.
+trap	there are no open tickets for the checkout team	There are no open tickets for the checkout team.
+trap	the build did not fail it was cancelled	The build did not fail; it was cancelled.
+trap	please don't forget to attach the signed form	Please don't forget to attach the signed form.
+trap	we need fifteen licenses not fifty	We need 15 licenses, not 50.
+trap	send two hundred units to the warehouse in pune	Send 200 units to the warehouse in Pune.
+trap	sarvesh and manas will present the kubernetes migration	Sarvesh and Manas will present the Kubernetes migration.
+trap	the api returns a four oh four when the token expires	The API returns a 404 when the token expires.
+trap	without the patch the app will not start	Without the patch, the app will not start.
+trap	nobody told me about the change in the schedule	Nobody told me about the change in the schedule.
+trap	the deadline is not friday it is the following monday	The deadline is not Friday; it is the following Monday.
+trap	i need exactly three copies of the contract	I need exactly three copies of the contract.
+trap	neither of them has approved the budget yet	Neither of them has approved the budget yet.
+longform	so i went to the meeting this morning and the client said they want the new feature by the end of the month but i told them that we need at least six weeks to build and test it properly and they said they would think about it	So I went to the meeting this morning, and the client said they want the new feature by the end of the month. But I told them that we need at least six weeks to build and test it properly, and they said they would think about it.
+longform	the main issue with the current approach is that it does not scale when the number of users grows so we should consider moving to a queue based design which would also make retries easier to handle	The main issue with the current approach is that it does not scale when the number of users grows. So we should consider moving to a queue-based design, which would also make retries easier to handle.
+longform	first we fix the login bug second we update the docs and third we ship the release	First, we fix the login bug. Second, we update the docs. Third, we ship the release.
+longform	i checked the logs and the error started right after the deployment so i think the new config is the cause but i want to confirm before we roll back	I checked the logs and the error started right after the deployment, so I think the new config is the cause, but I want to confirm before we roll back.
+longform	thanks for joining everyone today we will cover the roadmap the hiring plan and the budget and then we will have time for questions	Thanks for joining, everyone. Today we will cover the roadmap, the hiring plan and the budget, and then we will have time for questions.
+longform	the customer called yesterday complaining that the app crashes when they upload a large file i tried it myself and it works fine so maybe it is a device problem	The customer called yesterday complaining that the app crashes when they upload a large file. I tried it myself and it works fine, so maybe it is a device problem.
+longform	we reviewed three vendors the first was too expensive the second had poor support and the third seemed like a good fit so we will move forward with them	We reviewed three vendors. The first was too expensive, the second had poor support, and the third seemed like a good fit, so we will move forward with them.
+longform	please remember to submit your timesheets by friday and if you are on leave let your manager know so the payroll team can plan accordingly	Please remember to submit your timesheets by Friday, and if you are on leave, let your manager know so the payroll team can plan accordingly.
+short	yes	Yes.
+short	thank you so much	Thank you so much.
+short	okay sounds good	Okay, sounds good.
+short	see you tomorrow	See you tomorrow.
+short	not yet	Not yet.

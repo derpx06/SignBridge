@@ -1,0 +1,38 @@
+so um i need to send the the report by uh friday no wait make that thursday	I need to send the report by Thursday.	true
+i think the answer is forty two	I think the answer is 42.	true
+we're gonna ship it	We're going to ship it.	true
+so um i need to send the the report by uh friday no wait make that thursday	Please find attached the quarterly financial summary for review.	false
+send the report to maria by friday and copy the whole team	Send it.	false
+i do not want to ship it on friday	I want to ship it on Friday.	false
+we should ship it on friday	We should not ship it on Friday.	false
+i don't want to ship it on friday	I do not want to ship it on Friday.	true
+i can't make it on friday	I cannot make it on Friday.	true
+call me at 15 minutes past three	Call me at 15 minutes past three.	true
+call me at 15 minutes past three	Call me at 50 minutes past three.	false
+please call me tomorrow morning about it	Please call me tomorrow at 9 about it.	false
+uh um		true
+uh um	something	false
+hello there my friend		false
+hello there my friend	Hello there, my friend!	true
+meet me at noon	Meet me at 12.	false
+it costs five dollars	It costs $5.	true
+we have nothing to lose	We have to lose.	false
+she left without saying goodbye	She left without saying goodbye.	true
+the quick brown fox jumps over the lazy dog	The quick brown fox jumps.	true
+the quick brown fox jumps over the lazy dog	A swift auburn vulpine leaps above a sluggish canine.	false
+the quick brown fox jumps over the lazy dog	The quick brown fox jumps over the lazy dog	true
+I NEVER said that	I never said that.	true
+ship 2 boxes on 10 may	Ship 2 boxes on 10 May.	true
+ship 2 boxes on 10 may	Ship boxes on May.	false
+café au lait please	Café au lait, please.	true
+the answer is one hundred	The answer is 100.	true
+nobody knows	Somebody knows.	false
+ok	Okay.	true
+the meeting is at nine thirty	The meeting is at 9:30.	true
+honestly um i dont really care which one we pick	Honestly, I don't really care which one we pick.	true
+i dont think we should of shipped it before testing	I don't think we should have shipped it before testing.	true
+i dont think we should ship it	I think we should ship it.	false
+the total came to twenty three thousand four hundred and fifty dollars	The total came to $23,450.	true
+the answer is forty two no sorry forty three	The answer is 43.	true
+send it to john dot smith at example dot com	Send it to john.smith@example.com.	true
+send the report to maria by friday and copy the whole team	Send it.	false

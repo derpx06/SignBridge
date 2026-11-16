@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>body{margin:0;--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--pill:rgba(23,28,32,.86);--shadow:0 12px 32px rgba(0,0,0,.45);--scrim:#0A0D10;--focus:#5EEAD4}</style>
+</helmet>
+<div data-screen-label="Onboarding" style="width:960px;height:640px;box-sizing:border-box;display:flex;flex-direction:column;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:16px;overflow:hidden;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;-webkit-font-smoothing:antialiased">
+  <header style="height:56px;flex:none;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 10px 0 20px">
+    <div style="display:flex;align-items:center;gap:10px">{{ logo }}<span style="font-weight:600;font-size:15px">Voicio</span></div>
+    <div role="progressbar" aria-label="Setup progress" aria-valuemin="1" aria-valuemax="6" aria-valuenow="{{ step }}" style="display:flex;align-items:center;gap:6px">
+      <sc-for list="{{ dots }}" as="d" hint-placeholder-count="6"><span style="height:6px;width:{{ d.w }};border-radius:999px;background:{{ d.bg }};transition:width .2s ease-out,background .2s ease-out"></span></sc-for>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px"><span style="font:500 12px/1 'JetBrains Mono',monospace;color:var(--tx3)">{{ step }} / 6</span>
+      <button aria-label="Close setup" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--tx3);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">{{ ic14.x }}</button></div>
+  </header>
+
+  <section style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 40px">
+    <div style="width:100%;max-width:520px;display:flex;flex-direction:column;gap:16px">
+
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px">
+          <div style="position:relative;width:96px;height:96px;display:flex;align-items:center;justify-content:center"><span style="position:absolute;inset:0;border-radius:30px;border:1px solid var(--ac-line)"></span>{{ logo64 }}</div>
+          <h1 style="margin:8px 0 0;font-size:32px;line-height:40px;font-weight:600;letter-spacing:-0.025em">Speak. It types.</h1>
+          <p style="margin:0;font-size:15px;line-height:24px;color:var(--tx2);max-width:420px;text-wrap:pretty">Voicio turns your voice into text in any app. It runs entirely on this computer — no account, no cloud.</p>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <span style="height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--line2);font-size:12.5px;color:var(--tx2);display:inline-flex;align-items:center;gap:6px"><span style="color:var(--ac-tx);display:flex">{{ ic14.lock }}</span>Works offline</span>
+            <span style="height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--line2);font-size:12.5px;color:var(--tx2);display:inline-flex;align-items:center;gap:6px"><span style="color:var(--ac-tx);display:flex">{{ ic14.type }}</span>Types into any app</span>
+            <span style="height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--line2);font-size:12.5px;color:var(--tx2);display:inline-flex;align-items:center;gap:6px"><span style="color:var(--ac-tx);display:flex">{{ ic14.clock }}</span>About 2 minutes to set up</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ s2 }}">
+        <div><h2 style="margin:0;font-size:24px;line-height:32px;font-weight:600;letter-spacing:-0.02em">We picked a model for you</h2>
+          <p style="margin:6px 0 0;color:var(--tx2);font-size:14px">Based on this computer: 16 GB memory, 41 GB free.</p></div>
+        <div style="background:var(--surf);border:1px solid var(--ac-line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="width:36px;height:36px;border-radius:10px;background:var(--ac-soft);color:var(--ac-tx);display:flex;align-items:center;justify-content:center;flex:none">{{ ic.models }}</span>
+            <div style="flex:1"><div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600;font-size:15px">{{ q }}</span><sc-if value="{{ qRec }}" hint-placeholder-val="{{ true }}"><span style="height:20px;padding:0 7px;border-radius:999px;background:var(--ac-soft);color:var(--ac-tx);font:500 11.5px/1 Inter,sans-serif;display:inline-flex;align-items:center">Recommended</span></sc-if></div>
+              <div style="font-size:13px;color:var(--tx2);margin-top:2px">{{ qDesc }}</div></div>
+            <span style="font:400 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);white-space:nowrap">{{ qSize }}</span>
+          </div>
+          <div role="radiogroup" aria-label="Quality" style="display:flex;height:32px;padding:2px;gap:2px;border-radius:10px;background:var(--sunk);border:1px solid var(--line);box-sizing:border-box">
+            <sc-for list="{{ qSeg }}" as="s" hint-placeholder-count="3"><button role="radio" aria-checked="{{ s.on }}" onClick="{{ s.pick }}" style="flex:1;border-radius:8px;border:1px solid {{ s.bd }};background:{{ s.bg }};color:{{ s.fg }};font:500 13px/1 Inter,sans-serif;cursor:pointer;transition:background .15s ease-out">{{ s.label }}</button></sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div role="progressbar" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100" aria-label="Model download" style="height:6px;border-radius:999px;background:var(--line);overflow:hidden"><div style="width:41%;height:100%;border-radius:999px;background:var(--ac)"></div></div>
+            <div style="display:flex;align-items:center;gap:8px;font:400 12px/16px 'JetBrains Mono',monospace;color:var(--tx2)"><span style="flex:1">Parakeet TDT 0.6B · 263 of 640 MB</span><span>21.3 MB/s · 18 s left</span></div>
+          </div>
+        </div>
+        <div style="font-size:12.5px;color:var(--tx3)">Keeps downloading in the background while you finish setup.</div>
+      </sc-if>
+
+      <sc-if value="{{ s3 }}">
+        <div><h2 style="margin:0;font-size:24px;line-height:32px;font-weight:600;letter-spacing:-0.02em">Check your microphone</h2>
+          <p style="margin:6px 0 0;color:var(--tx2);font-size:14px">Say a few words. If the bar doesn't move, pick another input.</p></div>
+        <div style="background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:16px">
+          <button aria-haspopup="listbox" style="height:40px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:10px;border:1px solid var(--line2);background:var(--bg);color:var(--tx);font:400 14px/1 Inter,sans-serif;cursor:pointer;text-align:left" style-hover="border-color:var(--tx3)"><span style="color:var(--tx3);display:flex">{{ ic.mic }}</span><span style="flex:1">Blue Yeti (USB)</span><span style="font-size:12px;color:var(--tx3)">3 inputs</span><span style="color:var(--tx3);display:flex">{{ ic.chevDown }}</span></button>
+          <div style="padding:4px 0">{{ meterBig }}</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="height:24px;padding:0 9px;border-radius:999px;background:var(--ac-soft);color:var(--ac-tx);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:5px">{{ ic12.check }}Hearing you</span><span style="font-size:12.5px;color:var(--tx3)">Good level — not too quiet, not clipping.</span></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ s4 }}">
+        <div><h2 style="margin:0;font-size:24px;line-height:32px;font-weight:600;letter-spacing:-0.02em">Pick a shortcut</h2>
+          <p style="margin:6px 0 0;color:var(--tx2);font-size:14px">Works in every app. Press the keys you want to use.</p></div>
+        <div role="group" aria-label="Recording shortcut" style="height:112px;border-radius:14px;border:1.5px dashed var(--ac);background:var(--ac-soft);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <kbd style="font:500 15px/1 'JetBrains Mono',monospace;height:40px;padding:0 14px;display:inline-flex;align-items:center;border-radius:8px;background:var(--key);border:1px solid var(--line2);border-bottom:3px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Super</kbd><span style="color:var(--tx3)">+</span>
+            <kbd style="font:500 15px/1 'JetBrains Mono',monospace;height:40px;padding:0 14px;display:inline-flex;align-items:center;border-radius:8px;background:var(--key);border:1px solid var(--line2);border-bottom:3px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Alt</kbd><span style="color:var(--tx3)">+</span>
+            <kbd style="font:500 15px/1 'JetBrains Mono',monospace;height:40px;padding:0 22px;display:inline-flex;align-items:center;border-radius:8px;background:var(--key);border:1px solid var(--line2);border-bottom:3px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Space</kbd>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--tx2)"><span style="width:7px;height:7px;border-radius:50%;background:var(--ac);animation:vk-breathe 1.2s ease-in-out infinite"></span>Recording keys… press Esc to cancel</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--tx2)"><span style="color:var(--ac-tx);display:flex">{{ ic14.circleCheck }}</span>No conflicts with your desktop shortcuts.</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:4px">
+          <div role="radiogroup" aria-label="Shortcut behaviour" style="display:flex;height:32px;padding:2px;gap:2px;border-radius:10px;background:var(--sunk);border:1px solid var(--line);box-sizing:border-box;width:260px">
+            <sc-for list="{{ modeSeg }}" as="s" hint-placeholder-count="2"><button role="radio" aria-checked="{{ s.on }}" onClick="{{ s.pick }}" style="flex:1;border-radius:8px;border:1px solid {{ s.bd }};background:{{ s.bg }};color:{{ s.fg }};font:500 12.5px/1 Inter,sans-serif;cursor:pointer">{{ s.label }}</button></sc-for>
+          </div>
+          <span style="font-size:12.5px;color:var(--tx3)">{{ modeNote }}</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ s5 }}">
+        <div><h2 style="margin:0;font-size:24px;line-height:32px;font-weight:600;letter-spacing:-0.02em">Try typing into a field</h2>
+          <p style="margin:6px 0 0;color:var(--tx2);font-size:14px">Click the box, press the shortcut and say “testing one two three”.</p></div>
+        <div style="min-height:112px;box-sizing:border-box;border-radius:12px;border:1px solid var(--ac);outline:3px solid var(--ac-soft);background:var(--surf);padding:12px 14px;font-size:15px;line-height:24px">Testing one, two, three. This is Voicio typing into a real text field<span style="display:inline-block;width:2px;height:18px;background:var(--ac);vertical-align:-3px;margin-left:1px;animation:vk-blink 1s steps(1) infinite"></span></div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:var(--ac-tx);display:flex">{{ ic.circleCheck }}</span><span>Typing works.</span><span style="font:400 12px/1 'JetBrains Mono',monospace;color:var(--tx3)">68 chars · 0.4 s</span></div>
+        <div style="display:flex;align-items:center;gap:12px;padding-top:12px;border-top:1px solid var(--line)">
+          <span style="font-size:12.5px;color:var(--tx2);flex:1">Letters missing or out of order? Switch to paste.</span>
+          <div role="radiogroup" aria-label="Output" style="display:flex;height:30px;padding:2px;gap:2px;border-radius:10px;background:var(--sunk);border:1px solid var(--line);box-sizing:border-box;width:200px">
+            <sc-for list="{{ outSeg }}" as="s" hint-placeholder-count="2"><button role="radio" aria-checked="{{ s.on }}" onClick="{{ s.pick }}" style="flex:1;border-radius:8px;border:1px solid {{ s.bd }};background:{{ s.bg }};color:{{ s.fg }};font:500 12.5px/1 Inter,sans-serif;cursor:pointer">{{ s.label }}</button></sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ s6 }}">
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px">
+          <h2 style="margin:0;font-size:28px;line-height:36px;font-weight:600;letter-spacing:-0.02em">You're ready</h2>
+          <p style="margin:0;color:var(--tx2);font-size:15px;line-height:24px;max-width:420px;text-wrap:pretty">Press the shortcut in any app and start talking. Press it again when you're done.</p>
+          <div style="display:flex;align-items:center;gap:8px">
+            <kbd style="font:500 13px/1 'JetBrains Mono',monospace;height:30px;padding:0 10px;display:inline-flex;align-items:center;border-radius:7px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Super</kbd><span style="color:var(--tx3)">+</span>
+            <kbd style="font:500 13px/1 'JetBrains Mono',monospace;height:30px;padding:0 10px;display:inline-flex;align-items:center;border-radius:7px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Alt</kbd><span style="color:var(--tx3)">+</span>
+            <kbd style="font:500 13px/1 'JetBrains Mono',monospace;height:30px;padding:0 16px;display:inline-flex;align-items:center;border-radius:7px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Space</kbd>
+          </div>
+          <div style="width:100%;height:120px;margin-top:6px;border-radius:14px;background:var(--sunk);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:14px 14px">
+            <div style="width:220px;height:44px;box-sizing:border-box;border-radius:999px;background:var(--pill);border:1px solid var(--line2);display:flex;align-items:center;gap:10px;padding:0 16px">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px var(--ac-soft);flex:none"></span>
+              <div style="flex:1;display:flex;justify-content:center">{{ pillWave }}</div>
+              <span style="font:500 12px/1 'JetBrains Mono',monospace;color:var(--tx2)">0:03</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;font-size:12.5px;color:var(--tx2)"><span>Say <b style="font-weight:500;color:var(--tx)">“new line”</b> to break a line</span><span>Say <b style="font-weight:500;color:var(--tx)">“scratch that”</b> to undo</span></div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <footer style="height:64px;flex:none;display:flex;align-items:center;gap:8px;padding:0 20px;border-top:1px solid var(--line)">
+    <sc-if value="{{ canBack }}"><button onClick="{{ back }}" style="height:36px;padding:0 12px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 13.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">{{ ic14.arrowLeft }}Back</button></sc-if>
+    <div style="flex:1"></div>
+    <sc-if value="{{ canSkip }}"><button onClick="{{ next }}" style="height:36px;padding:0 12px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 13.5px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">{{ skipLabel }}</button></sc-if>
+    <button onClick="{{ next }}" style="height:36px;padding:0 16px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 13.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:filter .15s ease-out" style-hover="filter:brightness(1.1)">{{ nextLabel }}{{ ic14.arrowRight }}</button>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:640},&quot;step&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:1,&quot;max&quot;:6,&quot;default&quot;:1,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { step: null, q: 'Standard', mode: 'Hold to talk', out: 'Type it' };
+  componentDidMount() { if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true }); }
+  componentDidUpdate(pp) { if (pp.step !== this.props.step) this.setState({ step: null }); }
+  renderVals() {
+    const K = window.VK, R = React;
+    const ic = K ? K.icons(R, 16) : {}, ic14 = K ? K.icons(R, 14) : {}, ic12 = K ? K.icons(R, 12, 2) : {};
+    const step = Math.min(6, Math.max(1, Number(this.state.step || this.props.step || 1)));
+    const set = (n) => this.setState({ step: Math.min(6, Math.max(1, n)) });
+    const seg = (opts, cur, key) => opts.map((o) => { const on = o === cur; return { label: o, on, pick: () => this.setState({ [key]: o }), bg: on ? 'var(--surf)' : 'transparent', fg: on ? 'var(--tx)' : 'var(--tx2)', bd: on ? 'var(--line2)' : 'transparent' }; });
+    const Q = { Lite: ['Parakeet small, no clean-up. Quick for short messages.', '680 MB\n1.2 GB RAM'], Standard: ['Parakeet 0.6B + S1-mini clean-up. Fast and accurate.', '1.7 GB\n3.0 GB RAM'], Quality: ['Parakeet 1.1B + S1-mini. Best for long, technical text.', '3.5 GB\n5.8 GB RAM'] };
+    const qd = Q[this.state.q];
+    return {
+      ic, ic14, ic12,
+      logo: K ? K.logo(R, 24) : null, logo64: K ? K.logo(R, 64) : null,
+      step,
+      dots: Array.from({ length: 6 }, (_, i) => ({ w: i === step - 1 ? '22px' : '6px', bg: i < step ? 'var(--ac)' : 'var(--line2)' })),
+      s1: step === 1, s2: step === 2, s3: step === 3, s4: step === 4, s5: step === 5, s6: step === 6,
+      canBack: step > 1, canSkip: step === 2 || step === 5, skipLabel: step === 2 ? 'Skip for now' : 'Skip test',
+      nextLabel: step === 1 ? 'Get started' : step === 6 ? 'Finish' : 'Continue',
+      next: () => set(step === 6 ? 1 : step + 1), back: () => set(step - 1),
+      q: this.state.q, qRec: this.state.q === 'Standard', qDesc: qd[0], qSize: qd[1].replace('\n', ' · '),
+      qSeg: seg(['Lite', 'Standard', 'Quality'], this.state.q, 'q'),
+      modeSeg: seg(['Hold to talk', 'Tap to toggle'], this.state.mode, 'mode'),
+      modeNote: this.state.mode === 'Hold to talk' ? 'Talk while holding, release to type.' : 'Press once to start, again to finish.',
+      outSeg: seg(['Type it', 'Paste it'], this.state.out, 'out'),
+      meterBig: K ? K.meter(R, { n: 32, h: 14, dur: 2.2 }) : null,
+      pillWave: K ? K.wave(R, { n: 18, h: 22, w: 3, g: 3 }) : null
+    };
+  }
+}
+</script>
+</body>
+</html>

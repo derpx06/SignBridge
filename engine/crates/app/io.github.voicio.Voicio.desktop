@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Voicio
+Comment=Private, on-device dictation
+Exec=voicio
+Icon=io.github.voicio.Voicio
+Categories=Utility;Accessibility;
+Terminal=false
+StartupNotify=false
+StartupWMClass=io.github.voicio.Voicio
+X-GNOME-UsesNotifications=true

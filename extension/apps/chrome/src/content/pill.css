@@ -1,0 +1,50 @@
+:host{all:initial}
+.root{position:fixed;left:0;top:0;width:0;height:0;overflow:visible;pointer-events:none;z-index:2147483647;font:400 14px/20px var(--font);color:var(--tx)}
+.root *{box-sizing:border-box}
+.root button{font:inherit;color:inherit;cursor:pointer}
+.root :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.root{-webkit-font-smoothing:antialiased}
+/* The overlay must never paint: the shared .voicio class gives pages a background, which here would cover the whole site. */
+.root.voicio{background:transparent!important}
+.stack{position:fixed;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;pointer-events:none;width:330px;min-height:158px}
+.stack.up{flex-direction:column}
+.stack.down{flex-direction:column-reverse}
+.stack.right{align-items:flex-end}
+.stack.left{align-items:flex-start}
+.stack.mid{align-items:center}
+.live{height:58px;display:flex;align-items:flex-end;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 16px);mask-image:linear-gradient(to bottom,transparent 0,#000 16px)}
+.live p{margin:0;color:var(--tx)}
+.live .dim{color:var(--tx3)}
+.card .actions{display:flex;gap:8px;margin-top:10px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* The floating capsule (Capsule.dc.html): ink #16130F, 40 px tall, cream words. Always ink in both themes, with a calm soft
+   shadow and a thin state ring (orange while speaking, lime when typed). Calm entrance: ~200 ms ease-out, low overshoot. */
+.capsule{pointer-events:auto;display:flex;align-items:center;gap:10px;height:40px;min-width:64px;max-width:330px;width:max-content;padding-block:0;padding-inline:13px 6px;border-radius:20px;cursor:grab;user-select:none;touch-action:none;background:#16130F;color:#F7F3EA;box-shadow:0 8px 20px rgba(22,19,15,.22),0 0 0 0 rgba(242,84,27,0);animation:vk-pop .2s cubic-bezier(.2,.9,.3,1.08);transition:box-shadow .3s cubic-bezier(.2,.8,.2,1)}
+.capsule.listening{box-shadow:0 8px 20px rgba(22,19,15,.22),0 0 0 4px rgba(242,84,27,.16)}
+.capsule.done{box-shadow:0 8px 20px rgba(22,19,15,.22),0 0 0 4px rgba(184,240,106,.32)}
+.capsule.err{box-shadow:0 8px 20px rgba(22,19,15,.22),0 0 0 3px rgba(255,107,91,.28)}
+.capsule .words{flex:1;min-width:0;display:flex;justify-content:flex-end;overflow:hidden;font:500 13.5px/18px var(--font);color:#F7F3EA;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 14px);mask-image:linear-gradient(to right,transparent 0,#000 14px)}
+.capsule .words>span{white-space:nowrap;flex:none}
+/* the fade sits over empty padding, so short text never starts under it; only overflowing text slides beneath */
+.capsule .words{padding-inline-start:10px;margin-inline-start:-10px;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 10px);mask-image:linear-gradient(to right,transparent 0,#000 10px)}
+.capsule .words:dir(rtl){-webkit-mask-image:linear-gradient(to left,transparent 0,#000 10px);mask-image:linear-gradient(to left,transparent 0,#000 10px)}
+.capsule .dim{color:rgba(247,243,234,.5)}
+.capsule .words{unicode-bidi:plaintext}
+.capsule .words:dir(rtl){justify-content:flex-start;-webkit-mask-image:linear-gradient(to left,transparent 0,#000 14px);mask-image:linear-gradient(to left,transparent 0,#000 14px)}
+.capsule .act{flex:none;height:26px;padding:0 11px;border-radius:999px;border:0;background:#F7F3EA;color:#16130F;font:700 12px/26px var(--font);cursor:pointer;transition:background .15s}
+.capsule .act:hover{background:#FFFFFF}
+.capsule .label{font:500 13.5px/18px var(--font);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-inline-end:6px;color:#F7F3EA}
+.capsule .label.work{color:#FFC24B}
+.capsule .label.err{color:#FFB3A8}
+.capsule .label b{color:#B8F06A;font-weight:700}
+.capsule .x{width:26px;height:26px;flex:none;border-radius:50%;border:0;background:transparent;color:rgba(247,243,234,.55);display:grid;place-items:center;cursor:pointer}
+.capsule .x:hover{background:rgba(247,243,234,.1);color:#F7F3EA}
+.capsule .cloud{flex:none;font:700 10.5px/18px var(--font);letter-spacing:.02em;padding:0 8px;border-radius:999px;background:rgba(255,122,69,.18);color:#FFB08A} /* the capsule is always ink, so no theme tokens here */
+.fieldmic{position:fixed;width:30px;height:30px;display:grid;place-items:center;pointer-events:auto;border-radius:50%;border:0;background:#16130F;box-shadow:0 6px 14px rgba(22,19,15,.22);color:#FF7A45;cursor:pointer;animation:vk-pop .2s cubic-bezier(.2,.9,.3,1.08)}
+.fieldmic:hover{background:#2B2620}
+.root .fieldmic{color:#FF7A45} /* beats .root button{color:inherit}: the mic glyph carries the accent */
+.glass{background:var(--pill);box-shadow:var(--shadow)}
+.card{pointer-events:auto;width:300px;border-radius:20px;padding:14px 16px;font:400 13.5px/19px var(--font);color:var(--tx);animation:vk-pop .2s cubic-bezier(.2,.9,.3,1.08)}
+.card h4{margin:0;font:800 16px/20px var(--head);letter-spacing:-.3px}
+.card p.sub{margin:3px 0 0;color:var(--tx2);font-size:12.5px;line-height:17px}
+@media (prefers-reduced-motion:reduce){.capsule,.fieldmic,.card{animation:none!important;transition:none!important}}

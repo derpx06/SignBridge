@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- For a future Voicio.app bundle. Not built or tested yet: macOS support is experimental. -->
+<plist version="1.0">
+<dict>
+  <key>CFBundleIdentifier</key><string>io.github.voicio.Voicio</string>
+  <key>CFBundleName</key><string>Voicio</string>
+  <key>CFBundleExecutable</key><string>voicio</string>
+  <key>CFBundleShortVersionString</key><string>0.1.0</string>
+  <key>LSUIElement</key><true/>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Voicio listens to your microphone only while you dictate. Audio is processed on this Mac and never saved.</string>
+  <key>NSAppleEventsUsageDescription</key>
+  <string>Voicio types the recognised text into the app you are using.</string>
+</dict>
+</plist>

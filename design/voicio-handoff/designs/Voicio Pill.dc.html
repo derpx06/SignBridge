@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>body{margin:0;--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--pill:rgba(23,28,32,.86);--shadow:0 12px 32px rgba(0,0,0,.45);--scrim:#0A0D10;--focus:#5EEAD4}</style>
+</helmet>
+<div data-screen-label="Floating pill" style="width:{{ W }};height:{{ H }};position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--line);background:var(--sunk);box-sizing:border-box;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;color:var(--tx);-webkit-font-smoothing:antialiased">
+  <sc-if value="{{ isDesktop }}">
+    <div aria-hidden="true" style="position:absolute;inset:0">
+      <span style="position:absolute;left:-80px;top:-60px;width:520px;height:420px;border-radius:50%;background:oklch(0.62 0.09 190 / .55);filter:blur(80px)"></span>
+      <span style="position:absolute;right:-60px;top:40px;width:480px;height:380px;border-radius:50%;background:oklch(0.58 0.09 270 / .45);filter:blur(90px)"></span>
+      <span style="position:absolute;left:360px;bottom:-200px;width:420px;height:360px;border-radius:50%;background:oklch(0.78 0.09 70 / .35);filter:blur(90px)"></span>
+      <div style="position:absolute;left:0;right:0;top:0;height:28px;background:rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;font:500 12px/1 Inter,sans-serif;color:#fff">Tue 27 Oct  14:32</div>
+      <div style="position:absolute;left:96px;top:64px;width:420px;height:270px;border-radius:14px;background:var(--surf);opacity:.55;filter:blur(5px)"></div>
+      <div style="position:absolute;left:470px;top:110px;width:380px;height:240px;border-radius:14px;background:var(--bg);opacity:.6;filter:blur(5px)"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isEditor }}">
+    <div style="position:absolute;inset:0;background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:16px 16px"></div>
+    <div style="position:absolute;left:100px;right:100px;top:24px;height:360px;border-radius:12px;background:var(--surf);border:1px solid var(--line2);overflow:hidden">
+      <div style="height:36px;display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--tx2)"><span style="display:flex;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--line2)"></span><span style="width:10px;height:10px;border-radius:50%;background:var(--line2)"></span><span style="width:10px;height:10px;border-radius:50%;background:var(--line2)"></span></span><span style="flex:1;text-align:center">launch-notes.md — Text Editor</span></div>
+      <div style="padding:18px 28px;font-size:14px;line-height:24px;color:var(--tx)">
+        <div style="font-size:18px;font-weight:600;margin-bottom:8px">Launch checklist — 1.4.2</div>
+        <div style="color:var(--tx2)">– Release notes by noon Thursday</div>
+        <div style="color:var(--tx2)">– Linux build: tray icon, Wayland, autostart</div>
+        <div style="color:var(--tx2);margin-bottom:10px">– Chrome extension store listing</div>
+        <div>Notes from standup: <span style="display:inline-block;width:2px;height:18px;background:var(--ac);vertical-align:-3px;animation:vk-blink 1s steps(1) infinite"></span></div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isTile }}">
+    <div style="position:absolute;inset:0;background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:16px 16px"></div>
+    <div style="position:absolute;left:16px;top:14px;font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">{{ label }}</div>
+  </sc-if>
+
+  <div style="position:absolute;left:0;right:0;bottom:{{ bottom }};display:flex;flex-direction:column;align-items:center;gap:8px">
+    <sc-if value="{{ stListening }}" hint-placeholder-val="{{ true }}">
+      <div aria-live="polite" style="width:400px;box-sizing:border-box;padding:12px 16px;border-radius:16px;background:var(--pill);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border:1px solid var(--line2);box-shadow:var(--shadow);font-size:14px;line-height:22px">
+        <div style="color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">…for Thursday we need the release notes done by noon,</div>
+        <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">and can someone double-check the Linux build? I think</div>
+        <div style="white-space:nowrap;overflow:hidden">the tray icon still flickers <span style="color:var(--tx3)">on Wayland when you</span></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ stError }}">
+      <div role="alert" style="width:360px;box-sizing:border-box;padding:14px 16px;border-radius:16px;background:var(--pill);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line2);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:600"><span style="color:var(--err);display:flex">{{ ic.alertCircle }}</span>Couldn't type into Terminal</div>
+        <div style="font-size:13px;color:var(--tx2);text-wrap:pretty">The window blocked typed input. Your text is safe.</div>
+        <div style="background:var(--surf2);border-radius:8px;padding:8px 10px;font-size:13px;line-height:19px">git commit -m "fix: release the audio device when dictation is cancelled"</div>
+        <div style="display:flex;gap:6px">
+          <button style="height:30px;padding:0 12px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:500 12.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="filter:brightness(1.1)">{{ ic14.copy }}Copy</button>
+          <button style="height:30px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);font:500 12.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:var(--surf2)">{{ ic14.retry }}Retry</button>
+          <button style="height:30px;padding:0 10px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 12.5px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">Open settings</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ stNoModel }}">
+      <div role="alert" style="width:340px;box-sizing:border-box;padding:14px 16px;border-radius:16px;background:var(--pill);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line2);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600">Download a speech model first</div>
+        <div style="font-size:13px;color:var(--tx2);text-wrap:pretty">Standard is 1.7 GB and works offline once installed.</div>
+        <div style="display:flex;gap:6px">
+          <button style="height:30px;padding:0 12px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:500 12.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="filter:brightness(1.1)">{{ ic14.download }}Open Models</button>
+          <button style="height:30px;padding:0 10px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 12.5px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">Not now</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <div onMouseEnter="{{ enter }}" onMouseLeave="{{ leave }}" aria-label="Voicio dictation" style="width:220px;height:44px;box-sizing:border-box;border-radius:999px;background:var(--pill);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border:1px solid {{ pillBorder }};box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;padding:0 6px 0 16px;cursor:grab;user-select:none">
+      <sc-if value="{{ stListening }}" hint-placeholder-val="{{ true }}">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px var(--ac-soft);flex:none"></span>
+        <div style="flex:1;display:flex;justify-content:center">{{ wave }}</div>
+        <sc-if value="{{ hover }}"><button aria-label="Cancel dictation" tabindex="-1" style="width:30px;height:30px;border-radius:50%;border:none;background:var(--surf2);color:var(--tx);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none" style-hover="background:var(--err-soft);color:var(--err)">{{ ic14.x }}</button></sc-if>
+        <sc-if value="{{ noHover }}" hint-placeholder-val="{{ true }}"><span style="width:30px;text-align:center;font:500 12px/1 'JetBrains Mono',monospace;color:var(--tx2)">0:07</span></sc-if>
+      </sc-if>
+      <sc-if value="{{ stProcessing }}">
+        <span style="position:relative;width:14px;height:14px;flex:none">{{ spinner }}</span>
+        <span style="font-size:13px;font-weight:500;flex:1">Cleaning up…</span>
+        <div style="padding-right:10px">{{ waveSmall }}</div>
+      </sc-if>
+      <sc-if value="{{ stDone }}">
+        <span style="color:var(--ac-tx);display:flex;animation:vk-pop .18s ease-out">{{ ic.circleCheck }}</span>
+        <span style="font-size:13px;font-weight:500;flex:1">Typed into Slack</span>
+        <span style="font:400 12px/1 'JetBrains Mono',monospace;color:var(--tx3);padding-right:10px">48 words</span>
+      </sc-if>
+      <sc-if value="{{ stError }}">
+        <span style="color:var(--err);display:flex">{{ ic.alertCircle }}</span>
+        <span style="font-size:13px;font-weight:500;flex:1">Couldn't type</span>
+        <button aria-label="Dismiss" tabindex="-1" style="width:30px;height:30px;border-radius:50%;border:none;background:transparent;color:var(--tx2);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">{{ ic14.x }}</button>
+      </sc-if>
+      <sc-if value="{{ stNoModel }}">
+        <span style="color:var(--warn);display:flex">{{ ic.download }}</span>
+        <span style="font-size:12.5px;font-weight:500;flex:1;white-space:nowrap">Speech model not installed</span>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:440},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;listening&quot;,&quot;processing&quot;,&quot;done&quot;,&quot;error&quot;,&quot;nomodel&quot;],&quot;default&quot;:&quot;listening&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;scene&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;editor&quot;,&quot;tile&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { hov: false };
+  componentDidMount() { if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true }); }
+  renderVals() {
+    const K = window.VK, R = React;
+    const st = this.props.state || 'listening', sc = this.props.scene || 'tile';
+    const hover = !!this.props.hover || this.state.hov;
+    const labels = { listening: 'listening', processing: 'processing', done: 'done · fades after 1.2 s', error: 'error', nomodel: 'speech model not installed' };
+    return {
+      ic: K ? K.icons(R, 16) : {}, ic14: K ? K.icons(R, 14) : {},
+      W: sc === 'tile' ? '468px' : '960px', H: sc === 'tile' ? '300px' : '440px', bottom: sc === 'tile' ? '24px' : '32px',
+      isDesktop: sc === 'desktop', isEditor: sc === 'editor', isTile: sc === 'tile', label: labels[st],
+      stListening: st === 'listening', stProcessing: st === 'processing', stDone: st === 'done', stError: st === 'error', stNoModel: st === 'nomodel',
+      hover, noHover: !hover,
+      enter: () => this.setState({ hov: true }), leave: () => this.setState({ hov: false }),
+      pillBorder: st === 'error' ? 'var(--err)' : 'var(--line2)',
+      wave: K ? K.wave(R, { n: 18, h: 22, w: 3, g: 3 }) : null,
+      waveSmall: K ? K.wave(R, { n: 7, h: 14, w: 3, g: 3, mode: 'processing' }) : null,
+      spinner: K ? K.spinner(R, 0, 2) : null
+    };
+  }
+}
+</script>
+</body>
+</html>

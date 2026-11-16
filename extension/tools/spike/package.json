@@ -1,0 +1,1 @@
+{ "name": "voicio-spike", "private": true, "license": "GPL-3.0-or-later", "type": "module", "dependencies": { "@huggingface/transformers": "^3.7.0" } }

@@ -1,0 +1,57 @@
+[package]
+name = "voicio"
+version = "0.9.0"
+edition = "2021"
+license.workspace = true
+description = "Voicio desktop agent: hotkey, microphone, model-worker supervision and text insertion"
+publish = false
+
+[[bin]]
+name = "voicio"
+path = "src/main.rs"
+
+[dependencies]
+voicio-ipc = { path = "../ipc" }
+voicio-models = { path = "../models" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+regex = "1"
+base64 = "0.22"
+cpal = "0.18"
+toml = "0.9"
+directories = "6"
+sysinfo = { version = "0.38", default-features = false, features = ["system"] }
+interprocess = "2.4"
+slint = { version = "1.18", default-features = false, features = ["std", "compat-1-2", "backend-winit", "renderer-software", "system-tray", "accessibility", "unstable-winit-030"] }
+
+global-hotkey = "0.9"
+arboard = { version = "3", default-features = false }
+# Live cloud transcription (src/cloud.rs): a blocking WebSocket on a thread, TLS by rustls + ring (already in Cargo.lock).
+tungstenite = { version = "0.30", default-features = false, features = ["handshake"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+webpki-roots = "1"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+zbus = "5"
+# Wayland desktops other than GNOME: global shortcuts through the XDG portal (press + release).
+ashpd = { version = "0.13", default-features = false, features = ["global_shortcuts", "remote_desktop", "screencast", "async-io"] }
+futures-util = { version = "0.3", default-features = false, features = ["std"] }
+# X11 keystroke injection; Wayland (non-GNOME) uses the clipboard until enigo's Wayland backends stabilise.
+enigo = { version = "0.6", default-features = false, features = ["x11rb"] }
+arboard = { version = "3", default-features = false, features = ["wayland-data-control"] }
+
+[target.'cfg(any(windows, target_os = "macos"))'.dependencies]
+enigo = "0.6"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_Security", "Win32_System_JobObjects", "Win32_UI_WindowsAndMessaging"] }
+
+# Optional cloud STT (src/cloud.rs): same ureq + TLS setup as the models crate (already in Cargo.lock).
+[target.'cfg(target_os = "linux")'.dependencies.ureq]
+version = "3"
+features = ["rustls"]
+
+[target.'cfg(not(target_os = "linux"))'.dependencies.ureq]
+version = "3"
+default-features = false
+features = ["native-tls", "gzip"]

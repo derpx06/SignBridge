@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Voicio</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="privacy_policy_url" translatable="false">https://github.com/derpx06/voicio/blob/main/PRIVACY.md</string>
+    <string name="accessibility_description">Shows the Voicio bubble over text fields and types what you dictate into the field you are using. Voicio reads only the focused field. Your voice stays on this phone unless you turn on an optional cloud provider yourself.</string>
+
+
+    <!-- onboarding: shared -->
+    <string name="skip">Skip</string>
+    <string name="back">Back</string>
+    <string name="step_of">Step %1$d of %2$d</string>
+    <string name="perm_continue">Continue</string>
+
+    <!-- onboarding: welcome -->
+    <string name="welcome_title">Hi. Let\'s get you talking.</string>
+    <string name="welcome_body">A bubble sits next to any text field. Say what you mean, and Voicio types it into whatever app you\'re in. Setup takes about two minutes.</string>
+    <string name="welcome_point_1">Works in every app: chat, email, notes.</string>
+    <string name="welcome_point_2">Stays on this phone. No account, no upload.</string>
+    <string name="welcome_point_3">Punctuation, no ums, your meaning kept.</string>
+    <string name="welcome_cta">Get started</string>
+    <string name="demo_said">running ten minutes late save me a seat</string>
+    <string name="demo_typed">Running 10 minutes late, save me a seat.</string>
+    <string name="demo_hint">Message</string>
+
+    <!-- onboarding: microphone -->
+    <string name="mic_title">Say hello.</string>
+    <string name="mic_body">Talk the way you normally would. The honeycomb moves with your voice.</string>
+    <string name="mic_ask_body">Voicio listens only while you dictate. Audio is never saved.</string>
+    <string name="mic_allow">Allow microphone</string>
+    <string name="mic_open_settings">Open app settings</string>
+    <string name="mic_blocked">Android will not ask again. Open app settings, tap Permissions, then Microphone, and choose Allow.</string>
+    <string name="mic_listening">Listening…</string>
+    <string name="mic_ok">Loud and clear</string>
+    <string name="mic_ok_body">Your voice is well above the room noise.</string>
+    <string name="mic_silent">Nothing heard yet. Check the microphone is not muted or covered, and speak a little closer.</string>
+    <string name="mic_failed">The microphone could not start. Another app may be using it.</string>
+    <string name="mic_try_again">Try again</string>
+    <string name="mic_skip">Skip this check</string>
+
+    <!-- onboarding: bubble (accessibility) -->
+    <string name="acc_title">Turn on the bubble.</string>
+    <string name="acc_body">Android\'s accessibility setting lets Voicio show the bubble next to text fields and type for you. It reads only the field you are typing in.</string>
+    <string name="acc_on">Accessibility is on</string>
+    <string name="guide_1">Open Voicio in the list</string>
+    <string name="guide_1_body">Under Downloaded apps.</string>
+    <string name="guide_2">Switch on \"Use Voicio\"</string>
+    <string name="guide_2_body">Then tap Allow. You come straight back here.</string>
+    <string name="guide_3">If it says \"Restricted setting\"</string>
+    <string name="guide_3_body">Open App info, tap the three dots at the top right, choose Allow restricted settings, then try step 2 again.</string>
+    <string name="guide_still_off">Still off? Android may be blocking it</string>
+    <string name="guide_open_acc">Open accessibility settings</string>
+    <string name="guide_open_appinfo">Open App info</string>
+
+    <!-- onboarding: model -->
+    <string name="model_title">Get your speech model.</string>
+    <string name="model_body">One download of %1$d MB. It runs on this phone, so your voice never leaves it.</string>
+    <string name="model_blurb">Fast and accurate English with live words while you speak.</string>
+    <string name="model_english">English</string>
+    <string name="model_download_size">%1$d MB download</string>
+    <string name="model_on_phone">%1$d MB on your phone</string>
+    <string name="model_memory">About 0.7 GB memory</string>
+    <string name="model_download_cta">Download %1$d MB</string>
+    <string name="dl_done">Model ready</string>
+    <string name="dl_stopped">Download stopped</string>
+    <string name="dl_progress">%1$d of %2$d MB · you can leave this screen</string>
+    <string name="dl_unpacking">Unpacking and checking. This takes a minute.</string>
+    <string name="dl_try_again">Try again</string>
+    <string name="dl_offline_title">No internet connection</string>
+    <string name="dl_offline_body">Connect to Wi-Fi or mobile data, then try again. Nothing has been downloaded yet.</string>
+    <string name="dl_space_title">Not enough storage</string>
+    <string name="dl_space_body">Free about 320 MB on this phone, then try again.</string>
+    <string name="dl_metered_title">You are on mobile data</string>
+    <string name="dl_metered_body">The model is %1$d MB. Wi-Fi is kinder to your data plan.</string>
+    <string name="dl_metered_go">Download anyway</string>
+    <string name="dl_privacy">Checked against a fixed checksum before use. This is the only time Voicio goes online, unless you turn on a cloud provider.</string>
+
+    <!-- onboarding: try it -->
+    <string name="try_title">Now say something.</string>
+    <string name="try_body">Tap the box below. When the bubble appears, %1$s it and say something.</string>
+    <string name="try_hint">Tap here to try</string>
+    <string name="try_it_works">It works. Voicio is ready in every app.</string>
+    <string name="ready_1">Tap any text field</string>
+    <string name="ready_1_body">The bubble appears next to it.</string>
+    <string name="ready_2_tap">Tap the bubble and speak</string>
+    <string name="ready_2_hold">Hold the bubble and speak</string>
+    <string name="ready_2_body">Your words appear inside it as you talk.</string>
+    <string name="ready_3_tap">Tap Done, or let go</string>
+    <string name="ready_3_hold">Let go</string>
+    <string name="ready_3_body">Clean text is typed in. Undo takes it back.</string>
+    <string name="ready_start">Start using Voicio</string>
+    <string name="ready_warn_acc_title">The bubble is off</string>
+    <string name="ready_warn_acc_body">Turn on accessibility so Voicio can show the bubble and type for you.</string>
+    <string name="ready_warn_acc_fix">Turn on</string>
+    <string name="ready_warn_mic_title">Microphone is off</string>
+    <string name="ready_warn_mic_body">Voicio cannot hear you until you allow it.</string>
+    <string name="ready_warn_mic_fix">Open app settings</string>
+    <string name="ready_warn_model_title">No speech model yet</string>
+    <string name="ready_warn_model_body">Download it from Home whenever you are on Wi-Fi.</string>
+
+    <!-- home / data -->
+    <string name="data_reset_title">Your history was reset</string>
+    <string name="data_reset_body">Android could no longer unlock the saved history and notes, so Voicio started fresh. Nothing else changed.</string>
+    <string name="dismiss">Dismiss</string>
+
+    <!-- settings -->
+    <string name="set_delete_model">Delete downloaded model</string>
+    <string name="set_reset">Reset app</string>
+</resources>

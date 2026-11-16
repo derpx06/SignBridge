@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>body{margin:0;--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--ac2:#22D3EE;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--pill:rgba(23,28,32,.9);--shadow:0 12px 32px rgba(0,0,0,.45);--focus:#5EEAD4}</style>
+</helmet>
+<div data-screen-label="In-page" style="width:468px;height:240px;box-sizing:border-box;position:relative;overflow:hidden;border-radius:14px;border:1px solid {{ sBd }};background:{{ sBg }};font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;-webkit-font-smoothing:antialiased">
+  <div style="position:absolute;left:16px;top:12px;font:500 11.5px/16px 'JetBrains Mono',monospace;color:{{ sSub }}">{{ label }}</div>
+  <div style="position:absolute;left:16px;top:36px;width:300px;height:112px;box-sizing:border-box;border-radius:8px;border:1px solid {{ fBd }};box-shadow:{{ fRing }};background:{{ sFld }};color:{{ sTx }};padding:10px 12px;font-size:13.5px;line-height:22px">{{ fieldText }}<sc-if value="{{ caret }}"><span style="display:inline-block;width:2px;height:16px;background:#3B5BDB;vertical-align:-3px;margin-left:1px;animation:vk-blink 1s steps(1) infinite"></span></sc-if>
+    <sc-if value="{{ isHover }}">
+      <button aria-label="Dictate into this field" style="position:absolute;right:8px;bottom:8px;width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--ac-tx);display:flex;align-items:center;justify-content:center;cursor:pointer">{{ ic14.mic }}</button>
+      <div role="tooltip" style="position:absolute;right:-20px;bottom:46px;height:30px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;background:var(--tx);color:var(--bg);font:500 12px/1 Inter,sans-serif;white-space:nowrap">Dictate<span style="font:500 11px/1 'JetBrains Mono',monospace;opacity:.7">Alt+Shift+V</span></div>
+    </sc-if>
+  </div>
+  <sc-if value="{{ isContext }}">
+    <div role="menu" style="position:absolute;left:236px;top:56px;width:216px;padding:4px;border-radius:10px;background:var(--bg);border:1px solid var(--line2);box-shadow:var(--shadow);font-size:13px;color:var(--tx)">
+      <div style="height:28px;display:flex;align-items:center;padding:0 10px;border-radius:6px">Cut</div>
+      <div style="height:28px;display:flex;align-items:center;padding:0 10px;border-radius:6px">Copy</div>
+      <div style="height:28px;display:flex;align-items:center;padding:0 10px;border-radius:6px">Paste</div>
+      <div style="height:1px;background:var(--line);margin:3px 0"></div>
+      <div role="menuitem" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;background:var(--ac-soft);font-weight:500">{{ logo14 }}<span style="flex:1">Dictate here</span><span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--tx3)">Alt+Shift+V</span></div>
+      <div style="height:1px;background:var(--line);margin:3px 0"></div>
+      <div style="height:28px;display:flex;align-items:center;padding:0 10px;border-radius:6px">Inspect</div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isPill }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;right:16px;bottom:16px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;color:var(--tx)">
+      <sc-if value="{{ stListening }}" hint-placeholder-val="{{ true }}">
+        <div aria-live="polite" style="width:248px;box-sizing:border-box;padding:9px 13px;border-radius:14px;background:var(--pill);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line2);box-shadow:var(--shadow);font-size:13.5px;line-height:21px">
+          <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">the structure works really well, could</div>
+          <div style="white-space:nowrap;overflow:hidden">we move pricing <span style="color:var(--tx3)">above the FAQ and</span></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ stError }}">
+        <div role="alert" style="width:248px;box-sizing:border-box;padding:11px 13px;border-radius:14px;background:var(--pill);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line2);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:13px;font-weight:600">Didn't catch that</div>
+          <div style="font-size:12.5px;line-height:18px;color:var(--tx2)">No speech detected. Check your mic and try again.</div>
+          <div style="display:flex;gap:6px"><button style="height:28px;padding:0 12px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 12.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer">{{ ic12.retry }}Retry</button><button style="height:28px;padding:0 10px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 12.5px/1 Inter,sans-serif;cursor:pointer">Dismiss</button></div>
+        </div>
+      </sc-if>
+      <div style="width:200px;height:40px;box-sizing:border-box;border-radius:999px;background:var(--pill);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid {{ pillBd }};box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;padding:0 5px 0 14px">
+        <sc-if value="{{ stListening }}" hint-placeholder-val="{{ true }}"><span style="width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px var(--ac-soft);flex:none"></span><div style="flex:1;display:flex;justify-content:center">{{ wave }}</div><span style="font:500 11.5px/1 'JetBrains Mono',monospace;color:var(--tx2)">0:06</span><span aria-label="Cancel" style="width:28px;height:28px;border-radius:50%;background:var(--surf2);color:var(--tx2);display:flex;align-items:center;justify-content:center;flex:none">{{ ic12.x }}</span></sc-if>
+        <sc-if value="{{ stProcessing }}"><span style="position:relative;width:14px;height:14px;flex:none">{{ spin }}</span><span style="font-size:13px;font-weight:500;flex:1">Cleaning up…</span><div style="padding-right:8px">{{ procWave }}</div></sc-if>
+        <sc-if value="{{ stDone }}"><span style="color:var(--ac-tx);display:flex">{{ ic.circleCheck }}</span><span style="font-size:13px;font-weight:500;flex:1">Inserted</span><span style="font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--tx3);padding-right:9px">41 words</span></sc-if>
+        <sc-if value="{{ stError }}"><span style="color:var(--warn);display:flex">{{ ic.alertCircle }}</span><span style="font-size:13px;font-weight:500;flex:1">Didn't catch that</span><span style="width:28px;height:28px;border-radius:50%;color:var(--tx2);display:flex;align-items:center;justify-content:center">{{ ic12.x }}</span></sc-if>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:468,&quot;height&quot;:240},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;listening&quot;,&quot;processing&quot;,&quot;done&quot;,&quot;error&quot;,&quot;hover&quot;,&quot;context&quot;],&quot;default&quot;:&quot;listening&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;site&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() { if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true }); }
+  renderVals() {
+    const K = window.VK, R = React, p = this.props;
+    const st = p.state || 'listening', dark = p.site === 'dark';
+    const pill = ['listening', 'processing', 'done', 'error'].includes(st);
+    const texts = { listening: 'Hi Sam, thanks for sending the draft over. I read it this morning and ', processing: 'Hi Sam, thanks for sending the draft over. I read it this morning and ', done: 'Hi Sam, thanks for sending the draft over. I read it this morning and the structure works really well. Could we move pricing above the FAQ?', error: 'Hi Sam, ', hover: '', context: 'Hi Sam, ' };
+    const labels = { listening: 'listening', processing: 'processing', done: 'done · fades after 1.5 s', error: 'error', hover: 'hover · field mic + tooltip', context: 'right-click · “Dictate here”' };
+    const focused = st !== 'hover';
+    return {
+      ic: K ? K.icons(R, 16) : {}, ic14: K ? K.icons(R, 14) : {}, ic12: K ? K.icons(R, 12, 2) : {}, logo14: K ? K.logo(R, 14) : null,
+      label: labels[st] + (dark ? ' · dark site' : ' · light site'),
+      sBg: dark ? '#0D1117' : '#FFFFFF', sTx: dark ? '#E6EDF3' : '#1F2328', sSub: dark ? '#9198A1' : '#59636E', sBd: dark ? '#3D444D' : '#D1D9E0', sFld: dark ? '#151B23' : '#FFFFFF',
+      fBd: focused ? '#3B5BDB' : (dark ? '#3D444D' : '#D1D9E0'), fRing: focused ? '0 0 0 3px rgba(59,91,219,.18)' : 'none',
+      fieldText: texts[st] || '', caret: focused,
+      isHover: st === 'hover', isContext: st === 'context', isPill: pill,
+      stListening: st === 'listening', stProcessing: st === 'processing', stDone: st === 'done', stError: st === 'error',
+      pillBd: st === 'error' ? 'var(--warn)' : 'var(--line2)',
+      wave: K ? K.wave(R, { n: 14, h: 18, w: 3, g: 2, grad: true }) : null,
+      procWave: K ? K.wave(R, { n: 6, h: 12, w: 3, g: 2, mode: 'processing' }) : null,
+      spin: K ? K.spinner(R, 0, 2) : null
+    };
+  }
+}
+</script>
+</body>
+</html>

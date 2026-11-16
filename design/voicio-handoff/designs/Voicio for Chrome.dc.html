@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>html,body{margin:0;background:#DADFE0}a{color:#0F766E}a:hover{color:#115E59}textarea::-webkit-scrollbar{width:0}</style>
+</helmet>
+<div style="zoom:{{ z }};width:1280px;padding:20px 40px 32px;box-sizing:border-box;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;display:flex;flex-direction:column;align-items:center;gap:14px;-webkit-font-smoothing:antialiased">
+  <div style="width:1200px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:12px 14px;border-radius:14px;background:#FFFFFF;border:1px solid #D2D7D9;color:#101417;box-sizing:border-box">
+    <div style="display:flex;flex-direction:column;gap:2px;margin-right:auto"><div style="font-weight:600">Voicio for Chrome · live prototype</div><div style="font-size:12.5px;color:#475157">Click into the message, press <b style="font:500 12px/1 'JetBrains Mono',monospace">Alt + Shift + V</b> and talk. Press it again (or wait) to insert. Esc cancels. Right-click a field for “Dictate here”.</div></div>
+    <sc-for list="{{ demoGroups }}" as="g" hint-placeholder-count="5">
+      <div style="display:flex;align-items:center;gap:6px"><span style="font-size:12px;color:#475157">{{ g.label }}</span>
+        <div style="display:flex;height:28px;padding:2px;gap:2px;border-radius:8px;background:#EDEFEF;border:1px solid #E2E6E7;box-sizing:border-box"><sc-for list="{{ g.opts }}" as="o"><button onClick="{{ o.pick }}" aria-pressed="{{ o.on }}" style="padding:0 9px;border-radius:6px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }};font:500 12px/1 Inter,sans-serif;cursor:pointer;white-space:nowrap">{{ o.label }}</button></sc-for></div></div>
+    </sc-for>
+  </div>
+
+  <div data-screen-label="Browser" style="{{ vars }};width:1200px;height:780px;border-radius:14px;overflow:hidden;background:var(--sunk);border:1px solid var(--line2);display:flex;flex-direction:column;position:relative;color:var(--tx);box-shadow:0 24px 60px rgba(16,20,23,.18)">
+    <div style="height:40px;flex:none;display:flex;align-items:flex-end;gap:4px;padding:0 10px">
+      <div style="display:flex;gap:6px;align-self:center;padding:0 8px 0 4px"><span style="width:11px;height:11px;border-radius:50%;background:var(--line2)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--line2)"></span><span style="width:11px;height:11px;border-radius:50%;background:var(--line2)"></span></div>
+      <button onClick="{{ goPage }}" style="height:32px;width:220px;display:flex;align-items:center;gap:8px;padding:0 12px;border:none;border-radius:10px 10px 0 0;background:{{ tab1Bg }};color:var(--tx);font:500 12.5px/1 Inter,sans-serif;cursor:pointer;text-align:left"><span style="width:14px;height:14px;border-radius:4px;background:#3B5BDB;flex:none"></span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">New message · Postbox</span><sc-if value="{{ tabLive }}"><span title="Voicio is listening" style="width:7px;height:7px;border-radius:50%;background:var(--ac);animation:vk-breathe 1.2s ease-in-out infinite"></span></sc-if></button>
+      <sc-if value="{{ optOpen }}"><div style="height:32px;width:220px;display:flex;align-items:center;gap:8px;padding:0 6px 0 12px;border-radius:10px 10px 0 0;background:{{ tab2Bg }};font:500 12.5px/1 Inter,sans-serif;box-sizing:border-box"><button onClick="{{ goOpt }}" style="flex:1;display:flex;align-items:center;gap:8px;border:none;background:transparent;color:var(--tx);font:inherit;cursor:pointer;padding:0;height:100%">{{ logo14 }}Voicio settings</button><button onClick="{{ closeOpt }}" aria-label="Close tab" style="width:20px;height:20px;border-radius:6px;border:none;background:transparent;color:var(--tx3);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">{{ ic12.x }}</button></div></sc-if>
+    </div>
+    <div style="height:44px;flex:none;display:flex;align-items:center;gap:6px;padding:0 10px;background:var(--bg);border-bottom:1px solid var(--line)">
+      <span style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--tx3)">{{ ic.arrowLeft }}</span><span style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--tx3);opacity:.5">{{ ic.arrowRight }}</span><span style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--tx3)">{{ ic.retry }}</span>
+      <div style="flex:1;height:32px;border-radius:999px;background:var(--surf);border:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 14px;font:400 13px/1 'JetBrains Mono',monospace;color:var(--tx2)"><span style="display:flex;color:var(--tx3)">{{ ic12.lock }}</span>{{ url }}</div>
+      <div style="position:relative">
+        <button onClick="{{ togglePopup }}" aria-label="Voicio" aria-expanded="{{ popupOpen }}" title="Voicio · Alt+Shift+V" style="width:32px;height:32px;border-radius:8px;border:none;background:{{ extBg }};display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:var(--surf2)">{{ logo18 }}<span style="position:absolute;right:3px;bottom:3px;width:9px;height:9px;border-radius:50%;background:{{ badge }};border:2px solid var(--bg);display:{{ badgeShow }}"></span></button>
+      </div>
+      <span style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--tx3)">{{ ic.models }}</span>
+      <span style="width:26px;height:26px;border-radius:50%;background:oklch(0.7 0.08 40);color:#fff;font:600 11px/26px Inter,sans-serif;text-align:center;margin-left:2px">MO</span>
+    </div>
+
+    <div ref="{{ vpRef }}" onMouseDown="{{ vpDown }}" style="flex:1;min-height:0;position:relative;overflow:hidden">
+
+      <sc-if value="{{ onPage }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;background:{{ sBg }};color:{{ sTx }};display:flex;flex-direction:column;font-family:Inter,system-ui,sans-serif">
+          <div style="height:52px;flex:none;display:flex;align-items:center;gap:24px;padding:0 28px;background:{{ sHead }};border-bottom:1px solid {{ sBd }}">
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span style="width:20px;height:20px;border-radius:6px;background:#3B5BDB"></span>Postbox</span>
+            <span style="font-size:13px;color:{{ sSub }}">Inbox</span><span style="font-size:13px;color:{{ sSub }}">Sent</span><span style="font-size:13px;color:{{ sSub }}">Drafts</span>
+          </div>
+          <div style="flex:1;display:flex;justify-content:center;padding:28px 0">
+            <div style="width:560px;display:flex;flex-direction:column;gap:12px">
+              <div style="font-size:20px;font-weight:600;letter-spacing:-0.01em">New message</div>
+              <div onMouseEnter="{{ hv.to.enter }}" onMouseLeave="{{ hv.to.leave }}" style="position:relative">
+                <input ref="{{ refs.to }}" value="{{ vals.to }}" onChange="{{ ch.to }}" onFocus="{{ fc.to }}" onContextMenu="{{ cm.to }}" placeholder="To" aria-label="To" style="width:100%;height:40px;box-sizing:border-box;border-radius:8px;border:1px solid {{ sBd }};background:{{ sFld }};color:{{ sTx }};padding:0 44px 0 12px;font:400 14px/1 Inter,sans-serif;outline:none" style-focus="border-color:#3B5BDB;box-shadow:0 0 0 3px rgba(59,91,219,.18)">
+                <sc-if value="{{ hv.to.on }}"><button onMouseDown="{{ keep }}" onClick="{{ st.to }}" onMouseEnter="{{ tip.to.enter }}" onMouseLeave="{{ tip.to.leave }}" aria-label="Dictate into To" style="position:absolute;right:6px;top:6px;width:28px;height:28px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--ac-tx);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:vk-pop .15s ease-out" style-hover="background:var(--ac);color:var(--on-ac)">{{ ic14.mic }}</button></sc-if>
+                <sc-if value="{{ tip.to.on }}"><div role="tooltip" style="position:absolute;right:0;top:-38px;height:30px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;background:var(--tx);color:var(--bg);font:500 12px/1 Inter,sans-serif;white-space:nowrap;z-index:5">Dictate<span style="font:500 11px/1 'JetBrains Mono',monospace;opacity:.7">Alt+Shift+V</span></div></sc-if>
+              </div>
+              <div onMouseEnter="{{ hv.subject.enter }}" onMouseLeave="{{ hv.subject.leave }}" style="position:relative">
+                <input ref="{{ refs.subject }}" value="{{ vals.subject }}" onChange="{{ ch.subject }}" onFocus="{{ fc.subject }}" onContextMenu="{{ cm.subject }}" placeholder="Subject" aria-label="Subject" style="width:100%;height:40px;box-sizing:border-box;border-radius:8px;border:1px solid {{ sBd }};background:{{ sFld }};color:{{ sTx }};padding:0 44px 0 12px;font:400 14px/1 Inter,sans-serif;outline:none" style-focus="border-color:#3B5BDB;box-shadow:0 0 0 3px rgba(59,91,219,.18)">
+                <sc-if value="{{ hv.subject.on }}"><button onMouseDown="{{ keep }}" onClick="{{ st.subject }}" onMouseEnter="{{ tip.subject.enter }}" onMouseLeave="{{ tip.subject.leave }}" aria-label="Dictate into Subject" style="position:absolute;right:6px;top:6px;width:28px;height:28px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--ac-tx);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:vk-pop .15s ease-out" style-hover="background:var(--ac);color:var(--on-ac)">{{ ic14.mic }}</button></sc-if>
+                <sc-if value="{{ tip.subject.on }}"><div role="tooltip" style="position:absolute;right:0;top:-38px;height:30px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;background:var(--tx);color:var(--bg);font:500 12px/1 Inter,sans-serif;white-space:nowrap;z-index:5">Dictate<span style="font:500 11px/1 'JetBrains Mono',monospace;opacity:.7">Alt+Shift+V</span></div></sc-if>
+              </div>
+              <div onMouseEnter="{{ hv.body.enter }}" onMouseLeave="{{ hv.body.leave }}" style="position:relative">
+                <textarea ref="{{ refs.body }}" value="{{ vals.body }}" onChange="{{ ch.body }}" onFocus="{{ fc.body }}" onContextMenu="{{ cm.body }}" placeholder="Write your message…" aria-label="Message" style="width:100%;height:300px;box-sizing:border-box;border-radius:8px;border:1px solid {{ sBd }};background:{{ sFld }};color:{{ sTx }};padding:12px 14px 44px;font:400 14.5px/24px Inter,sans-serif;outline:none;resize:none" style-focus="border-color:#3B5BDB;box-shadow:0 0 0 3px rgba(59,91,219,.18)"></textarea>
+                <sc-if value="{{ hv.body.on }}"><button onMouseDown="{{ keep }}" onClick="{{ st.body }}" onMouseEnter="{{ tip.body.enter }}" onMouseLeave="{{ tip.body.leave }}" aria-label="Dictate into Message" style="position:absolute;right:10px;bottom:12px;width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--ac-tx);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:vk-pop .15s ease-out" style-hover="background:var(--ac);color:var(--on-ac)">{{ ic14.mic }}</button></sc-if>
+                <sc-if value="{{ tip.body.on }}"><div role="tooltip" style="position:absolute;right:0;bottom:50px;height:30px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;background:var(--tx);color:var(--bg);font:500 12px/1 Inter,sans-serif;white-space:nowrap;z-index:5">Dictate<span style="font:500 11px/1 'JetBrains Mono',monospace;opacity:.7">Alt+Shift+V</span></div></sc-if>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <button style="height:36px;padding:0 18px;border-radius:8px;border:none;background:#3B5BDB;color:#fff;font:600 13.5px/1 Inter,sans-serif;cursor:pointer">Send</button>
+                <button onClick="{{ discard }}" style="height:36px;padding:0 12px;border-radius:8px;border:1px solid {{ sBd }};background:transparent;color:{{ sSub }};font:500 13.5px/1 Inter,sans-serif;cursor:pointer">Discard</button>
+                <span style="margin-left:auto;font-size:12.5px;color:{{ sSub }}">Draft saved</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ onOpt }}">
+        <div style="position:absolute;inset:0">
+          <dc-import name="Chrome Options" embedded="{{ true }}" rec="{{ popRec }}" text-a="{{ textA }}" text-b="{{ textB }}" timer="{{ timer }}" on-mic="{{ popupMic }}" on-insert="{{ insertNow }}" on-clear="{{ clearText }}" into="{{ into }}" on-into="{{ setInto }}" theme="{{ themeName }}" on-theme="{{ setThemeName }}" on-opt="{{ setOpt }}" hint-size="100%,100%"></dc-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pillOn }}">
+        <div style="position:absolute;left:{{ pillX }};top:{{ pillY }};transform:translateY(-100%);display:flex;flex-direction:column;align-items:flex-start;gap:8px;z-index:10;font-family:Inter,system-ui,sans-serif;color:var(--tx)">
+          <sc-if value="{{ pListening }}">
+            <div aria-live="polite" style="width:288px;box-sizing:border-box;padding:10px 14px;border-radius:14px;background:var(--pill);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid var(--line2);box-shadow:var(--shadow);animation:vk-pop .16s ease-out">
+              <div style="height:44px;overflow:hidden;display:flex;align-items:flex-end;font-size:14px;line-height:22px"><div>{{ liveA }}<span style="color:var(--tx3)">{{ liveB }}</span><sc-if value="{{ liveEmpty }}"><span style="color:var(--tx3)">Listening… start talking</span></sc-if></div></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ pError }}">
+            <div role="alert" style="width:288px;box-sizing:border-box;padding:12px 14px;border-radius:14px;background:var(--pill);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line2);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px"><span style="color:var(--warn);display:flex">{{ ic.alertCircle }}</span>{{ errTitle }}</div>
+              <div style="font-size:12.5px;line-height:18px;color:var(--tx2)">{{ errBody }}</div>
+              <div style="display:flex;gap:6px"><button onMouseDown="{{ keep }}" onClick="{{ retry }}" style="height:28px;padding:0 12px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 12.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer">{{ ic12.retry }}Retry</button><button onMouseDown="{{ keep }}" onClick="{{ cancel }}" style="height:28px;padding:0 10px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 12.5px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">Dismiss</button></div>
+            </div>
+          </sc-if>
+          <div onMouseDown="{{ dragStart }}" aria-label="Voicio dictation" style="width:200px;height:40px;box-sizing:border-box;border-radius:999px;background:var(--pill);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid {{ pillBd }};box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;padding:0 5px 0 14px;cursor:grab;user-select:none">
+            <sc-if value="{{ pListening }}"><span style="width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px var(--ac-soft);flex:none;animation:vk-breathe 1.4s ease-in-out infinite"></span><div style="flex:1;display:flex;justify-content:center">{{ pillWave }}</div><span style="font:500 11.5px/1 'JetBrains Mono',monospace;color:var(--tx2)">{{ timer }}</span><button onMouseDown="{{ keep }}" onClick="{{ cancel }}" aria-label="Cancel dictation" title="Cancel · Esc" style="width:28px;height:28px;border-radius:50%;border:none;background:var(--surf2);color:var(--tx2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none" style-hover="background:var(--err-soft);color:var(--err)">{{ ic12.x }}</button></sc-if>
+            <sc-if value="{{ pProcessing }}"><span style="position:relative;width:14px;height:14px;flex:none">{{ spin }}</span><span style="font-size:13px;font-weight:500;flex:1">{{ procText }}</span><div style="padding-right:8px">{{ procWave }}</div></sc-if>
+            <sc-if value="{{ pDone }}"><span style="color:var(--ac-tx);display:flex;animation:vk-pop .18s ease-out">{{ ic.circleCheck }}</span><span style="font-size:13px;font-weight:500;flex:1">Inserted</span><span style="font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--tx3);padding-right:9px">{{ doneWords }}</span></sc-if>
+            <sc-if value="{{ pError }}"><span style="color:var(--warn);display:flex">{{ ic.alertCircle }}</span><span style="font-size:13px;font-weight:500;flex:1">Didn't catch that</span><button onMouseDown="{{ keep }}" onClick="{{ cancel }}" aria-label="Dismiss" style="width:28px;height:28px;border-radius:50%;border:none;background:transparent;color:var(--tx2);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2)">{{ ic12.x }}</button></sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ ctxOn }}">
+        <div role="menu" onMouseDown="{{ keep }}" style="position:absolute;left:{{ ctxX }};top:{{ ctxY }};width:240px;padding:4px;border-radius:10px;background:var(--bg);border:1px solid var(--line2);box-shadow:var(--shadow);z-index:20;font-size:13px;color:var(--tx)">
+          <div role="menuitem" style="height:30px;display:flex;align-items:center;padding:0 10px;border-radius:6px;color:var(--tx3)">Undo</div>
+          <div style="height:1px;background:var(--line);margin:3px 0"></div>
+          <div role="menuitem" style="height:30px;display:flex;align-items:center;padding:0 10px;border-radius:6px" style-hover="background:var(--surf2)">Cut</div>
+          <div role="menuitem" style="height:30px;display:flex;align-items:center;padding:0 10px;border-radius:6px" style-hover="background:var(--surf2)">Copy</div>
+          <div role="menuitem" style="height:30px;display:flex;align-items:center;padding:0 10px;border-radius:6px" style-hover="background:var(--surf2)">Paste</div>
+          <div style="height:1px;background:var(--line);margin:3px 0"></div>
+          <button role="menuitem" onClick="{{ ctxDictate }}" style="width:100%;height:32px;display:flex;align-items:center;gap:8px;padding:0 10px;border:none;border-radius:6px;background:var(--ac-soft);color:var(--tx);font:500 13px/1 Inter,sans-serif;cursor:pointer;text-align:left" style-hover="background:var(--ac);color:var(--on-ac)">{{ logo14 }}<span style="flex:1">Dictate here</span><span style="font:400 11px/1 'JetBrains Mono',monospace;opacity:.75">Alt+Shift+V</span></button>
+          <div style="height:1px;background:var(--line);margin:3px 0"></div>
+          <div role="menuitem" style="height:30px;display:flex;align-items:center;padding:0 10px;border-radius:6px" style-hover="background:var(--surf2)">Spell check</div>
+          <div role="menuitem" style="height:30px;display:flex;align-items:center;padding:0 10px;border-radius:6px" style-hover="background:var(--surf2)">Inspect</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ popupOpen }}">
+        <div onMouseDown="{{ stop }}" style="position:absolute;top:2px;right:56px;z-index:30;border-radius:12px;box-shadow:var(--shadow);animation:vk-pop .15s ease-out;transform-origin:top right">
+          <dc-import name="Chrome Popup" view="{{ popView }}" rec="{{ popRec }}" text-a="{{ textA }}" text-b="{{ textB }}" timer="{{ timer }}" demo-text="{{ false }}" on-mic="{{ popupMic }}" on-insert="{{ insertNow }}" on-clear="{{ clearText }}" into="{{ into }}" on-into="{{ setInto }}" on-advanced="{{ openOpt }}" on-opt="{{ setOpt }}" on-state-action="{{ stateAction }}" on-allow-mic="{{ allowMic }}" site="mail.postbox.app" hint-size="360px,480px"></dc-import>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script>
+const DARK = '--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--ac2:#22D3EE;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--pill:rgba(23,28,32,.9);--shadow:0 12px 32px rgba(0,0,0,.45);--focus:#5EEAD4';
+const LIGHT = '--bg:#F6F7F7;--sunk:#E9ECEC;--surf:#FFFFFF;--surf2:#EEF1F1;--line:#E2E6E7;--line2:#CED4D6;--tx:#101417;--tx2:#475157;--tx3:#646E74;--ac:#0F766E;--ac2:#0E7490;--on-ac:#FFFFFF;--ac-tx:#0F766E;--ac-soft:rgba(15,118,110,.09);--ac-line:rgba(15,118,110,.3);--err:#B91C1C;--err-soft:rgba(220,38,38,.08);--warn:#A16207;--warn-soft:rgba(234,179,8,.14);--key:#FFFFFF;--key-edge:#C3CBCE;--knob:#FFFFFF;--pill:rgba(255,255,255,.92);--shadow:0 12px 32px rgba(16,20,23,.14);--focus:#0F766E';
+const RAW = {
+  body: "hi sam um thanks for sending the draft over I read it this morning and uh the structure works really well could we move the pricing section above the FAQ and trim the intro to two sentences happy to jump on a call tomorrow if that's easier",
+  subject: 'um feedback on the launch draft',
+  to: 'sam at studio dot co'
+};
+const CLEAN = {
+  body: "Hi Sam, thanks for sending the draft over. I read it this morning and the structure works really well. Could we move the pricing section above the FAQ and trim the intro to two sentences? Happy to jump on a call tomorrow if that's easier.",
+  subject: 'Feedback on the launch draft',
+  to: 'sam@studio.co'
+};
+const FIELDS = ['to', 'subject', 'body'];
+class Component extends DCLogic {
+  state = { theme: 'Light', site: 'Light', popView: 'Ready', speech: 'Simulated', result: 'Normal', rec: 'ready', target: null, last: 'body', words: [], final: '', vals: { to: '', subject: '', body: '' }, popupOpen: false, tab: 'page', optOpen: false, hover: null, tip: null, ctx: null, into: true, mode: 'Tap to toggle', insertAs: 'Type', autostop: '3 s', secs: 0, drag: { dx: 0, dy: 0 }, anchor: { x: 0, y: 0 }, procText: 'Cleaning up…', doneWords: '', err: null, themeName: 'Light' };
+  refs2 = { to: React.createRef(), subject: React.createRef(), body: React.createRef() };
+  vp = React.createRef();
+  componentDidMount() {
+    if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true });
+    this._kd = (e) => this.onKey(e); this._ku = (e) => this.onKeyUp(e);
+    window.addEventListener('keydown', this._kd, true); window.addEventListener('keyup', this._ku, true);
+    this._rs = () => this.setState({ z: Math.min(1, window.innerWidth / 1280) }); this._rs(); window.addEventListener('resize', this._rs);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this._kd, true); window.removeEventListener('keyup', this._ku, true); window.removeEventListener('resize', this._rs); this.clearTimers(); }
+  clearTimers() { clearInterval(this._w); clearInterval(this._s); clearInterval(this._ty); clearTimeout(this._a); clearTimeout(this._b); clearTimeout(this._c); if (this._sr) { try { this._sr.onend = null; this._sr.abort(); } catch (e) {} this._sr = null; } }
+  activeField() { const a = document.activeElement; for (const k of FIELDS) if (this.refs2[k].current === a) return k; return null; }
+  anchorFor(k) {
+    const f = this.refs2[k] && this.refs2[k].current, v = this.vp.current;
+    if (!f || !v) return { x: 920, y: 420 };
+    const fr = f.getBoundingClientRect(), vr = v.getBoundingClientRect();
+    const z = this.state.z || 1; return { x: Math.min((fr.right - vr.left) / z + 16, 1200 - 300), y: (fr.bottom - vr.top) / z };
+  }
+  onKey(e) {
+    if (e.altKey && e.shiftKey && (e.code === 'KeyV' || e.key === 'V' || e.key === 'v' || e.key === '◊')) {
+      e.preventDefault(); e.stopPropagation();
+      if (e.repeat) return;
+      if (this.state.rec === 'listening') this.stop();
+      else if (this.state.rec === 'ready' || this.state.rec === 'done' || this.state.rec === 'error') this.start(this.activeField() || this.state.last);
+      return;
+    }
+    if (e.key === 'Escape') {
+      if (this.state.rec === 'listening' || this.state.rec === 'error') { e.preventDefault(); this.cancel(); }
+      else if (this.state.popupOpen || this.state.ctx) this.setState({ popupOpen: false, ctx: null });
+    }
+  }
+  onKeyUp(e) {
+    if (this.state.mode === 'Hold to talk' && this.state.rec === 'listening' && (e.code === 'KeyV' || e.key === 'Alt' || e.key === 'Shift')) this.stop();
+  }
+  start(target) {
+    if (this.state.popView !== 'Ready') { this.setState({ popupOpen: true, tab: 'page' }); return; }
+    this.clearTimers();
+    const t = target || null;
+    if (t && this.refs2[t].current && !this.state.popupOpen) this.refs2[t].current.focus();
+    this.setState({ rec: 'listening', target: t, last: t || this.state.last, words: [], final: '', secs: 0, ctx: null, drag: { dx: 0, dy: 0 }, anchor: t ? this.anchorFor(t) : { x: 0, y: 0 }, err: null, hover: null, tip: null });
+    this._s = setInterval(() => this.setState((s) => ({ secs: s.secs + 1 })), 1000);
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (this.state.speech === 'Real mic' && SR) {
+      const r = new SR(); this._sr = r; r.continuous = true; r.interimResults = true; r.lang = 'en-US';
+      r.onresult = (ev) => { let fin = '', int = ''; for (let i = 0; i < ev.results.length; i++) { const x = ev.results[i][0].transcript; if (ev.results[i].isFinal) fin += x + ' '; else int += x; } this._real = (fin + int).trim(); this.setState({ words: this._real ? this._real.split(/\s+/) : [] }); };
+      r.onerror = (ev) => { if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') this.fail('Microphone blocked', 'Allow the microphone for this site in Chrome, then try again.'); else if (ev.error === 'no-speech') this.fail("Didn't catch that", 'No speech detected. Check your mic and try again.'); };
+      r.onend = () => { if (this.state.rec === 'listening') this.stop(); };
+      this._real = '';
+      try { r.start(); } catch (e) { this.fail('Microphone unavailable', 'Chrome couldn’t open the microphone here.'); }
+      return;
+    }
+    const raw = RAW[t || 'body'].split(' ');
+    let i = 0;
+    this._w = setInterval(() => {
+      if (i < raw.length) { const w = raw[i++]; this.setState((s) => ({ words: [...s.words, w] })); return; }
+      clearInterval(this._w);
+      const ms = { Off: 0, '3 s': 3000, '10 s': 10000 }[this.state.autostop];
+      if (ms) this._a = setTimeout(() => { if (this.state.rec === 'listening') this.stop(); }, ms);
+    }, 165);
+  }
+  fail(title, body) { this.clearTimers(); this.setState({ rec: 'error', err: { title, body } }); }
+  stop() {
+    const s = this.state;
+    clearInterval(this._w); clearInterval(this._s); clearTimeout(this._a);
+    const real = !!this._sr;
+    if (this._sr) { try { this._sr.onend = null; this._sr.stop(); } catch (e) {} this._sr = null; }
+    if (!s.words.length) return this.fail("Didn't catch that", 'No speech detected. Check your mic and try again.');
+    if (s.result === 'Error') return this.fail("Couldn't insert the text", 'This field blocked typing. Your words are saved in the popup.');
+    this.setState({ rec: 'processing', procText: 'Cleaning up…' });
+    this._b = setTimeout(() => {
+      let text;
+      if (real) { const r = (this._real || s.words.join(' ')).replace(/\b(um+|uh+|erm)\b\s*/gi, '').trim(); text = r.charAt(0).toUpperCase() + r.slice(1) + (/[.?!]$/.test(r) ? '' : '.'); }
+      else if (s.words.length >= RAW[s.target || 'body'].split(' ').length) text = CLEAN[s.target || 'body'];
+      else { const r = s.words.filter((w) => !/^(um+|uh+)$/i.test(w)).join(' '); text = r.charAt(0).toUpperCase() + r.slice(1) + '…'; }
+      this.setState({ final: text, words: [] });
+      if (this.state.into && this.state.target) this.typeInto(this.state.target, text);
+      else this.finish(text);
+    }, 750);
+  }
+  typeInto(k, text) {
+    const base = this.state.vals[k];
+    const sep = base && !/\s$/.test(base) ? ' ' : '';
+    const full = base + sep + text;
+    const el = this.refs2[k].current;
+    const done = () => { this.finish(text); if (el && !this.state.popupOpen) { el.focus(); try { el.setSelectionRange(full.length, full.length); el.scrollTop = el.scrollHeight; } catch (e) {} } };
+    if (this.state.insertAs === 'Paste') { this.setState((s) => ({ vals: { ...s.vals, [k]: full } }), done); return; }
+    this.setState({ procText: 'Typing…' });
+    let n = base.length + sep.length;
+    this._ty = setInterval(() => {
+      n = Math.min(full.length, n + 3);
+      this.setState((s) => ({ vals: { ...s.vals, [k]: full.slice(0, n) } }));
+      if (el) el.scrollTop = el.scrollHeight;
+      if (n >= full.length) { clearInterval(this._ty); done(); }
+    }, 16);
+  }
+  finish(text) {
+    this.setState({ rec: 'done', doneWords: text.split(/\s+/).length + ' words' });
+    this._c = setTimeout(() => this.setState({ rec: 'ready' }), 1500);
+  }
+  cancel() { this.clearTimers(); this.setState({ rec: 'ready', words: [], err: null }); }
+  insertNow() {
+    const s = this.state, k = s.last || 'body';
+    const text = s.final || s.words.join(' ');
+    if (!text) return;
+    this.setState({ target: k, anchor: this.anchorFor(k), popupOpen: false, rec: 'processing', procText: 'Typing…' }, () => this.typeInto(k, text));
+  }
+  renderVals() {
+    const K = window.VK, R = React, s = this.state;
+    const ic = K ? K.icons(R, 16) : {}, ic14 = K ? K.icons(R, 14) : {}, ic12 = K ? K.icons(R, 12, 2) : {};
+    const L = s.rec === 'listening';
+    const seg = (label, key, opts, after) => ({ label, opts: opts.map((o) => { const on = s[key] === o; return { label: o, on, bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#101417' : '#475157', bd: on ? '#CED4D6' : 'transparent', pick: () => { this.setState({ [key]: o }); after && after(o); } }; }) });
+    const dark = s.site === 'Dark';
+    const mk = (fn) => Object.fromEntries(FIELDS.map((k) => [k, fn(k)]));
+    const ws = s.words;
+    const tailN = Math.min(3, ws.length);
+    const liveA = ws.slice(0, ws.length - tailN).join(' ') + (ws.length > tailN ? ' ' : '');
+    const liveB = ws.slice(ws.length - tailN).join(' ');
+    const pv = { Ready: 'main', 'First run': 'firstrun', 'No model': 'nomodel', 'No mic': 'nomic' }[s.popView];
+    const mmss = Math.floor(s.secs / 60) + ':' + String(s.secs % 60).padStart(2, '0');
+    const setTheme = (v) => { const d = v === 'Dark' || (v === 'System' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); this.setState({ themeName: v, theme: d ? 'Dark' : 'Light' }); };
+    return {
+      ic, ic14, ic12, logo14: K ? K.logo(R, 14) : null, logo18: K ? K.logo(R, 18) : null,
+      demoGroups: [seg('Extension', 'theme', ['Dark', 'Light'], (o) => this.setState({ themeName: o })), seg('Website', 'site', ['Light', 'Dark']), seg('Popup', 'popView', ['Ready', 'First run', 'No model', 'No mic']), seg('Speech', 'speech', ['Simulated', 'Real mic']), seg('Next result', 'result', ['Normal', 'Error'])],
+      vars: s.theme === 'Dark' ? DARK : LIGHT,
+      goPage: () => this.setState({ tab: 'page' }), goOpt: () => this.setState({ tab: 'options' }), closeOpt: () => this.setState({ optOpen: false, tab: 'page' }),
+      openOpt: () => this.setState({ optOpen: true, tab: 'options', popupOpen: false }),
+      optOpen: s.optOpen, onPage: s.tab === 'page', onOpt: s.tab === 'options',
+      tab1Bg: s.tab === 'page' ? 'var(--bg)' : 'transparent', tab2Bg: s.tab === 'options' ? 'var(--bg)' : 'transparent', tabLive: L,
+      url: s.tab === 'page' ? 'mail.postbox.app/compose' : 'chrome-extension://voicio/options.html',
+      togglePopup: () => this.setState({ popupOpen: !s.popupOpen, ctx: null }), popupOpen: s.popupOpen,
+      extBg: s.popupOpen ? 'var(--surf2)' : 'transparent',
+      badge: L ? 'var(--ac)' : s.rec === 'error' ? 'var(--warn)' : 'var(--tx3)', badgeShow: L || s.rec === 'error' || s.popView === 'No model' ? 'block' : 'none',
+      vpRef: this.vp, vpDown: () => { if (s.popupOpen || s.ctx) this.setState({ popupOpen: false, ctx: null }); },
+      stop: (e) => e.stopPropagation(), keep: (e) => e.preventDefault(),
+      sBg: dark ? '#0D1117' : '#FFFFFF', sTx: dark ? '#E6EDF3' : '#1F2328', sSub: dark ? '#9198A1' : '#59636E', sBd: dark ? '#3D444D' : '#D1D9E0', sFld: dark ? '#151B23' : '#FFFFFF', sHead: dark ? '#010409' : '#F6F8FA',
+      refs: this.refs2, vals: s.vals,
+      ch: mk((k) => (e) => { const v = e.target.value; this.setState((st) => ({ vals: { ...st.vals, [k]: v } })); }),
+      fc: mk((k) => () => this.setState({ last: k })),
+      cm: mk((k) => (e) => { e.preventDefault(); const vr = this.vp.current.getBoundingClientRect(); this.refs2[k].current && this.refs2[k].current.focus(); const z = s.z || 1; this.setState({ ctx: { x: Math.min((e.clientX - vr.left) / z, 1200 - 250), y: Math.min((e.clientY - vr.top) / z, 380), k }, last: k, popupOpen: false }); }),
+      hv: mk((k) => ({ on: s.hover === k && s.rec === 'ready', enter: () => this.setState({ hover: k }), leave: () => this.setState({ hover: null, tip: null }) })),
+      tip: mk((k) => ({ on: s.tip === k && s.rec === 'ready', enter: () => this.setState({ tip: k }), leave: () => this.setState({ tip: null }) })),
+      st: mk((k) => () => { this.refs2[k].current && this.refs2[k].current.focus(); this.start(k); }),
+      discard: () => { this.cancel(); this.setState({ vals: { to: '', subject: '', body: '' } }); },
+      ctxOn: !!s.ctx, ctxX: (s.ctx ? s.ctx.x : 0) + 'px', ctxY: (s.ctx ? s.ctx.y : 0) + 'px',
+      ctxDictate: () => { const k = s.ctx.k; this.setState({ ctx: null }); this.start(k); },
+      pillOn: s.rec !== 'ready' && !!s.target && s.tab === 'page' && !s.popupOpen,
+      pillX: (s.anchor.x + s.drag.dx) + 'px', pillY: (s.anchor.y + s.drag.dy) + 'px',
+      pListening: L, pProcessing: s.rec === 'processing', pDone: s.rec === 'done', pError: s.rec === 'error',
+      pillBd: s.rec === 'error' ? 'var(--warn)' : 'var(--line2)',
+      liveA, liveB, liveEmpty: ws.length === 0,
+      errTitle: s.err ? s.err.title : '', errBody: s.err ? s.err.body : '',
+      retry: () => this.start(s.target || s.last), cancel: () => this.cancel(),
+      procText: s.procText, doneWords: s.doneWords,
+      pillWave: K ? K.wave(R, { n: 14, h: 18, w: 3, g: 2, grad: true }) : null,
+      procWave: K ? K.wave(R, { n: 6, h: 12, w: 3, g: 2, mode: 'processing' }) : null,
+      spin: K ? K.spinner(R, 0, 2) : null,
+      dragStart: (e) => {
+        if (e.target.closest && e.target.closest('button')) return;
+        e.preventDefault();
+        const sx = e.clientX, sy = e.clientY, d0 = s.drag;
+        const z = s.z || 1; const mv = (ev) => this.setState({ drag: { dx: d0.dx + (ev.clientX - sx) / z, dy: d0.dy + (ev.clientY - sy) / z } });
+        const up = () => { window.removeEventListener('mousemove', mv); window.removeEventListener('mouseup', up); };
+        window.addEventListener('mousemove', mv); window.addEventListener('mouseup', up);
+      },
+      timer: mmss, z: s.z || 1,
+      popView: pv, popRec: L ? 'listening' : s.rec === 'processing' ? 'processing' : 'ready',
+      textA: L ? liveA : s.final, textB: L ? liveB : '',
+      popupMic: () => { if (L) this.stop(); else if (s.rec !== 'processing') this.start(s.into ? s.last : null); },
+      insertNow: () => this.insertNow(), clearText: () => this.setState({ final: '', words: [] }),
+      into: s.into, setInto: (v) => this.setState({ into: v }),
+      setOpt: (k, v) => { if (k === 'Mode') this.setState({ mode: v }); else if (k === 'Insert' || k === 'Insert as') this.setState({ insertAs: v === 'Typing' ? 'Type' : v }); else if (k === 'Auto-stop after silence') this.setState({ autostop: v }); else if (k === 'Appearance') setTheme(v); },
+      themeName: s.themeName, setThemeName: setTheme,
+      stateAction: () => this.setState({ popView: 'Ready' }), allowMic: () => this.setState({ popView: 'Ready' })
+    };
+  }
+}
+</script>
+</body>
+</html>

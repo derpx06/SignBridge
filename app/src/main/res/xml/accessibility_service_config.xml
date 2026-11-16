@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Declares only what the bubble needs (see docs/research/bank-safe-accessibility.md):
+  - Only focus and window changes. Click and selection events are not requested: they carry the text of the view.
+  - No gestures, key-event filtering, screenshots, fingerprint gestures, magnification or accessibility button.
+    The service never taps or swipes; it only pastes / sets text on the focused editable field.
+  - flagRetrieveInteractiveWindows stays: it is the only way an accessibility service learns where the keyboard is
+    (only the input-method window's bounds are read, never another window's content).
+  - isAccessibilityTool=false: Android 14+ then hides views that apps mark accessibilityDataSensitive (payment fields).
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeViewFocused|typeWindowStateChanged|typeWindowsChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault|flagRetrieveInteractiveWindows"
+    android:canRetrieveWindowContent="true"
+    android:canPerformGestures="false"
+    android:canRequestFilterKeyEvents="false"
+    android:canTakeScreenshot="false"
+    android:isAccessibilityTool="false"
+    android:description="@string/accessibility_description_v2"
+    android:notificationTimeout="100"
+    android:settingsActivity="com.whispr.app.MainActivity" />

@@ -1,0 +1,9 @@
+{
+  "uuid": "voicio@derpx06.github.io",
+  "name": "Voicio Dictation",
+  "description": "Private, on-device dictation: press your dictation shortcut in any text field and speak. Words appear live, then the finished text is cleaned up and inserted. Needs the voicio agent (the Voicio desktop app) running.",
+  "version-name": "0.9.0",
+  "shell-version": ["50"],
+  "settings-schema": "org.gnome.shell.extensions.voicio",
+  "url": "https://github.com/derpx06/voicio"
+}

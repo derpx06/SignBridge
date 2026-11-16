@@ -1,0 +1,20 @@
+{
+ "id": "whistle",
+ "name": "Cactus Whistle",
+ "tier": "Tiny",
+ "kind": "Speech recognition",
+ "license": "apache-2.0",
+ "engine": "needle",
+ "repo": "Cactus-Compute/whistle",
+ "revision": "741118687e1f008f06d1351a402a731274789790",
+ "dtype": "cactus-quants",
+ "wer": 0,
+ "rtf": 0,
+ "files": [
+  {
+   "path": "whistle.cact",
+   "size": 16919407,
+   "sha256": "b6e02f048568ac5d01a2042556c658061e699acbc0aa2a1439f52f3d461dffeb"
+  }
+ ]
+}

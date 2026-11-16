@@ -1,0 +1,671 @@
+{
+ "about": "Contract cases for every provider in ../cloud-stt.json, run by the desktop (cloud.rs), Android (CloudTest.kt) and Chrome (cloud.test.ts) tests against a fake network. replies: [status, body] in order (a string body is sent as-is). requests: what each request must carry: method, path, one header (KEY = the test key), multipart form values (null = present, any value), query values, a JSON body subset, or a raw body content type. Bodies are the docs' own examples where the docs give one (see doc).",
+ "cases": [
+  {
+   "provider": "groq",
+   "doc": "https://console.groq.com/docs/speech-to-text",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "text": "Your transcribed text appears here...",
+      "x_groq": {
+       "id": "req_unique_id"
+      }
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/openai/v1/audio/transcriptions",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "form": {
+      "file": null,
+      "model": "whisper-large-v3-turbo",
+      "language": "en",
+      "response_format": "json"
+     }
+    }
+   ],
+   "text": "Your transcribed text appears here..."
+  },
+  {
+   "provider": "openai",
+   "doc": "https://developers.openai.com/api/reference/resources/audio/subresources/transcriptions/methods/create",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "text": "Imagine the wildest idea that you've ever had...",
+      "usage": {
+       "type": "tokens",
+       "input_tokens": 14,
+       "input_token_details": {
+        "text_tokens": 0,
+        "audio_tokens": 14
+       },
+       "output_tokens": 45,
+       "total_tokens": 59
+      }
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1/audio/transcriptions",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "form": {
+      "file": null,
+      "model": "gpt-transcribe",
+      "language": "en",
+      "response_format": "json"
+     }
+    }
+   ],
+   "text": "Imagine the wildest idea that you've ever had..."
+  },
+  {
+   "provider": "gemini",
+   "doc": "https://aistudio.google.com/docs/audio (no verbatim inline-audio example; response shape from the docs' jq .candidates[].content.parts[].text)",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "candidates": [
+       {
+        "content": {
+         "parts": [
+          {
+           "text": "Weather"
+          }
+         ],
+         "role": "model"
+        },
+        "finishReason": "STOP"
+       }
+      ]
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+     "header": [
+      "x-goog-api-key",
+      "KEY"
+     ],
+     "json": {
+      "generationConfig": {
+       "temperature": 0
+      }
+     }
+    }
+   ],
+   "text": "Weather"
+  },
+  {
+   "provider": "deepgram",
+   "doc": "https://developers.deepgram.com/docs/pre-recorded-audio",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "metadata": {
+       "request_id": "r1"
+      },
+      "results": {
+       "channels": [
+        {
+         "alternatives": [
+          {
+           "transcript": "Yeah, as as much as, it's worth having a talk to the neighbors.",
+           "confidence": 0.99
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1/listen",
+     "header": [
+      "Authorization",
+      "Token KEY"
+     ],
+     "query": {
+      "model": "nova-3",
+      "smart_format": "true",
+      "language": "en"
+     },
+     "raw": "audio/wav"
+    }
+   ],
+   "text": "Yeah, as as much as, it's worth having a talk to the neighbors."
+  },
+  {
+   "provider": "elevenlabs",
+   "doc": "https://elevenlabs.io/docs/api-reference/speech-to-text/convert",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "language_code": "en",
+      "language_probability": 0.98,
+      "text": "Hello world!",
+      "words": []
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1/speech-to-text",
+     "header": [
+      "xi-api-key",
+      "KEY"
+     ],
+     "form": {
+      "file": null,
+      "model_id": "scribe_v3",
+      "language_code": "en"
+     }
+    }
+   ],
+   "text": "Hello world!"
+  },
+  {
+   "provider": "mistral",
+   "doc": "https://docs.mistral.ai/api/endpoint/audio/transcriptions (example text elided in the docs)",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "model": "voxtral-mini-2507",
+      "text": "This audio was transcribed by Voxtral.",
+      "language": "en",
+      "segments": [],
+      "usage": {
+       "prompt_audio_seconds": 203
+      }
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1/audio/transcriptions",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "form": {
+      "file": null,
+      "model": "voxtral-mini-latest",
+      "language": "en"
+     }
+    }
+   ],
+   "text": "This audio was transcribed by Voxtral."
+  },
+  {
+   "provider": "assemblyai",
+   "doc": "https://www.assemblyai.com/docs/api-reference/transcripts/submit",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "upload_url": "https://cdn.assemblyai.com/upload/f756988d-47e2-4ca3-96ce-04bb168f8f2a"
+     }
+    ],
+    [
+     200,
+     {
+      "id": "0072a82b-aa22-4962-add2-6121c36c17c6",
+      "status": "processing",
+      "text": null
+     }
+    ],
+    [
+     200,
+     {
+      "id": "0072a82b-aa22-4962-add2-6121c36c17c6",
+      "status": "completed",
+      "text": "Smoke from hundreds of wildfires in Canada is triggering air quality alerts."
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v2/upload",
+     "header": [
+      "authorization",
+      "KEY"
+     ],
+     "raw": "application/octet-stream"
+    },
+    {
+     "method": "POST",
+     "path": "/v2/transcript",
+     "header": [
+      "authorization",
+      "KEY"
+     ],
+     "json": {
+      "audio_url": "https://cdn.assemblyai.com/upload/f756988d-47e2-4ca3-96ce-04bb168f8f2a",
+      "speech_models": [
+       "universal-3-5-pro",
+       "universal-2"
+      ],
+      "language_code": "en"
+     }
+    },
+    {
+     "method": "GET",
+     "path": "/v2/transcript/0072a82b-aa22-4962-add2-6121c36c17c6",
+     "header": [
+      "authorization",
+      "KEY"
+     ]
+    }
+   ],
+   "text": "Smoke from hundreds of wildfires in Canada is triggering air quality alerts."
+  },
+  {
+   "provider": "azure",
+   "doc": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/fast-transcription-create",
+   "lang": "en",
+   "region": "westeurope",
+   "replies": [
+    [
+     200,
+     {
+      "durationMilliseconds": 2000,
+      "combinedPhrases": [
+       {
+        "text": "Weather"
+       }
+      ],
+      "phrases": [
+       {
+        "offsetMilliseconds": 40,
+        "durationMilliseconds": 320,
+        "text": "Weather",
+        "locale": "en-US",
+        "confidence": 0.78983736
+       }
+      ]
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/speechtotext/transcriptions:transcribe",
+     "header": [
+      "Ocp-Apim-Subscription-Key",
+      "KEY"
+     ],
+     "form": {
+      "audio": null,
+      "definition": "{\"locales\":[\"en-US\"]}"
+     },
+     "query": {
+      "api-version": "2025-10-15"
+     }
+    }
+   ],
+   "text": "Weather"
+  },
+  {
+   "provider": "sarvam",
+   "doc": "https://docs.sarvam.ai/api-reference-docs/speech-to-text/transcribe",
+   "lang": "hi",
+   "replies": [
+    [
+     200,
+     {
+      "request_id": "20250101_0a1b2c3d-1234-5678-9abc-def012345678",
+      "transcript": "नमस्ते, आप कैसे हैं?",
+      "language_code": "hi-IN"
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/speech-to-text",
+     "header": [
+      "api-subscription-key",
+      "KEY"
+     ],
+     "form": {
+      "file": null,
+      "model": "saaras:v4",
+      "language_code": "hi-IN"
+     }
+    }
+   ],
+   "text": "नमस्ते, आप कैसे हैं?"
+  },
+  {
+   "provider": "soniox",
+   "doc": "https://docs.soniox.com/stt/api-reference/transcriptions/create_transcription (file id and transcript text illustrative)",
+   "lang": "en",
+   "replies": [
+    [
+     201,
+     {
+      "id": "84c32fc6-4fb5-4e7a-b656-b5ec70493753",
+      "filename": "audio.wav"
+     }
+    ],
+    [
+     201,
+     {
+      "id": "73d4357d-cad2-4338-a60d-ec6f2044f721",
+      "status": "queued",
+      "model": "stt-async-v6",
+      "error_type": null,
+      "error_message": null
+     }
+    ],
+    [
+     200,
+     {
+      "id": "73d4357d-cad2-4338-a60d-ec6f2044f721",
+      "status": "completed"
+     }
+    ],
+    [
+     200,
+     {
+      "id": "73d4357d-cad2-4338-a60d-ec6f2044f721",
+      "text": "Hello world.",
+      "tokens": []
+     }
+    ],
+    [
+     204,
+     ""
+    ],
+    [
+     204,
+     ""
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1/files",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "form": {
+      "file": null
+     }
+    },
+    {
+     "method": "POST",
+     "path": "/v1/transcriptions",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "json": {
+      "file_id": "84c32fc6-4fb5-4e7a-b656-b5ec70493753",
+      "model": "stt-async-v6",
+      "language_hints": [
+       "en"
+      ]
+     }
+    },
+    {
+     "method": "GET",
+     "path": "/v1/transcriptions/73d4357d-cad2-4338-a60d-ec6f2044f721",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ]
+    },
+    {
+     "method": "GET",
+     "path": "/v1/transcriptions/73d4357d-cad2-4338-a60d-ec6f2044f721/transcript",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ]
+    },
+    {
+     "method": "DELETE",
+     "path": "/v1/transcriptions/73d4357d-cad2-4338-a60d-ec6f2044f721",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ]
+    },
+    {
+     "method": "DELETE",
+     "path": "/v1/files/84c32fc6-4fb5-4e7a-b656-b5ec70493753",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ]
+    }
+   ],
+   "text": "Hello world."
+  },
+  {
+   "provider": "speechmatics",
+   "doc": "https://docs.speechmatics.com/api-ref/batch/create-a-new-job (waited response shape from the schema)",
+   "lang": "en",
+   "replies": [
+    [
+     201,
+     {
+      "id": "dlbvi9xpzf",
+      "status": "done",
+      "txt": "Hello world.\n"
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v2/jobs",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "form": {
+      "data_file": null,
+      "config": "{\"type\":\"transcription\",\"transcription_config\":{\"language\":\"en\",\"operating_point\":\"enhanced\"}}"
+     },
+     "query": {
+      "wait": "25",
+      "format": "txt"
+     }
+    }
+   ],
+   "text": "Hello world."
+  },
+  {
+   "provider": "together",
+   "doc": "https://docs.together.ai/reference/audio-transcriptions",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "text": "Hello, world!"
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1/audio/transcriptions",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "form": {
+      "file": null,
+      "model": "openai/whisper-large-v3",
+      "language": "en",
+      "response_format": "json"
+     }
+    }
+   ],
+   "text": "Hello, world!"
+  },
+  {
+   "provider": "lemonfox",
+   "doc": "https://www.lemonfox.ai/apis/speech-to-text",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "text": "Artificial intelligence is the intelligence of machines or software, as opposed to the ..."
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1/audio/transcriptions",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "form": {
+      "file": null,
+      "language": "english",
+      "response_format": "json"
+     }
+    }
+   ],
+   "text": "Artificial intelligence is the intelligence of machines or software, as opposed to the ..."
+  },
+  {
+   "provider": "lemonfoxeu",
+   "doc": "https://www.lemonfox.ai/apis/speech-to-text",
+   "lang": "de",
+   "replies": [
+    [
+     200,
+     {
+      "text": "Hallo Welt."
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/v1/audio/transcriptions",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "form": {
+      "file": null,
+      "language": "german"
+     }
+    }
+   ],
+   "text": "Hallo Welt."
+  },
+  {
+   "provider": "cartesia",
+   "doc": "https://docs.cartesia.ai/api-reference/stt/transcribe (no verbatim example; fields from the schema)",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "type": "transcript",
+      "request_id": "r1",
+      "text": "Hello world.",
+      "language": "en",
+      "duration": 1.0
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/stt",
+     "header": [
+      "Cartesia-Version",
+      "2026-08-14"
+     ],
+     "form": {
+      "file": null,
+      "model": "ink-whisper",
+      "language": "en"
+     }
+    }
+   ],
+   "text": "Hello world."
+  },
+  {
+   "provider": "openrouter",
+   "doc": "https://openrouter.ai/docs/api/reference/overview",
+   "lang": "en",
+   "replies": [
+    [
+     200,
+     {
+      "id": "gen-1",
+      "choices": [
+       {
+        "finish_reason": "stop",
+        "message": {
+         "role": "assistant",
+         "content": "Hello there!"
+        }
+       }
+      ]
+     }
+    ]
+   ],
+   "requests": [
+    {
+     "method": "POST",
+     "path": "/api/v1/chat/completions",
+     "header": [
+      "Authorization",
+      "Bearer KEY"
+     ],
+     "json": {
+      "model": "google/gemini-4-hydrogen",
+      "temperature": 0
+     }
+    }
+   ],
+   "text": "Hello there!"
+  }
+ ]
+}

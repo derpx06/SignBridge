@@ -1,0 +1,6 @@
+node_modules
+dist
+*.log
+e2e/.profile
+apps/chrome/*.zip
+dist-test

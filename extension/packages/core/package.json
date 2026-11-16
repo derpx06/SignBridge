@@ -1,0 +1,6 @@
+{
+  "name": "@voicio/core", "version": "0.1.0", "private": true, "license": "GPL-3.0-or-later", "type": "module",
+  "main": "src/index.ts",
+  "scripts": { "test": "vitest run", "typecheck": "tsc -p ." },
+  "dependencies": { "zod": "^3.25.0" }
+}

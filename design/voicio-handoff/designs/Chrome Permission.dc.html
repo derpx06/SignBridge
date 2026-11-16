@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>body{margin:0;--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--ac2:#22D3EE;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--focus:#5EEAD4}</style>
+</helmet>
+<div data-screen-label="Permission" style="width:960px;height:600px;box-sizing:border-box;position:relative;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:16px;overflow:hidden;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;-webkit-font-smoothing:antialiased">
+  <header style="height:56px;display:flex;align-items:center;gap:10px;padding:0 28px;border-bottom:1px solid var(--line)">{{ logo }}<span style="font-weight:600">Voicio for Chrome</span><span style="font-size:13px;color:var(--tx3)">Setup</span></header>
+  <sc-if value="{{ isPre }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:20px;top:64px;width:300px;height:96px;border-radius:12px;border:1.5px dashed var(--line2);display:flex;align-items:center;justify-content:center;text-align:center;font:500 11.5px/18px 'JetBrains Mono',monospace;color:var(--tx3);padding:0 20px;box-sizing:border-box">Chrome's “Use your microphone?” prompt opens here — choose Allow</div>
+    <div style="position:absolute;left:0;right:0;top:56px;bottom:0;display:flex;align-items:center;justify-content:center">
+      <div style="width:460px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px">
+        <div style="position:relative;width:96px;height:96px;display:flex;align-items:center;justify-content:center"><span style="position:absolute;inset:0;border-radius:50%;background:var(--ac-soft)"></span><span style="position:absolute;inset:14px;border-radius:50%;border:1px solid var(--ac-line)"></span><span style="position:relative;width:52px;height:52px;border-radius:50%;background:linear-gradient(160deg,var(--ac2),var(--ac));color:var(--on-ac);display:flex;align-items:center;justify-content:center">{{ ic24.mic }}</span></div>
+        <h1 style="margin:4px 0 0;font-size:26px;line-height:34px;font-weight:600;letter-spacing:-0.02em">One more thing: your microphone</h1>
+        <p style="margin:0;color:var(--tx2);font-size:14.5px;line-height:22px;text-wrap:pretty">Chrome will ask if Voicio can use the mic. Here's what that means.</p>
+        <div style="width:100%;display:flex;flex-direction:column;gap:2px;text-align:left;border-radius:12px;border:1px solid var(--line);background:var(--surf);padding:6px">
+          <div style="display:flex;gap:10px;align-items:center;padding:8px 10px"><span style="color:var(--ac-tx);display:flex">{{ ic.lock }}</span><span style="font-size:13.5px">Audio is turned into text on this computer</span></div>
+          <div style="display:flex;gap:10px;align-items:center;padding:8px 10px"><span style="color:var(--ac-tx);display:flex">{{ ic.mic }}</span><span style="font-size:13.5px">The mic is only on while you're dictating</span></div>
+          <div style="display:flex;gap:10px;align-items:center;padding:8px 10px"><span style="color:var(--ac-tx);display:flex">{{ ic.settings }}</span><span style="font-size:13.5px">You can turn it off any time in Chrome</span></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:4px"><button style="height:38px;padding:0 18px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 13.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="filter:brightness(1.1)">Continue{{ ic14.arrowRight }}</button><button style="height:38px;padding:0 14px;border-radius:8px;border:none;background:transparent;color:var(--tx2);font:500 13.5px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--surf2);color:var(--tx)">Not now</button></div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isBlocked }}">
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:32px;padding:32px 40px">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <span style="align-self:flex-start;height:24px;padding:0 9px;border-radius:999px;background:var(--err-soft);color:var(--err);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px">{{ ic12.alertCircle }}Microphone blocked</span>
+        <div><h1 style="margin:0;font-size:26px;line-height:34px;font-weight:600;letter-spacing:-0.02em">Let's turn the mic back on</h1><p style="margin:6px 0 0;color:var(--tx2);font-size:14.5px;line-height:22px">Chrome is blocking the microphone for Voicio. It takes about 20 seconds.</p></div>
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+          <div style="display:flex;gap:12px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surf)"><span style="width:24px;height:24px;border-radius:50%;border:1.5px solid var(--ac);color:var(--ac-tx);display:flex;align-items:center;justify-content:center;flex:none;font:600 12px/1 'JetBrains Mono',monospace;box-sizing:border-box">{{ s.n }}</span><div><div style="font-weight:500">{{ s.t }}</div><div style="font-size:13px;color:var(--tx2)">{{ s.b }}</div></div></div>
+        </sc-for>
+        <div style="display:flex;gap:8px;margin-top:4px"><button style="height:38px;padding:0 16px;border-radius:8px;border:none;background:var(--ac);color:var(--on-ac);font:600 13.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="filter:brightness(1.1)">{{ ic14.ext }}Open Chrome settings</button><button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);font:500 13.5px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:var(--surf2)">{{ ic14.retry }}I've allowed it</button></div>
+      </div>
+      <div style="border-radius:14px;border:1px solid var(--line2);background:repeating-linear-gradient(135deg,var(--surf) 0 10px,var(--sunk) 10px 20px);height:440px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;box-sizing:border-box;font:500 12px/18px 'JetBrains Mono',monospace;color:var(--tx2)">screenshot: chrome://settings/content/microphone<br>→ Voicio for Chrome → Allow</div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:600},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;preprompt&quot;,&quot;blocked&quot;],&quot;default&quot;:&quot;preprompt&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() { if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true }); }
+  renderVals() {
+    const K = window.VK, R = React, v = this.props.view || 'preprompt';
+    return {
+      ic: K ? K.icons(R, 16) : {}, ic14: K ? K.icons(R, 14) : {}, ic12: K ? K.icons(R, 12, 2) : {}, ic24: K ? K.icons(R, 24) : {}, logo: K ? K.logo(R, 24) : null,
+      isPre: v === 'preprompt', isBlocked: v === 'blocked',
+      steps: [['1', 'Click the lock next to the address', 'Or open Chrome settings with the button below.'], ['2', 'Find “Microphone”', 'It will say Block. Change it to Allow.'], ['3', 'Come back and press “I’ve allowed it”', 'Voicio checks again — no reload needed.']].map(([n, t, b]) => ({ n, t, b }))
+    };
+  }
+}
+</script>
+</body>
+</html>

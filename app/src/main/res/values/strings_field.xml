@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The floating dictation field (orb and bar). Owned by app/src/main/kotlin/com/whispr/app/flow. -->
+<resources>
+    <string name="field_orb_description">Voicio dictation. Tap to talk hands-free, or hold while you speak. Drag to move.</string>
+    <string name="field_orb_action">Start dictation</string>
+    <string name="field_cancel">Cancel dictation</string>
+    <string name="field_dismiss">Dismiss</string>
+    <string name="field_done">Done, insert the text</string>
+    <string name="field_retry">Retry</string>
+    <string name="field_undo">Undo</string>
+    <string name="field_undo_description">Undo last dictation</string>
+    <string name="field_starting">Starting…</string>
+    <string name="field_listening">Listening…</string>
+    <string name="field_working">Writing…</string>
+    <string name="field_inserted">Inserted</string>
+    <string name="field_cloud">Cloud</string>
+    <string name="field_cloud_used">Using your cloud provider</string>
+</resources>

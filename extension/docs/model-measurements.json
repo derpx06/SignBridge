@@ -1,0 +1,20 @@
+[
+ {
+  "id": "moonshine-tiny",
+  "MB": 32,
+  "WERpct": 8,
+  "stopToTextMs": 319,
+  "peakProcessesMB": 1950,
+  "extensionDeltaMB": 417,
+  "ok": true
+ },
+ {
+  "id": "moonshine-base",
+  "MB": 67,
+  "WERpct": 8,
+  "stopToTextMs": 325,
+  "peakProcessesMB": 2102,
+  "extensionDeltaMB": 474,
+  "ok": true
+ }
+]

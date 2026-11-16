@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>html,body{margin:0;background:#E4E7E7}a{color:#0F766E}a:hover{color:#115E59}</style>
+</helmet>
+<div style="width:2440px;padding:56px;box-sizing:border-box;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;color:#101417;display:flex;flex-direction:column;gap:28px;-webkit-font-smoothing:antialiased">
+  <header style="display:flex;align-items:flex-end;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+      <div style="font:500 13px/16px 'JetBrains Mono',monospace;color:#475157">Voicio for Chrome · design board v1 · October 2026</div>
+      <h1 style="margin:0;font-size:44px;line-height:52px;font-weight:600;letter-spacing:-0.03em">Private, offline voice dictation for any web page</h1>
+      <p style="margin:0;font-size:16px;line-height:24px;color:#475157;max-width:820px;text-wrap:pretty">Speech is recognised on this computer, inside Chrome. Every screen below is shown in dark and light. The working version is in <a href="Voicio for Chrome.dc.html">Voicio for Chrome</a>.</p>
+    </div>
+  </header>
+
+  <section data-screen-label="Tokens" style="display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px">
+    <div style="background:#FFFFFF;border:1px solid #E2E6E7;border-radius:16px;padding:20px 24px">
+      <div style="font-size:16px;font-weight:600;margin-bottom:10px">Colour</div>
+      <div style="display:grid;grid-template-columns:96px 136px 136px 1fr">
+        <span style="font-size:12px;color:#646E74;padding:6px 0">Token</span><span style="font-size:12px;color:#646E74;padding:6px 0">Dark</span><span style="font-size:12px;color:#646E74;padding:6px 0">Light</span><span style="font-size:12px;color:#646E74;padding:6px 0">Use</span>
+        <sc-for list="{{ colours }}" as="c" hint-placeholder-count="16">
+          <span style="font:500 12px/32px 'JetBrains Mono',monospace;border-top:1px solid #EEF1F1">{{ c.t }}</span>
+          <span style="display:flex;align-items:center;gap:8px;border-top:1px solid #EEF1F1;font:400 11.5px/1 'JetBrains Mono',monospace"><span style="width:18px;height:18px;border-radius:5px;background:{{ c.d }};border:1px solid rgba(0,0,0,.12);flex:none"></span>{{ c.d }}</span>
+          <span style="display:flex;align-items:center;gap:8px;border-top:1px solid #EEF1F1;font:400 11.5px/1 'JetBrains Mono',monospace"><span style="width:18px;height:18px;border-radius:5px;background:{{ c.l }};border:1px solid rgba(0,0,0,.12);flex:none"></span>{{ c.l }}</span>
+          <span style="font-size:12.5px;line-height:32px;color:#475157;border-top:1px solid #EEF1F1">{{ c.u }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border:1px solid #E2E6E7;border-radius:16px;padding:20px 24px">
+      <div style="font-size:16px;font-weight:600;margin-bottom:10px">Type · Inter + JetBrains Mono</div>
+      <sc-for list="{{ type }}" as="t" hint-placeholder-count="8">
+        <div style="display:flex;align-items:baseline;gap:12px;padding:9px 0;border-top:1px solid #EEF1F1"><span style="width:112px;flex:none;font:400 11.5px/1 'JetBrains Mono',monospace;color:#646E74">{{ t.spec }}</span><span style="font:{{ t.font }};letter-spacing:{{ t.ls }}">{{ t.sample }}</span></div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="background:#FFFFFF;border:1px solid #E2E6E7;border-radius:16px;padding:20px 24px">
+        <div style="font-size:16px;font-weight:600;margin-bottom:12px">Spacing · 8px grid, 4px half-step</div>
+        <div style="display:flex;align-items:flex-end;gap:16px"><sc-for list="{{ spaces }}" as="s" hint-placeholder-count="8"><div style="display:flex;flex-direction:column;align-items:center;gap:6px"><span style="width:{{ s.px }};height:{{ s.px }};background:#0F766E;border-radius:3px"></span><span style="font:400 11.5px/1 'JetBrains Mono',monospace;color:#475157">{{ s.v }}</span></div></sc-for></div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E2E6E7;border-radius:16px;padding:20px 24px">
+        <div style="font-size:16px;font-weight:600;margin-bottom:12px">Radius</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><sc-for list="{{ radii }}" as="r" hint-placeholder-count="6"><div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border:1.5px solid #0F766E;border-radius:{{ r.px }};background:rgba(15,118,110,.08);flex:none"></span><span style="font-size:12px;line-height:16px;color:#475157"><b style="font:500 12px/16px 'JetBrains Mono',monospace;color:#101417">{{ r.v }}</b><br>{{ r.u }}</span></div></sc-for></div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E2E6E7;border-radius:16px;padding:20px 24px">
+        <div style="font-size:16px;font-weight:600;margin-bottom:6px">Motion &amp; elevation</div>
+        <div style="font-size:13px;line-height:20px;color:#475157;text-wrap:pretty">150 ms for hover and press, 200 ms for layout, easing <span style="font:400 12px/1 'JetBrains Mono',monospace">cubic-bezier(.2,.8,.2,1)</span>. Waveform bars move every 0.4–0.9 s; the mic ring pulses every 1.8 s. Only floating things cast a shadow: the pill, the popup, menus and tooltips. With reduced motion turned on, everything stays still.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="State notes" style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px">
+    <sc-for list="{{ notes }}" as="n" hint-placeholder-count="6"><div style="background:#FFFFFF;border:1px solid #E2E6E7;border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:6px"><div style="font-size:15px;font-weight:600">{{ n.t }}</div><div style="font-size:13px;line-height:20px;color:#475157;text-wrap:pretty">{{ n.b }}</div></div></sc-for>
+  </section>
+
+  <div style="position:sticky;top:16px;z-index:50;align-self:flex-start;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 14px;border-radius:12px;background:#FFFFFF;border:1px solid #D2D7D9;box-shadow:0 8px 24px rgba(16,20,23,.08)"><span style="font-size:13px;font-weight:500;color:#475157">Theme</span><div role="radiogroup" aria-label="Theme" style="display:flex;gap:2px;padding:2px;border-radius:9px;background:#EDEFEF"><sc-for list="{{ themeSeg }}" as="t" hint-placeholder-count="3"><button role="radio" aria-checked="{{ t.on }}" onClick="{{ t.pick }}" style="height:30px;padding:0 14px;border-radius:7px;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};font:500 13px/1 Inter,sans-serif;cursor:pointer">{{ t.label }}</button></sc-for></div></div>
+  <div style="display:grid;grid-template-columns:{{ cols }};gap:40px;align-items:start">
+<!--DARK-START-->
+    <div data-screen-label="Dark" style="display:{{ showDark }};--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--ac2:#22D3EE;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--pill:rgba(23,28,32,.9);--shadow:0 12px 32px rgba(0,0,0,.45);--scrim:#0A0D10;--focus:#5EEAD4;background:#0A0D0F;border-radius:28px;padding:36px;flex-direction:column;gap:20px;color:var(--tx)">
+      <div style="font-size:28px;font-weight:600;letter-spacing:-0.02em;color:var(--tx)">Dark</div>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">01 · Toolbar icon — 16 / 32 / 48 and badge states</div>
+      <div style="display:flex;gap:40px;align-items:flex-end;padding:24px;border-radius:16px;background:var(--bg);border:1px solid var(--line)">
+        <div style="display:flex;gap:18px;align-items:flex-end">{{ logo48 }}{{ logo32 }}{{ logo16 }}</div>
+        <div style="width:1px;align-self:stretch;background:var(--line)"></div>
+        <sc-for list="{{ badges }}" as="b" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;align-items:center;gap:8px"><span style="position:relative;display:flex">{{ logo32 }}<span style="position:absolute;right:-3px;bottom:-3px;width:12px;height:12px;border-radius:50%;background:{{ b.c }};border:2.5px solid var(--bg);display:{{ b.show }}"></span></span><span style="font-size:12px;color:var(--tx2)">{{ b.l }}</span></div></sc-for>
+      </div>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">02 · Popup 360×480 — ready, listening, cleaning up</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <dc-import name="Chrome Popup" view="main" rec="ready" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="main" rec="listening" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="main" rec="processing" hint-size="360px,480px"></dc-import>
+      </div>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">03 · Popup — finished text, first run, no microphone</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <dc-import name="Chrome Popup" view="main" rec="ready" text-a="Thanks for the notes on the pricing page. Let's keep the free tier, but move the team plan to the top and add a short FAQ under it." text-b="" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="firstrun" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="nomic" hint-size="360px,480px"></dc-import>
+      </div>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">04 · Popup — speech model missing, mic blocked</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <dc-import name="Chrome Popup" view="nomodel" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="blocked" hint-size="360px,480px"></dc-import>
+      </div>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">05 · In-page pill — listening on light and dark sites, never takes focus</div>
+      <div style="display:grid;grid-template-columns:repeat(2,468px);gap:24px">
+        <dc-import name="Chrome In-page" state="listening" site="light" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="listening" site="dark" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="processing" site="light" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="done" site="dark" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="error" site="light" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="error" site="dark" hint-size="468px,240px"></dc-import>
+      </div>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">06 · Context actions — field mic on hover, right-click “Dictate here”</div>
+      <div style="display:grid;grid-template-columns:repeat(2,468px);gap:24px">
+        <dc-import name="Chrome In-page" state="hover" site="light" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="context" site="dark" hint-size="468px,240px"></dc-import>
+      </div>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">07 · Settings page — Dictate (same controls as the popup)</div>
+      <dc-import name="Chrome Options" section="dictate" rec="listening" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">08 · Settings page — General</div>
+      <dc-import name="Chrome Options" section="general" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">09 · Settings page — Sites</div>
+      <dc-import name="Chrome Options" section="sites" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">10 · Settings page — Appearance</div>
+      <dc-import name="Chrome Options" section="appearance" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">11 · Settings page — Speech model</div>
+      <dc-import name="Chrome Options" section="connection" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">12 · Settings page — Privacy</div>
+      <dc-import name="Chrome Options" section="privacy" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">13 · Settings page — About</div>
+      <dc-import name="Chrome Options" section="about" hint-size="960px,680px"></dc-import>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">14 · Microphone pre-prompt</div>
+      <dc-import name="Chrome Permission" view="preprompt" hint-size="960px,600px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">15 · Permission blocked — help</div>
+      <dc-import name="Chrome Permission" view="blocked" hint-size="960px,600px"></dc-import>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">16 · Component sheet</div>
+      <dc-import name="Voicio Components" hint-size="960px,1400px"></dc-import>
+    </div>
+<!--DARK-END-->
+<!--LIGHT-START-->
+    <div data-screen-label="Light" style="display:{{ showLight }};--bg:#F6F7F7;--sunk:#EDEFEF;--surf:#FFFFFF;--surf2:#EEF1F1;--line:#E2E6E7;--line2:#CED4D6;--tx:#101417;--tx2:#475157;--tx3:#646E74;--ac:#0F766E;--ac2:#0E7490;--on-ac:#FFFFFF;--ac-tx:#0F766E;--ac-soft:rgba(15,118,110,.09);--ac-line:rgba(15,118,110,.3);--err:#B91C1C;--err-soft:rgba(220,38,38,.08);--warn:#A16207;--warn-soft:rgba(234,179,8,.14);--key:#FFFFFF;--key-edge:#C3CBCE;--knob:#FFFFFF;--pill:rgba(255,255,255,.92);--shadow:0 12px 32px rgba(16,20,23,.12);--scrim:#F0F2F2;--focus:#0F766E;background:#D6DBDC;border-radius:28px;padding:36px;flex-direction:column;gap:20px;color:var(--tx)">
+      <div style="font-size:28px;font-weight:600;letter-spacing:-0.02em;color:var(--tx)">Light</div>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">01 · Toolbar icon — 16 / 32 / 48 and badge states</div>
+      <div style="display:flex;gap:40px;align-items:flex-end;padding:24px;border-radius:16px;background:var(--bg);border:1px solid var(--line)">
+        <div style="display:flex;gap:18px;align-items:flex-end">{{ logo48 }}{{ logo32 }}{{ logo16 }}</div>
+        <div style="width:1px;align-self:stretch;background:var(--line)"></div>
+        <sc-for list="{{ badges }}" as="b" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;align-items:center;gap:8px"><span style="position:relative;display:flex">{{ logo32 }}<span style="position:absolute;right:-3px;bottom:-3px;width:12px;height:12px;border-radius:50%;background:{{ b.c }};border:2.5px solid var(--bg);display:{{ b.show }}"></span></span><span style="font-size:12px;color:var(--tx2)">{{ b.l }}</span></div></sc-for>
+      </div>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">02 · Popup 360×480 — ready, listening, cleaning up</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <dc-import name="Chrome Popup" view="main" rec="ready" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="main" rec="listening" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="main" rec="processing" hint-size="360px,480px"></dc-import>
+      </div>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">03 · Popup — finished text, first run, no microphone</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <dc-import name="Chrome Popup" view="main" rec="ready" text-a="Thanks for the notes on the pricing page. Let's keep the free tier, but move the team plan to the top and add a short FAQ under it." text-b="" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="firstrun" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="nomic" hint-size="360px,480px"></dc-import>
+      </div>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">04 · Popup — speech model missing, mic blocked</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <dc-import name="Chrome Popup" view="nomodel" hint-size="360px,480px"></dc-import>
+        <dc-import name="Chrome Popup" view="blocked" hint-size="360px,480px"></dc-import>
+      </div>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">05 · In-page pill — listening on light and dark sites, never takes focus</div>
+      <div style="display:grid;grid-template-columns:repeat(2,468px);gap:24px">
+        <dc-import name="Chrome In-page" state="listening" site="light" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="listening" site="dark" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="processing" site="light" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="done" site="dark" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="error" site="light" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="error" site="dark" hint-size="468px,240px"></dc-import>
+      </div>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">06 · Context actions — field mic on hover, right-click “Dictate here”</div>
+      <div style="display:grid;grid-template-columns:repeat(2,468px);gap:24px">
+        <dc-import name="Chrome In-page" state="hover" site="light" hint-size="468px,240px"></dc-import>
+        <dc-import name="Chrome In-page" state="context" site="dark" hint-size="468px,240px"></dc-import>
+      </div>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">07 · Settings page — Dictate (same controls as the popup)</div>
+      <dc-import name="Chrome Options" section="dictate" rec="listening" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">08 · Settings page — General</div>
+      <dc-import name="Chrome Options" section="general" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">09 · Settings page — Sites</div>
+      <dc-import name="Chrome Options" section="sites" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">10 · Settings page — Appearance</div>
+      <dc-import name="Chrome Options" section="appearance" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">11 · Settings page — Speech model</div>
+      <dc-import name="Chrome Options" section="connection" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">12 · Settings page — Privacy</div>
+      <dc-import name="Chrome Options" section="privacy" hint-size="960px,680px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">13 · Settings page — About</div>
+      <dc-import name="Chrome Options" section="about" hint-size="960px,680px"></dc-import>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">14 · Microphone pre-prompt</div>
+      <dc-import name="Chrome Permission" view="preprompt" hint-size="960px,600px"></dc-import>
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">15 · Permission blocked — help</div>
+      <dc-import name="Chrome Permission" view="blocked" hint-size="960px,600px"></dc-import>
+
+      <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-top:12px">16 · Component sheet</div>
+      <dc-import name="Voicio Components" hint-size="960px,1400px"></dc-import>
+    </div>
+<!--LIGHT-END-->
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Light&quot;,&quot;Dark&quot;,&quot;Both&quot;],&quot;default&quot;:&quot;Light&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { th: null };
+  componentDidMount() { if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true }); }
+  renderVals() {
+    const K = window.VK, R = React;
+    const colours = [
+      ['--bg', '#101417', '#F6F7F7', 'Page and popup background'], ['--sunk', '#0C1013', '#EDEFEF', 'Sidebar, segmented track'], ['--surf', '#171C20', '#FFFFFF', 'Cards, fields, transcript'], ['--surf2', '#1F252A', '#EEF1F1', 'Hover fill, selected tab'],
+      ['--line', '#242B30', '#E2E6E7', 'Soft 1px borders'], ['--line2', '#323A41', '#CED4D6', 'Control borders, off switch'], ['--tx', '#E9EDEF', '#101417', 'Primary text'], ['--tx2', '#A6B0B6', '#475157', 'Secondary text'], ['--tx3', '#85919A', '#646E74', 'Hints, unsettled words'],
+      ['--ac', '#14B8A6', '#0F766E', 'Primary fill, waveform'], ['--ac2', '#22D3EE', '#0E7490', 'Mic gradient, wave edges'], ['--on-ac', '#03201C', '#FFFFFF', 'Text on accent'], ['--ac-tx', '#2DD4BF', '#0F766E', 'Accent text and icons'],
+      ['--warn', '#FBBF24', '#A16207', 'Needs attention'], ['--err', '#F87171', '#B91C1C', 'Errors, destructive'], ['--focus', '#5EEAD4', '#0F766E', '2px focus ring']
+    ].map(([t, d, l, u]) => ({ t, d, l, u }));
+    const type = [
+      ['26/34 · 600', '600 26px/34px Inter,sans-serif', '-0.02em', "Let's turn the mic back on"], ['22/30 · 600', '600 22px/30px Inter,sans-serif', '-0.02em', 'Sites'], ['16/24 · 600', '600 16px/24px Inter,sans-serif', '-0.01em', 'Voicio isn’t ready'],
+      ['14/20 · 600', '600 14px/20px Inter,sans-serif', '0', 'Listening…'], ['14/20 · 400', '400 14px/20px Inter,sans-serif', '0', 'Body — the base size'], ['13/20 · 500', '500 13px/20px Inter,sans-serif', '0', 'Buttons, row labels'],
+      ['12/16 · 500', '500 12px/16px Inter,sans-serif', '0', 'Captions, chips, group headers'], ['Mono 12 · 500', "500 12px/16px 'JetBrains Mono',monospace", '0', 'Alt + Shift + V · 0:07']
+    ].map(([spec, font, ls, sample]) => ({ spec, font, ls, sample }));
+    const spaces = [4, 8, 12, 16, 24, 32, 40, 48].map((v) => ({ v: String(v), px: v + 'px' }));
+    const radii = [['5', 'Small keycap'], ['8', 'Buttons, inputs'], ['10', 'Segmented, rows'], ['12', 'Cards, popup'], ['16', 'Pages, panels'], ['999', 'Pill, chips, dots']].map(([v, u]) => ({ v, u, px: v === '999' ? '18px' : v + 'px' }));
+    const notes = [
+      ['Hover', 'Buttons brighten 10% (primary) or get a surf2 fill (secondary, ghost, icon). Destructive actions turn red only on hover. Rows highlight their whole width. 150 ms.'],
+      ['Focus', 'A 2px teal ring with a 2px gap on everything you can reach with the keyboard, using :focus-visible so mouse clicks don’t show it. Tab order goes top to bottom; arrow keys move inside segmented controls and menus.'],
+      ['Disabled', 'Shown at 45% opacity with a not-allowed cursor, and kept in the tab order with aria-disabled when the reason matters (e.g. the locked password switch shows a lock icon and the reason).'],
+      ['Loading', 'A spinner ring with “Cleaning up…” or “Typing…”, plus shimmering waveform bars. Downloads show a 4px bar with size, speed and time left. Nothing jumps in size when loading ends.'],
+      ['Pill', 'Injected in a shadow root next to the focused field and never takes focus — its buttons cancel mousedown. Drag it to move it; it remembers the spot. Esc cancels. Its glass background and border read on both white and dark sites.'],
+      ['Accessibility', 'All text passes WCAG AA in both themes. The live transcript uses aria-live="polite". Status is never shown by colour alone — there is always a label. With reduced motion, the waveform and pulse stand still.']
+    ].map(([t, b]) => ({ t, b }));
+    const badges = [['Idle', 'none', 'transparent'], ['Listening', 'block', 'var(--ac)'], ['Error', 'block', 'var(--warn)'], ['Off / no model', 'block', 'var(--tx3)']].map(([l, show, c]) => ({ l, show, c }));
+    const th = this.state.th || this.props.theme || 'Light';
+    const themeSeg = ['Light', 'Dark', 'Both'].map((l) => { const on = th === l; return { label: l, on, pick: () => this.setState({ th: l }), bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#101417' : '#475157', bd: on ? '#CED4D6' : 'transparent' }; });
+    return { themeSeg, cols: th === 'Both' ? '1fr 1fr' : '1fr', showDark: th === 'Light' ? 'none' : 'flex', showLight: th === 'Dark' ? 'none' : 'flex', colours, type, spaces, radii, notes, badges, logo16: K ? K.logo(R, 16) : null, logo32: K ? K.logo(R, 32) : null, logo48: K ? K.logo(R, 48) : null };
+  }
+}
+</script>
+</body>
+</html>

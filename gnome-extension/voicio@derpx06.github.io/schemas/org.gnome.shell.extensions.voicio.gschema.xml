@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.voicio" path="/org/gnome/shell/extensions/voicio/">
+    <key name="dictate" type="as">
+      <default><![CDATA[['F9']]]></default>
+      <summary>Dictation shortcut</summary>
+      <description>Only used as a fallback when the desktop shortcut service is unavailable: tap to start and tap again to finish.</description>
+    </key>
+  </schema>
+</schemalist>

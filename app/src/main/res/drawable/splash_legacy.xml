@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Before Android 12: the same ink splash, as the window background. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/voicio_ink"/>
+    <item android:drawable="@drawable/splash_icon" android:gravity="center" android:width="288dp" android:height="288dp"/>
+</layer-list>

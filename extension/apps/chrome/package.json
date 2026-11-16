@@ -1,0 +1,34 @@
+{
+  "name": "@voicio/chrome",
+  "version": "1.0.5",
+  "private": true,
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "typecheck": "tsc -p .",
+    "test": "vitest run --passWithNoTests",
+    "e2e": "node e2e/run.mjs",
+    "zip": "vite build && cp ../../../LICENSE dist/LICENSE && cd dist && rm -f ../voicio-chrome-$npm_package_version.zip && zip -qr ../voicio-chrome-$npm_package_version.zip . -x \"*.map\"",
+    "shots": "node e2e/shots.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource/bricolage-grotesque": "^5.3.0",
+    "@huggingface/transformers": "^3.7.0",
+    "@voicio/core": "workspace:*",
+    "@voicio/ui": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "playwright": "^1.55.0",
+    "vite": "^6.3.0"
+  }
+}

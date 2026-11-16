@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="voicio-kit.js"></script>
+<style>body{margin:0;--bg:#101417;--sunk:#0C1013;--surf:#171C20;--surf2:#1F252A;--line:#242B30;--line2:#323A41;--tx:#E9EDEF;--tx2:#A6B0B6;--tx3:#85919A;--ac:#14B8A6;--on-ac:#03201C;--ac-tx:#2DD4BF;--ac-soft:rgba(20,184,166,.14);--ac-line:rgba(45,212,191,.35);--err:#F87171;--err-soft:rgba(248,113,113,.12);--warn:#FBBF24;--warn-soft:rgba(251,191,36,.12);--key:#1F252A;--key-edge:#3A434A;--knob:#A6B0B6;--pill:rgba(23,28,32,.86);--shadow:0 12px 32px rgba(0,0,0,.45);--scrim:#0A0D10;--focus:#5EEAD4}</style>
+</helmet>
+<div data-screen-label="Component sheet" style="width:960px;box-sizing:border-box;padding:24px;background:var(--bg);border:1px solid var(--line);border-radius:16px;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:20px;color:var(--tx);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;-webkit-font-smoothing:antialiased">
+
+  <div style="grid-column:span 3;background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;grid-template-columns:80px repeat(4,minmax(0,1fr));gap:12px 10px;align-items:center">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Buttons</div>
+    <div style="font-size:12px;color:var(--tx3)">Default</div><div style="font-size:12px;color:var(--tx3)">Hover</div><div style="font-size:12px;color:var(--tx3)">Focus</div><div style="font-size:12px;color:var(--tx3)">Disabled</div>
+    <div style="font-size:12.5px;color:var(--tx2)">Primary</div>
+    <div><button style="height:32px;padding:0 14px;border-radius:8px;border:1px solid transparent;background:var(--ac);color:var(--on-ac);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px">{{ ic14.download }}Get what I need</button></div>
+    <div><button style="height:32px;padding:0 14px;border-radius:8px;border:1px solid transparent;background:var(--ac);color:var(--on-ac);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;filter:brightness(1.1)">{{ ic14.download }}Get what I need</button></div>
+    <div><button style="height:32px;padding:0 14px;border-radius:8px;border:1px solid transparent;background:var(--ac);color:var(--on-ac);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;outline:2px solid var(--focus);outline-offset:2px">{{ ic14.download }}Get what I need</button></div>
+    <div><button disabled style="height:32px;padding:0 14px;border-radius:8px;border:1px solid transparent;background:var(--ac);color:var(--on-ac);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;opacity:.45">{{ ic14.download }}Get what I need</button></div>
+    <div style="font-size:12.5px;color:var(--tx2)">Secondary</div>
+    <div><button style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px">{{ ic14.copy }}Copy</button></div>
+    <div><button style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surf2);color:var(--tx);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px">{{ ic14.copy }}Copy</button></div>
+    <div><button style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;outline:2px solid var(--focus);outline-offset:2px">{{ ic14.copy }}Copy</button></div>
+    <div><button disabled style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;opacity:.45">{{ ic14.copy }}Copy</button></div>
+    <div style="font-size:12.5px;color:var(--tx2)">Ghost</div>
+    <div><button style="height:32px;padding:0 10px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--tx2);font:500 13px/1 Inter,sans-serif">Skip for now</button></div>
+    <div><button style="height:32px;padding:0 10px;border-radius:8px;border:1px solid transparent;background:var(--surf2);color:var(--tx);font:500 13px/1 Inter,sans-serif">Skip for now</button></div>
+    <div><button style="height:32px;padding:0 10px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--tx2);font:500 13px/1 Inter,sans-serif;outline:2px solid var(--focus);outline-offset:2px">Skip for now</button></div>
+    <div><button disabled style="height:32px;padding:0 10px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--tx2);font:500 13px/1 Inter,sans-serif;opacity:.45">Skip for now</button></div>
+    <div style="font-size:12.5px;color:var(--tx2)">Danger</div>
+    <div><button style="height:32px;padding:0 12px;border-radius:8px;border:1px solid transparent;background:var(--err-soft);color:var(--err);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px">{{ ic14.trash }}Clear history</button></div>
+    <div><button style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--err);background:var(--err-soft);color:var(--err);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px">{{ ic14.trash }}Clear history</button></div>
+    <div><button style="height:32px;padding:0 12px;border-radius:8px;border:1px solid transparent;background:var(--err-soft);color:var(--err);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;outline:2px solid var(--focus);outline-offset:2px">{{ ic14.trash }}Clear history</button></div>
+    <div><button disabled style="height:32px;padding:0 12px;border-radius:8px;border:1px solid transparent;background:var(--err-soft);color:var(--err);font:500 13px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;opacity:.45">{{ ic14.trash }}Clear history</button></div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Segmented control</div>
+    <div role="radiogroup" style="display:flex;height:32px;padding:2px;gap:2px;border-radius:10px;background:var(--sunk);border:1px solid var(--line);box-sizing:border-box">
+      <sc-for list="{{ seg }}" as="s" hint-placeholder-count="4"><button role="radio" aria-checked="{{ s.on }}" onClick="{{ s.pick }}" style="flex:1;border-radius:8px;border:1px solid {{ s.bd }};background:{{ s.bg }};color:{{ s.fg }};font:500 12px/1 Inter,sans-serif;cursor:pointer;padding:0">{{ s.label }}</button></sc-for>
+    </div>
+    <div style="display:flex;height:28px;padding:2px;gap:2px;border-radius:10px;background:var(--sunk);border:1px solid var(--line);box-sizing:border-box;width:200px">
+      <span style="flex:1;border-radius:8px;border:1px solid var(--line2);background:var(--surf);font:500 12px/22px Inter,sans-serif;text-align:center">Type it</span><span style="flex:1;font:500 12px/24px Inter,sans-serif;text-align:center;color:var(--tx2)">Paste it</span>
+    </div>
+    <div style="font-size:12px;color:var(--tx3)">Arrow keys move the selection.</div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Switch</div>
+    <div style="display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:8px 18px;align-items:center;font-size:12px;color:var(--tx3)">
+      <span style="width:34px;height:20px;border-radius:999px;background:var(--ac);position:relative;display:block"><span style="position:absolute;top:3px;left:17px;width:14px;height:14px;border-radius:50%;background:var(--on-ac)"></span></span>
+      <span style="width:34px;height:20px;border-radius:999px;background:var(--line2);position:relative;display:block"><span style="position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--knob)"></span></span>
+      <span style="width:34px;height:20px;border-radius:999px;background:var(--ac);position:relative;display:block;outline:2px solid var(--focus);outline-offset:2px"><span style="position:absolute;top:3px;left:17px;width:14px;height:14px;border-radius:50%;background:var(--on-ac)"></span></span>
+      <span style="width:34px;height:20px;border-radius:999px;background:var(--ac);position:relative;display:block;opacity:.45"><span style="position:absolute;top:3px;left:17px;width:14px;height:14px;border-radius:50%;background:var(--on-ac)"></span></span>
+      <span>On</span><span>Off</span><span>Focus</span><span>Disabled</span>
+    </div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Keycap</div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <kbd style="font:500 12px/1 'JetBrains Mono',monospace;height:24px;padding:0 7px;display:inline-flex;align-items:center;border-radius:6px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Super</kbd><span style="color:var(--tx3)">+</span>
+      <kbd style="font:500 12px/1 'JetBrains Mono',monospace;height:24px;padding:0 7px;display:inline-flex;align-items:center;border-radius:6px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Alt</kbd><span style="color:var(--tx3)">+</span>
+      <kbd style="font:500 12px/1 'JetBrains Mono',monospace;height:24px;padding:0 7px;display:inline-flex;align-items:center;border-radius:6px;background:var(--key);border:1px solid var(--line2);border-bottom:2px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Space</kbd>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <kbd style="font:500 15px/1 'JetBrains Mono',monospace;height:40px;padding:0 14px;display:inline-flex;align-items:center;border-radius:8px;background:var(--key);border:1px solid var(--line2);border-bottom:3px solid var(--key-edge);color:var(--tx);box-sizing:border-box">Esc</kbd>
+      <kbd style="font:500 11px/1 'JetBrains Mono',monospace;height:20px;min-width:20px;padding:0 5px;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;background:var(--key);border:1px solid var(--line2);color:var(--tx2);box-sizing:border-box">/</kbd>
+      <span style="font-size:12px;color:var(--tx3)">L · M · S (inline hint)</span>
+    </div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Chip / badge</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <span style="height:24px;padding:0 9px;border-radius:999px;background:var(--ac-soft);color:var(--ac-tx);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:5px">{{ ic12.check }}Installed</span>
+      <span style="height:24px;padding:0 9px;border-radius:999px;background:var(--surf2);color:var(--tx2);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--ac)"></span>Downloading</span>
+      <span style="height:24px;padding:0 9px;border-radius:999px;background:var(--err-soft);color:var(--err);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:5px">{{ ic12.alert }}Failed</span>
+      <span style="height:24px;padding:0 9px;border-radius:999px;background:var(--warn-soft);color:var(--warn);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:5px">{{ ic12.drive }}Low space</span>
+      <span style="height:24px;padding:0 9px;border-radius:999px;border:1px solid var(--line2);color:var(--tx2);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;gap:6px;box-sizing:border-box"><span style="width:6px;height:6px;border-radius:2px;background:var(--line2)"></span>Slack</span>
+      <span style="height:22px;padding:0 8px;border-radius:999px;background:var(--surf2);color:var(--tx2);font:500 11.5px/1 Inter,sans-serif;display:inline-flex;align-items:center">Word</span>
+    </div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Progress bar</div>
+    <div style="height:4px;border-radius:999px;background:var(--line);overflow:hidden"><div style="width:62%;height:100%;border-radius:999px;background:var(--ac)"></div></div>
+    <div style="font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--tx2)">684 MB of 1.1 GB · 18.4 MB/s · 24 s left</div>
+    <div style="height:4px;border-radius:999px;background:var(--line);overflow:hidden"><div style="width:38%;height:100%;border-radius:999px;background:var(--tx3)"></div></div>
+    <div style="font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--tx3)">Paused · 38%</div>
+    <div style="height:4px;border-radius:999px;background:var(--line);overflow:hidden"><div style="width:100%;height:100%;border-radius:999px;background:var(--err)"></div></div>
+    <div style="font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--err)">Checksum mismatch</div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-bottom:4px">Toast</div>
+    <div role="status" style="display:flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 12px;border-radius:10px;background:var(--tx);color:var(--bg);font-size:13px;font-weight:500;align-self:flex-start"><span style="display:flex;color:var(--ac)">{{ ic14.check }}</span>Copied to clipboard</div>
+    <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 6px 0 12px;border-radius:10px;background:var(--tx);color:var(--bg);font-size:13px;font-weight:500;align-self:flex-start">Dictation deleted<button style="height:26px;padding:0 8px;border-radius:6px;border:none;background:transparent;color:var(--ac);font:600 12.5px/1 Inter,sans-serif;cursor:pointer">Undo</button></div>
+    <div role="alert" style="display:flex;align-items:center;gap:8px;height:36px;padding:0 6px 0 12px;border-radius:10px;background:var(--surf2);border:1px solid var(--err);color:var(--tx);font-size:13px;font-weight:500;align-self:flex-start"><span style="display:flex;color:var(--err)">{{ ic14.alertCircle }}</span>Microphone unplugged<button style="height:26px;padding:0 8px;border-radius:6px;border:none;background:transparent;color:var(--ac-tx);font:600 12.5px/1 Inter,sans-serif;cursor:pointer">Pick another</button></div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Card</div>
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:12.5px;font-weight:600;color:var(--tx2)">Last dictation</span><span style="font-size:12px;color:var(--tx3);flex:1">Gmail · 9 min ago</span><button aria-label="Copy" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--tx3);display:flex;align-items:center;justify-content:center">{{ ic14.copy }}</button></div>
+      <div style="font-size:13.5px;line-height:21px">Hi Daniel, thanks for the quick turnaround. I've signed page four.</div>
+    </div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:4px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);margin-bottom:8px">List row</div>
+    <div style="display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;height:40px;padding:0 6px 0 10px;border-radius:10px"><span style="font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--tx3)">14:05</span><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px">TODO: debounce the level meter</span><span style="font-size:11px;color:var(--tx3)">default</span></div>
+    <div style="display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;height:40px;padding:0 6px 0 10px;border-radius:10px;background:var(--surf2)"><span style="font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--tx3)">13:47</span><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px">Hi Daniel, thanks for the…</span><span style="display:flex;gap:2px;color:var(--tx2)">{{ ic14.copy }}{{ ic14.trash }}</span></div>
+    <div style="display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;height:40px;padding:0 6px 0 10px;border-radius:10px;outline:2px solid var(--focus);outline-offset:-2px"><span style="font:400 11.5px/1 'JetBrains Mono',monospace;color:var(--tx3)">11:20</span><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px">Q4 goals: ship the offline…</span><span style="font-size:11px;color:var(--tx3)">focus</span></div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3);align-self:flex-start">Empty state</div>
+    <div style="width:64px;height:64px;border-radius:50%;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-top:4px">{{ emptyWave }}</div>
+    <div style="font-weight:600">No matches</div>
+    <div style="font-size:12.5px;color:var(--tx2)">Nothing mentions “invoice”.</div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Tray menu</div>
+    <div role="menu" style="width:232px;background:var(--bg);border:1px solid var(--line2);border-radius:12px;padding:4px;box-shadow:var(--shadow)">
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:12px;color:var(--tx3)"><span style="width:6px;height:6px;border-radius:50%;background:var(--ac)"></span>Voicio · Ready</div>
+      <div style="height:1px;background:var(--line);margin:2px 0"></div>
+      <div role="menuitem" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border-radius:8px;background:var(--surf2);font-size:13px">{{ ic14.mic }}<span style="flex:1">Start dictation</span><span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--tx3)">Super Alt Space</span></div>
+      <div role="menuitem" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border-radius:8px;font-size:13px">{{ ic14.settings }}<span style="flex:1">Settings</span></div>
+      <div style="height:1px;background:var(--line);margin:2px 0"></div>
+      <div role="menuitem" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border-radius:8px;font-size:13px">{{ ic14.power }}<span style="flex:1">Quit</span><span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--tx3)">Ctrl Q</span></div>
+    </div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Logo mark</div>
+    <div style="display:flex;align-items:flex-end;gap:14px">{{ logo64 }}{{ logo40 }}{{ logo24 }}{{ logo16 }}<span style="padding-left:6px">{{ mark32 }}</span></div>
+    <div style="display:flex;align-items:center;gap:10px">{{ logo28 }}<span style="font-weight:600;font-size:20px;letter-spacing:-0.02em">Voicio</span></div>
+    <div style="font-size:12px;color:var(--tx3)">Five bars of a waveform, stepping down into a V.</div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Waveform</div>
+    <div style="display:flex;align-items:center;gap:10px"><span style="width:64px;font-size:12px;color:var(--tx3)">Live</span>{{ wLive }}</div>
+    <div style="display:flex;align-items:center;gap:10px"><span style="width:64px;font-size:12px;color:var(--tx3)">Working</span>{{ wProc }}</div>
+    <div style="display:flex;align-items:center;gap:10px"><span style="width:64px;font-size:12px;color:var(--tx3)">Idle</span>{{ wIdle }}</div>
+    <div style="font-size:12px;color:var(--tx3)">Reduced motion: bars hold still.</div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Icon button</div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span style="width:32px;height:32px;border-radius:8px;color:var(--tx2);display:flex;align-items:center;justify-content:center">{{ ic16.settings }}</span>
+      <span style="width:32px;height:32px;border-radius:8px;background:var(--surf2);color:var(--tx);display:flex;align-items:center;justify-content:center">{{ ic16.settings }}</span>
+      <span style="width:32px;height:32px;border-radius:8px;color:var(--tx2);display:flex;align-items:center;justify-content:center;outline:2px solid var(--focus);outline-offset:2px">{{ ic16.settings }}</span>
+      <span style="width:32px;height:32px;border-radius:8px;color:var(--tx2);display:flex;align-items:center;justify-content:center;opacity:.45">{{ ic16.settings }}</span>
+      <span style="width:32px;height:32px;border-radius:8px;background:var(--err-soft);color:var(--err);display:flex;align-items:center;justify-content:center">{{ ic16.trash }}</span>
+    </div>
+    <div style="font-size:12px;color:var(--tx3)">Default · hover · focus · disabled · destructive hover. Always has an aria-label.</div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Tooltip</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding-top:4px">
+      <div role="tooltip" style="height:30px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;background:var(--tx);color:var(--bg);font:500 12px/1 Inter,sans-serif">Dictate<span style="font:500 11px/1 'JetBrains Mono',monospace;opacity:.7">Alt+Shift+V</span></div>
+      <span style="margin-left:22px;width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:var(--bg);color:var(--ac-tx);display:flex;align-items:center;justify-content:center">{{ ic14.mic }}</span>
+    </div>
+    <div style="font-size:12px;color:var(--tx3)">Shows after 400 ms hover or on focus. Esc hides it.</div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Status dot</div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:10px 10px;align-items:center;font-size:12.5px;color:var(--tx2)">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 3px var(--ac-soft)"></span><span>Ready / listening (breathes while live)</span>
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 3px var(--warn-soft)"></span><span>Needs attention — mic or error</span>
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--err)"></span><span>Blocked</span>
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--tx3)"></span><span>Off / no model</span>
+    </div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Input</div>
+    <label style="height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;border:1px solid var(--line2);background:var(--bg);color:var(--tx3);font-size:13px">{{ ic14.search }}Search or add a site</label>
+    <label style="height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;border:1px solid var(--ac);box-shadow:0 0 0 3px var(--ac-soft);background:var(--bg);color:var(--tx);font:400 13px/1 'JetBrains Mono',monospace">notion.so<span style="width:1.5px;height:16px;background:var(--ac)"></span></label>
+    <label style="height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;border:1px solid var(--err);background:var(--bg);color:var(--tx);font:400 13px/1 'JetBrains Mono',monospace">notion<span style="margin-left:auto;font:400 12px/1 Inter,sans-serif;color:var(--err)">Not a site</span></label>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Select</div>
+    <div style="height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:8px;border:1px solid var(--line2);background:var(--bg);font-size:13px"><span style="color:var(--tx3);display:flex">{{ ic14.mic }}</span><span style="flex:1">Default — MacBook Pro Microphone</span><span style="color:var(--tx3);display:flex">{{ ic14.chevDown }}</span></div>
+    <div role="listbox" style="border-radius:10px;border:1px solid var(--line2);background:var(--bg);padding:4px;box-shadow:var(--shadow)">
+      <div role="option" style="height:30px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px;background:var(--surf2);font-size:13px"><span style="flex:1">Default — MacBook Pro Microphone</span><span style="color:var(--ac-tx);display:flex">{{ ic14.check }}</span></div>
+      <div role="option" style="height:30px;display:flex;align-items:center;padding:0 8px;border-radius:6px;font-size:13px">Blue Yeti (USB)</div>
+    </div>
+  </div>
+
+  <div style="background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <div style="font:500 12px/16px 'JetBrains Mono',monospace;color:var(--tx3)">Context menu item</div>
+    <div role="menu" style="border-radius:10px;border:1px solid var(--line2);background:var(--bg);padding:4px;box-shadow:var(--shadow);font-size:13px">
+      <div style="height:28px;display:flex;align-items:center;padding:0 10px;border-radius:6px">Paste</div>
+      <div style="height:1px;background:var(--line);margin:3px 0"></div>
+      <div role="menuitem" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;background:var(--ac-soft);font-weight:500">{{ logo14 }}<span style="flex:1">Dictate here</span><span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--tx3)">Alt+Shift+V</span></div>
+    </div>
+    <div style="font-size:12px;color:var(--tx3)">Only in editable fields. Hidden on password fields.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { q: 'Automatic' };
+  componentDidMount() { if (!window.VK) window.addEventListener('vk-ready', () => this.forceUpdate(), { once: true }); }
+  renderVals() {
+    const K = window.VK, R = React;
+    const w = (o) => (K ? K.wave(R, Object.assign({ n: 24, h: 28, w: 3, g: 3 }, o)) : null);
+    return {
+      ic16: K ? K.icons(R, 16) : {}, logo14: K ? K.logo(R, 14) : null, ic14: K ? K.icons(R, 14) : {}, ic12: K ? K.icons(R, 12, 2) : {},
+      seg: ['Automatic', 'Lite', 'Standard', 'Quality'].map((o) => { const a = o === this.state.q; return { label: o, on: a, pick: () => this.setState({ q: o }), bg: a ? 'var(--surf)' : 'transparent', fg: a ? 'var(--tx)' : 'var(--tx2)', bd: a ? 'var(--line2)' : 'transparent' }; }),
+      emptyWave: w({ n: 7, h: 24, mode: 'static', color: 'var(--tx3)', seed: 4 }),
+      logo64: K ? K.logo(R, 64) : null, logo40: K ? K.logo(R, 40) : null, logo24: K ? K.logo(R, 24) : null, logo16: K ? K.logo(R, 16) : null, logo28: K ? K.logo(R, 28) : null, mark32: K ? K.logo(R, 32, false) : null,
+      wLive: w({}), wProc: w({ mode: 'processing' }), wIdle: w({ mode: 'idle', color: 'var(--tx3)' })
+    };
+  }
+}
+</script>
+</body>
+</html>
